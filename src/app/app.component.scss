@@ -1,4 +1,9 @@
-.example-spacer {
+:host{
+  display: flex;
+  flex-direction: column;
+}
+
+.spacer {
     flex: 1 1 auto;
   }
 
@@ -8,4 +13,4 @@
     width: 50px;
     margin-right: 16px;
 }
-  
+
