@@ -7,10 +7,16 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MAT_DATE_LOCALE, provideNativeDateAdapter} from "@angular/material/core";
 import {MatButton} from "@angular/material/button";
+import {MatRadioModule} from '@angular/material/radio';
+import { UserInfoComponent } from './user-info/user-info.component';
+import { EnderecoComponent } from './endereco/endereco.component';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { CepServiceService } from '../../../app/cep-service.service';
+
 
 
 @NgModule({
-  declarations: [TelaCadastroComponent,],
+  declarations: [TelaCadastroComponent, UserInfoComponent, EnderecoComponent],
   exports: [TelaCadastroComponent],
 
   imports: [
@@ -19,10 +25,14 @@ import {MatButton} from "@angular/material/button";
     MatFormFieldModule,
     MatInputModule,
     MatDatepickerModule,
-    MatButton
+    MatButton,
+    MatRadioModule,
+    HttpClientModule
   ],
   providers: [
     provideNativeDateAdapter(),
+    CepServiceService,
+    HttpClient,
     { provide: MAT_DATE_LOCALE, useValue: 'pt-BR' }
   ]
 })
