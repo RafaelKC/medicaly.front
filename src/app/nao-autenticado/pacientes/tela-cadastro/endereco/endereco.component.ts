@@ -1,7 +1,7 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { CepServiceService, EnderecoResult } from '../../../../app/cep-service.service';
-import { FormControl, FormGroup, FormBuilder } from '@angular/forms';
-import { debounceTime } from 'rxjs';
+import {Component, OnInit} from '@angular/core';
+import {CepServiceService, EnderecoResult} from '../../../../cep-service.service';
+import {FormBuilder, FormGroup} from '@angular/forms';
+import {debounceTime} from 'rxjs';
 
 @Component({
   selector: 'app-endereco',
@@ -27,7 +27,7 @@ export class EnderecoComponent implements OnInit{
       return cepValue.length;
     }
     return 0;
-  }  
+  }
 
   public setForm(): void {
     this.form = this.formBuilder.group({
@@ -56,7 +56,7 @@ export class EnderecoComponent implements OnInit{
       this.cepService.buscar(valor).subscribe((dados) => this.populaForm(dados));
   }
 
-  
+
   public populaForm(dados: EnderecoResult): void {
     this.form.patchValue({
       logradouro: dados.logradouro,

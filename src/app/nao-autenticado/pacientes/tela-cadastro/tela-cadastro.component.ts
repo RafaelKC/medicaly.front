@@ -1,6 +1,5 @@
-import {Component, OnInit} from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import { PacienteInfo } from './user-info/user-info.component';
+import {Component} from '@angular/core';
+import {PacienteInput} from "../../../../tokens/models/paciente-input";
 
 @Component({
   selector: 'app-tela-cadastro',
@@ -10,9 +9,9 @@ import { PacienteInfo } from './user-info/user-info.component';
 
 export class TelaCadastroComponent {
   public etapaUsuario = true
-  public paciente: PacienteInfo;
+  public paciente: PacienteInput;
 
-  public setPaciente(paciente: PacienteInfo) {
+  public setPaciente(paciente: PacienteInput) {
     this.paciente = paciente;
     this.etapaUsuario = false;
   }

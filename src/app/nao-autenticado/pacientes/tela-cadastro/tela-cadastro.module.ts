@@ -8,11 +8,12 @@ import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MAT_DATE_LOCALE, provideNativeDateAdapter} from "@angular/material/core";
 import {MatButton} from "@angular/material/button";
 import {MatRadioModule} from '@angular/material/radio';
-import { UserInfoComponent } from './user-info/user-info.component';
-import { EnderecoComponent } from './endereco/endereco.component';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
-import { CepServiceService } from '../../../app/cep-service.service';
-
+import {UserInfoComponent} from './user-info/user-info.component';
+import {EnderecoComponent} from './endereco/endereco.component';
+import {HttpClient, HttpClientModule} from '@angular/common/http';
+import {CepServiceService} from '../../../cep-service.service';
+import {IMaskModule} from 'angular-imask';
+import {RadioButtonModule} from "primeng/radiobutton";
 
 
 @NgModule({
@@ -27,7 +28,9 @@ import { CepServiceService } from '../../../app/cep-service.service';
     MatDatepickerModule,
     MatButton,
     MatRadioModule,
-    HttpClientModule
+    HttpClientModule,
+    IMaskModule,
+    RadioButtonModule
   ],
   providers: [
     provideNativeDateAdapter(),

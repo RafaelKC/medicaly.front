@@ -6,45 +6,50 @@
           <mat-label>Nome</mat-label>
           <input formControlName="nome" matInput placeholder="Digite seu nome">
         </mat-form-field>
-  
+
         <mat-form-field appearance="fill">
             <mat-label>Sobrenome</mat-label>
             <input formControlName="sobrenome" matInput placeholder="Digite seu sobrenome">
           </mat-form-field>
-        
+
         <mat-form-field appearance="fill">
             <mat-label>CPF</mat-label>
-            <input formControlName="cpf" maxlength="11" matInput placeholder="Digite seu CPF">
+            <input [imask]="cpfMask" [unmask]="true" formControlName="cpf" matInput placeholder="Digite seu CPF">
           </mat-form-field>
-  
+
         <mat-form-field>
           <mat-label>Selecione uma Data</mat-label>
-          <input matInput [matDatepicker]="picker">
+          <input matInput formControlName="dataNascimento" [max]="maxDate"  [min]="minDate" [matDatepicker]="picker">
           <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
           <mat-datepicker #picker ></mat-datepicker>
         </mat-form-field>
-  
-  
+
+
       <mat-form-field class="example-full-width">
         <mat-label>Email</mat-label>
         <input type="email" matInput formControlName="email" placeholder="Ex. pat@example.com">
       </mat-form-field>
-  
+
         <mat-form-field appearance="fill">
             <mat-label>Telefone</mat-label>
-            <input formControlName="telefone" matInput placeholder="Digite seu telefone">
+            <input [imask]="telefoneMask" [unmask]="true" formControlName="telefone" matInput placeholder="Digite seu telefone">
           </mat-form-field>
-  
-  
+
+
         </div>
-          <mat-radio-group aria-label="Select an option">
-            <mat-radio-button value="1">Homem</mat-radio-button>
-            <mat-radio-button value="2">Mulher</mat-radio-button>
-            <mat-radio-button value="2">Outro</mat-radio-button>
+
+          <mat-radio-group aria-label="Select an option" formControlName="genero">
+            <mat-radio-button [value]="generos.Masculino">Homem</mat-radio-button>
+            <mat-radio-button [value]="generos.Feminino">Mulher</mat-radio-button>
+            <mat-radio-button [value]="generos.Outro">Outro</mat-radio-button>
           </mat-radio-group>
-  
-      <button mat-raised-button color="primary" (click)="salvar()"> Prosseguir </button>
-  
+
+      <button
+        mat-raised-button
+        color="primary"
+        [disabled]="!podeSalvar"
+        (click)="salvar()"
+      > Prosseguir </button>
+
     </form>
   </div>
-  

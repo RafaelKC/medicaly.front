@@ -6,6 +6,6 @@ export interface IUser {
   sobrenome: string;
   telefone: string;
   email: string;
-  dataNascimento: string;
+  dataNascimento: Date;
   genero: Genero;
 }

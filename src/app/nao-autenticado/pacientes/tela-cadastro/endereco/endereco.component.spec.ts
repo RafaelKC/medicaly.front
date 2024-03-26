@@ -1,6 +1,6 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { EnderecoComponent } from './endereco.component';
+import {EnderecoComponent} from './endereco.component';
 
 describe('EnderecoComponent', () => {
   let component: EnderecoComponent;
@@ -11,7 +11,7 @@ describe('EnderecoComponent', () => {
       imports: [EnderecoComponent]
     })
     .compileComponents();
-    
+
     fixture = TestBed.createComponent(EnderecoComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

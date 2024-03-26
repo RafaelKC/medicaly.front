@@ -8,7 +8,7 @@ export class PacienteInput extends EntityDto implements IUser {
   public cpf: string;
   public email: string;
   public telefone: string;
-  public dataNascimento: string;
+  public dataNascimento: Date;
   public enderecoId: string | null;
   public genero: Genero;
 }
