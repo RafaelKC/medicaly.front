@@ -1,6 +1,9 @@
 :host{
   display: flex;
   flex-direction: column;
+  app-root{
+    height: 100%;
+  }
 }
 
 .spacer {
@@ -14,3 +17,39 @@
     margin-right: 16px;
 }
 
+::ng-deep{
+
+  .sidenav > div {
+    display: flex;
+      flex-direction: column;
+      align-items: center;
+
+      gap: 6px;
+      button {
+          min-width: 170px;
+          max-width: 170px;
+      }
+  }
+  mat-drawer-content {
+    overflow: unset !important;
+  }
+
+  .sidenav {
+    width: 200px !important;
+  }
+
+}
+
+mat-drawer-container {
+  height: 100%;
+}
+
+
+.sidenav button,
+.sidenav a {
+  margin-right: 8px;
+}
+
+.button-disabled {
+  display: inline-block;
+}

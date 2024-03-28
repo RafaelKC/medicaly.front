@@ -1,24 +1,42 @@
-
+<mat-drawer-container class="container" autosize>
   <mat-toolbar color="primary">
     <mat-toolbar-row>
       <img class="medicaly-icon" src="assets/medica.ly-icon.jpeg">
       <span>Medica.ly</span>
       <span class="spacer"></span>
-      <button mat-icon-button class="example-icon">
+      <button mat-icon-button class="example-icon" (click)="drawer.toggle()">
         <mat-icon>menu</mat-icon>
       </button>
 
     </mat-toolbar-row>
   </mat-toolbar>
-
-
-
-
-
-
-
-
-
-
-
 <router-outlet />
+
+<mat-drawer #drawer class="sidenav" mode="side" position="end">
+<button mat-fab extended color="primary" (click)="navegar('/')">
+    <mat-icon>home</mat-icon>
+    Tela Inicial
+  </button>
+<button mat-fab extended color="primary" (click)="navegar('/login')">
+    <mat-icon>login</mat-icon>
+    Acessar
+  </button>
+<button mat-fab extended color="primary" (click)="navegar('/cadastro-paciente')">
+    <mat-icon>sentiment_satisfied_alt</mat-icon>
+    Cadastrar-se
+  </button>
+<button mat-fab extended color="primary" (click)="navegar('/contato')">
+    <mat-icon>contact_mail</mat-icon>
+    Contato
+  </button>
+<button mat-fab extended color="primary">
+    <mat-icon>medical_services</mat-icon>
+    Sobre Nós
+  </button>
+
+</mat-drawer>
+
+</mat-drawer-container>
+  
+  
+
