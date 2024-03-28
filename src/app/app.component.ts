@@ -9,6 +9,7 @@ import {MatSidenavModule} from "@angular/material/sidenav";
 import {MatButtonModule} from '@angular/material/button';
 
 import { Router, RouterModule } from '@angular/router';
+import { ContatoModule } from './contato/contato.module';
 
 
 @Component({
@@ -23,7 +24,8 @@ import { Router, RouterModule } from '@angular/router';
     MatIconButton,
     MatSidenavModule,
     MatButtonModule,
-    RouterModule
+    RouterModule,
+    ContatoModule
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
