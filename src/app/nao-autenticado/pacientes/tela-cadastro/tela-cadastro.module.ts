@@ -14,6 +14,7 @@ import {HttpClient, HttpClientModule} from '@angular/common/http';
 import {IMaskModule} from 'angular-imask';
 import {RadioButtonModule} from "primeng/radiobutton";
 import {RouterModule, Routes} from "@angular/router";
+import {CepServiceService} from "../../../../tokens/services/cep-service.service";
 
 const routes: Routes = [
   { path: '', component: TelaCadastroComponent }
@@ -38,6 +39,7 @@ const routes: Routes = [
   providers: [
     provideNativeDateAdapter(),
     HttpClient,
+    CepServiceService,
     { provide: MAT_DATE_LOCALE, useValue: 'pt-BR' }
   ]
 })
