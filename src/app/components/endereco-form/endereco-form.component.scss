@@ -1,0 +1,72 @@
+:host {
+  display: flex;
+  justify-content: center;
+  height: 100%;
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  width: 60%;
+  align-items: center;
+
+
+  form {
+    display: flex;
+    flex-direction: column;
+
+    div {
+      display: grid;
+      grid-template-columns: 2fr 2fr 2fr 1fr 1fr;
+      grid-template-areas:
+        "cep y y y y"
+        "log log num comp comp"
+        "bai bai cid cid uf"
+        "obs obs s s s";
+
+      gap: 16px;
+
+    }
+
+    button {
+      width: 55%;
+
+    }
+  }
+}
+
+.cep {
+  grid-area: cep;
+}
+
+.logradouro {
+  grid-area: log;
+}
+
+.numero {
+  grid-area: num;
+}
+
+.complemento {
+  grid-area: comp;
+}
+
+.bairro {
+  grid-area: bai;
+}
+
+.cidade {
+  grid-area: cid;
+}
+
+.estado {
+  grid-area: uf;
+}
+
+.observacoes {
+  grid-area: obs;
+}
+
+
+

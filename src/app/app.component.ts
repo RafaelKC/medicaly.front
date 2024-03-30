@@ -8,6 +8,7 @@ import {MatButtonModule, MatIconButton} from "@angular/material/button";
 import {MatSidenavModule} from "@angular/material/sidenav";
 import {ContatoModule} from "./nao-autenticado/contato/contato.module";
 import {DomSanitizer} from "@angular/platform-browser";
+import {MAT_DATE_LOCALE, provideNativeDateAdapter} from "@angular/material/core";
 
 
 @Component({
@@ -24,6 +25,10 @@ import {DomSanitizer} from "@angular/platform-browser";
     MatButtonModule,
     RouterModule,
     ContatoModule
+  ],
+  providers: [
+    provideNativeDateAdapter(),
+    { provide: MAT_DATE_LOCALE, useValue: 'pt-BR' }
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'

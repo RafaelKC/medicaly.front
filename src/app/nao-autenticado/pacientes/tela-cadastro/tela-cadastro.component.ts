@@ -21,6 +21,7 @@ export class TelaCadastroComponent {
   public serEndereco(endereco: EnderecoInput): void {
     this.endereco = endereco;
     console.log(endereco)
+    console.log(this.paciente)
   }
 
 }

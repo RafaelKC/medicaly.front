@@ -1,19 +1,10 @@
 import {Component, EventEmitter, OnDestroy, OnInit, Output} from '@angular/core';
-import {
-  AbstractControl,
-  FormBuilder,
-  FormControl,
-  FormGroup,
-  ValidationErrors,
-  ValidatorFn,
-  Validators
-} from '@angular/forms';
+import {AbstractControl, FormBuilder, FormControl, FormGroup, ValidatorFn, Validators} from '@angular/forms';
 import {debounceTime, first} from 'rxjs';
-import {CepServiceService, EnderecoResult} from "../../../../../tokens/services/cep-service.service";
-import {EnderecoInput} from "../../../../../tokens/models/endereco-input";
-import {CEP_MASK} from "../../../../../tokens/masks/cep.mask";
-import {CPF_MASK} from "../../../../../tokens/masks/cpf.mask";
-import {SubscriptionsManager} from "../../../../../tokens/utils/subscriptions-manager";
+import {CepServiceService, EnderecoResult} from "../../../tokens/services/cep-service.service";
+import {EnderecoInput} from "../../../tokens/models/endereco-input";
+import {CEP_MASK} from "../../../tokens/masks/cep.mask";
+import {SubscriptionsManager} from "../../../tokens/utils/subscriptions-manager";
 
 class EnderecoForm {
   public cep: FormControl<string | null>;
@@ -28,17 +19,17 @@ class EnderecoForm {
 }
 
 @Component({
-  selector: 'app-endereco',
-  templateUrl: './endereco.component.html',
-  styleUrl: './endereco.component.scss'
+  selector: 'app-endereco-form' ,
+  templateUrl: './endereco-form.component.html',
+  styleUrl: './endereco-form.component.scss'
 })
-export class EnderecoComponent implements OnInit, OnDestroy {
+export class EnderecoFormComponent implements OnInit, OnDestroy {
   @Output() setEndereco = new EventEmitter<EnderecoInput>();
 
   public cepMask = CEP_MASK;
-
   public form: FormGroup<EnderecoForm>;
   public carregado = false;
+  public fieldIsRequired = new Map<string, boolean>();
 
   private subs = new SubscriptionsManager();
 
@@ -79,9 +70,9 @@ export class EnderecoComponent implements OnInit, OnDestroy {
       cep: new FormControl('', { validators: [Validators.required, Validators.minLength(8), Validators.maxLength(8)] }),
       bairro: new FormControl('', { validators: [Validators.required] }),
       cidade: new FormControl({ value: '', disabled: true }, { validators: [Validators.required] }),
-      complemento: new FormControl('', { validators: this.oneRequiredValidator('numero', this.form) }),
+      complemento: new FormControl('', { validators: this.oneRequiredValidator('numero', 'complemento') }),
       numero: new FormControl(null, { validators: [
-        Validators.min(1), this.oneRequiredValidator('complemento', this.form)
+        Validators.min(1), this.oneRequiredValidator('complemento', 'numero')
         ] }),
       observacao: new FormControl(''),
       estado: new FormControl({ value: '', disabled: true }, { validators: [Validators.required, Validators.minLength(2), Validators.maxLength(2)] }),
@@ -89,6 +80,9 @@ export class EnderecoComponent implements OnInit, OnDestroy {
       codigoIbgeCidade: new FormControl('', { validators: [Validators.required] })
     });
     this.carregado = true;
+
+    this.setUpdateSecondOnUpdate('numero', 'complemento');
+    this.setUpdateSecondOnUpdate('complemento', 'numero');
 
     this.setSubs();
   }
@@ -123,16 +117,17 @@ export class EnderecoComponent implements OnInit, OnDestroy {
     })
   }
 
-  public oneRequiredValidator(secondControlName: string, form: FormGroup): ValidatorFn {
+  public oneRequiredValidator(secondControlName: string, controlName: string): ValidatorFn {
     return (control: AbstractControl) => {
       if (this.form) {
         const secondControlValue = this.form?.get(secondControlName)?.value;
-        console.log()
         const secondControlHasValue = Boolean(secondControlValue);
 
         if (secondControlHasValue) {
+          this.fieldIsRequired.set(controlName, false);
           return null;
         } else {
+          this.fieldIsRequired.set(controlName, true);
           return Validators.required(control);
         }
       }
@@ -142,7 +137,11 @@ export class EnderecoComponent implements OnInit, OnDestroy {
 
   private setUpdateSecondOnUpdate(first: string, second: string): void {
     const sub = this.form.get(first)
-      ?.valueChanges.subscribe(() => this.form.get(second)?.updateValueAndValidity());
+      ?.valueChanges.subscribe(() => {
+        this.form.get(second)?.updateValueAndValidity({ emitEvent: false });
+      });
     this.subs.add(sub);
   }
+
+  protected readonly Boolean = Boolean;
 }
