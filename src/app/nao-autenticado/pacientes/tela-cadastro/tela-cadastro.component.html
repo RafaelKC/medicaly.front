@@ -1,0 +1,3 @@
+<app-endereco *ngIf="!etapaUsuario"></app-endereco>
+
+<app-user-info *ngIf="etapaUsuario" (setPaciente)="setPaciente($event)"></app-user-info>
