@@ -1,10 +1,17 @@
 import {Routes} from '@angular/router';
-import {TelaCadastroComponent} from './nao-autenticado/pacientes/tela-cadastro/tela-cadastro.component';
-import {LoginComponent} from "./nao-autenticado/login/login.component";
-import { ContatoComponent } from './contato/contato.component';
 
 export const routes: Routes = [
-    {path: "cadastro-paciente", component: TelaCadastroComponent},
-    {path:"login", component:LoginComponent},
-    {path:"contato", component:ContatoComponent}
+  {
+    path: '',
+    redirectTo: 'home',
+    pathMatch: 'full'
+  },
+  {path: "home", loadChildren: () => import('././nao-autenticado/inicio/inicio.module').then(m => m.InicioModule)},
+  {path: "login", loadChildren: () => import('././nao-autenticado/login/login.module').then(m => m.LoginModule)},
+  {path: "contato", loadChildren: () => import('././nao-autenticado/contato/contato.module').then(m => m.ContatoModule)},
+  {path: "cadastro-paciente", loadChildren: () => import('././nao-autenticado/pacientes/tela-cadastro/tela-cadastro.module').then(m => m.TelaCadastroModule)},
+  {
+    path: '**',
+    redirectTo: 'home'
+  },
 ];

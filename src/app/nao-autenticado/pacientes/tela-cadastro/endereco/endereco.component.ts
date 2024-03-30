@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
-import {CepServiceService, EnderecoResult} from '../../../../cep-service.service';
 import {FormBuilder, FormGroup} from '@angular/forms';
 import {debounceTime} from 'rxjs';
+import {CepServiceService, EnderecoResult} from "../../../../../tokens/services/cep-service.service";
 
 @Component({
   selector: 'app-endereco',
@@ -53,7 +53,7 @@ export class EnderecoComponent implements OnInit{
   }
 
   public consultaCep(valor: string) {
-      this.cepService.buscar(valor).subscribe((dados) => this.populaForm(dados));
+      this.cepService.buscarEndereco(valor).subscribe((dados) => this.populaForm(dados));
   }
 
 

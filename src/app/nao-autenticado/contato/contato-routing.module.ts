@@ -10,24 +10,14 @@ import { MatRadioModule } from '@angular/material/radio';
 import { IMaskModule } from 'angular-imask';
 import { RadioButtonModule } from 'primeng/radiobutton';
 import { MatIconModule } from '@angular/material/icon';
+import {RouterModule, Routes} from "@angular/router";
 
-
+const routes: Routes = [
+  { path: '', component: ContatoComponent }
+];
 
 @NgModule({
-  declarations: [ContatoComponent],
-  imports: [
-    CommonModule,
-    ReactiveFormsModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatButton,
-    MatRadioModule,
-    HttpClientModule,
-    IMaskModule,
-    RadioButtonModule,
-    MatButtonModule, 
-    MatIconModule,
-    MatIconButton
-  ],
+  imports: [RouterModule.forChild(routes)],
+  exports: [RouterModule]
 })
-export class ContatoModule { }
+export class ContatoRoutingModule { }

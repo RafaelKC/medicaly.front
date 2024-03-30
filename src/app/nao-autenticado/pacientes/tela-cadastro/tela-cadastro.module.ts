@@ -11,15 +11,17 @@ import {MatRadioModule} from '@angular/material/radio';
 import {UserInfoComponent} from './user-info/user-info.component';
 import {EnderecoComponent} from './endereco/endereco.component';
 import {HttpClient, HttpClientModule} from '@angular/common/http';
-import {CepServiceService} from '../../../cep-service.service';
 import {IMaskModule} from 'angular-imask';
 import {RadioButtonModule} from "primeng/radiobutton";
+import {RouterModule, Routes} from "@angular/router";
 
+const routes: Routes = [
+  { path: '', component: TelaCadastroComponent }
+];
 
 @NgModule({
   declarations: [TelaCadastroComponent, UserInfoComponent, EnderecoComponent],
-  exports: [TelaCadastroComponent],
-
+  exports: [RouterModule],
   imports: [
     CommonModule,
     ReactiveFormsModule,
@@ -30,11 +32,11 @@ import {RadioButtonModule} from "primeng/radiobutton";
     MatRadioModule,
     HttpClientModule,
     IMaskModule,
-    RadioButtonModule
+    RadioButtonModule,
+    RouterModule.forChild(routes)
   ],
   providers: [
     provideNativeDateAdapter(),
-    CepServiceService,
     HttpClient,
     { provide: MAT_DATE_LOCALE, useValue: 'pt-BR' }
   ]

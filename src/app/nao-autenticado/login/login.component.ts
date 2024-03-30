@@ -6,12 +6,6 @@ import {RouterLink} from '@angular/router';
 
 @Component({
   selector: 'app-login',
-  standalone: true,
-  imports: [
-    ReactiveFormsModule,
-    MatFormFieldModule,
-    MatInputModule,
-    RouterLink],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss'
 })

@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import {Observable} from "rxjs";
 
 export class EnderecoResult {
   public cep: string;
@@ -17,9 +18,10 @@ export class EnderecoResult {
 export class CepServiceService {
 
   constructor(private httpClient: HttpClient) { }
-    buscar(cep: string){
-      return this
+
+  public buscarEndereco(cep: string): Observable<EnderecoResult> {
+    return this
       .httpClient.get<EnderecoResult>(`https://viacep.com.br/ws/${cep}/json/`)
-    
+
   }
 }
