@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {Router, RouterModule, RouterOutlet} from '@angular/router';
+import {Params, Router, RouterModule, RouterOutlet} from '@angular/router';
 import {TelaCadastroModule} from './nao-autenticado/pacientes/tela-cadastro/tela-cadastro.module';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatIconModule, MatIconRegistry} from '@angular/material/icon';
@@ -38,6 +38,10 @@ import {MAT_DATE_LOCALE, provideNativeDateAdapter} from "@angular/material/core"
 export class AppComponent {
   public title = 'medicaly.front';
 
+  public loginPacienteParams = {
+    tipoUsuario: 0
+  } as Params;
+
   constructor(
     private router: Router,
     private iconRegistry: MatIconRegistry,
@@ -48,7 +52,7 @@ export class AppComponent {
       this.sanitizer.bypassSecurityTrustResourceUrl('assets/medicaly-logo.svg'))
   }
 
-  public navegar(link: string): void{
-    this.router.navigate([link])
+  public navegar(link: string, queryParams: Params | undefined = undefined): void{
+    this.router.navigate([link], { queryParams })
   }
 }

@@ -1,7 +1,7 @@
 import {Subscription} from "rxjs";
 import { v4 as uuidv4 } from 'uuid';
 
-export class SubscriptionsManager {
+export class SubscriptionsManagerUtil {
   private subs = new Map<string, Subscription>();
 
   public add(sub?: Subscription): void;

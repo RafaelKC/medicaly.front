@@ -4,7 +4,7 @@ import {debounceTime, first} from 'rxjs';
 import {CepServiceService, EnderecoResult} from "../../../tokens/services/cep-service.service";
 import {EnderecoInput} from "../../../tokens/models/endereco-input";
 import {CEP_MASK} from "../../../tokens/masks/cep.mask";
-import {SubscriptionsManager} from "../../../tokens/utils/subscriptions-manager";
+import {SubscriptionsManagerUtil} from "../../../tokens/utils/subscriptions-manager.util";
 
 class EnderecoForm {
   public cep: FormControl<string | null>;
@@ -31,7 +31,7 @@ export class EnderecoFormComponent implements OnInit, OnDestroy {
   public carregado = false;
   public fieldIsRequired = new Map<string, boolean>();
 
-  private subs = new SubscriptionsManager();
+  private subs = new SubscriptionsManagerUtil();
 
   constructor(
     private cepService: CepServiceService,

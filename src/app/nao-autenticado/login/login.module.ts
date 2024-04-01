@@ -5,6 +5,9 @@ import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatInputModule} from "@angular/material/input";
 import {LoginComponent} from "./login.component";
 import {MatButton} from "@angular/material/button";
+import {LoginService} from "./login.service";
+import {HttpClientModule} from "@angular/common/http";
+import {NgIf} from "@angular/common";
 
 const routes: Routes = [
   { path: '', component: LoginComponent }
@@ -12,14 +15,16 @@ const routes: Routes = [
 
 @NgModule({
   declarations: [LoginComponent],
-  imports: [
-    ReactiveFormsModule,
-    MatFormFieldModule,
-    MatInputModule,
-    RouterLink,
-    RouterModule.forChild(routes),
-    MatButton
-  ],
-  exports: [RouterModule]
+    imports: [
+        ReactiveFormsModule,
+        MatFormFieldModule,
+        MatInputModule,
+        RouterLink,
+        RouterModule.forChild(routes),
+        MatButton,
+        NgIf
+    ],
+  exports: [RouterModule],
+  providers: [LoginService, HttpClientModule]
 })
 export class LoginModule { }
