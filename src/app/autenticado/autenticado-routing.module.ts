@@ -8,7 +8,6 @@ const routes: Routes = [
     path: '',
     canActivate: [authGuard],
     children: [
-      {path: "abc", loadComponent: () => import('./teste/teste.component').then(m => m.TesteComponent)},
       {
         path: '**',
         redirectTo: 'abc'
