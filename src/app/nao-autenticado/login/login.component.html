@@ -1,7 +1,7 @@
 <div class="container" *ngIf="carregado">
     <div class="center-content">
         <h1>Login</h1>
-        <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="form-group">
+        <form [formGroup]="loginForm" class="form-group">
             <mat-form-field appearance="fill">
                 <mat-label>Email</mat-label>
                 <input formControlName="email" matInput placeholder="Placeholder">
@@ -11,7 +11,7 @@
                 <mat-label>Senha</mat-label>
                 <input type="password" formControlName="password" matInput placeholder="Placeholder">
             </mat-form-field>
-            <button [disabled]="!podeSalvar" mat-raised-button color="primary" type="submit">Fazer login</button>
+            <button [disabled]="!podeSalvar" (click)="onSubmit()" mat-raised-button color="primary" type="submit">Fazer login</button>
         </form>
         <p>Ainda não tem cadastro conosco? <a routerLink="/cadastro-paciente">Clique aqui.</a></p>
     </div>

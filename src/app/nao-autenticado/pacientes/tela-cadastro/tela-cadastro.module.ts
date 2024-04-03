@@ -13,6 +13,7 @@ import {IMaskModule} from 'angular-imask';
 import {RadioButtonModule} from "primeng/radiobutton";
 import {RouterModule, Routes} from "@angular/router";
 import {EnderecoFormModule} from "../../../components/endereco-form/endereco-form.module";
+import {HttpMedicalyModule} from "../../../http-medicaly.module";
 
 const routes: Routes = [
   { path: '', component: TelaCadastroComponent }
@@ -29,7 +30,7 @@ const routes: Routes = [
     MatDatepickerModule,
     MatButton,
     MatRadioModule,
-    HttpClientModule,
+    HttpMedicalyModule,
     IMaskModule,
     RadioButtonModule,
     EnderecoFormModule,
