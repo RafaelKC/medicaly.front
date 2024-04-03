@@ -4,9 +4,17 @@ import {ReactiveFormsModule} from "@angular/forms";
 import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatInputModule} from "@angular/material/input";
 import {LoginComponent} from "./login.component";
+import {MatButton} from "@angular/material/button";
+import {LoginService} from "./login.service";
+import {NgIf} from "@angular/common";
+import {httpInterceptorsProvider} from "../../interceptors";
+import {HttpMedicalyModule} from "../../http-medicaly.module";
 
 const routes: Routes = [
-  { path: '', component: LoginComponent }
+  {
+    path: '',
+    component: LoginComponent,
+  }
 ];
 
 @NgModule({
@@ -16,8 +24,13 @@ const routes: Routes = [
     MatFormFieldModule,
     MatInputModule,
     RouterLink,
-    RouterModule.forChild(routes)
+    RouterModule.forChild(routes),
+    MatButton,
+    NgIf,
+    HttpMedicalyModule
   ],
-  exports: [RouterModule]
+  exports: [RouterModule],
+  providers: [LoginService, httpInterceptorsProvider]
 })
-export class LoginModule { }
+export class LoginModule {
+}

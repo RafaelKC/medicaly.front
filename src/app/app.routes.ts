@@ -6,10 +6,9 @@ export const routes: Routes = [
     redirectTo: 'home',
     pathMatch: 'full'
   },
-  {path: "home", loadChildren: () => import('././nao-autenticado/inicio/inicio.module').then(m => m.InicioModule)},
-  {path: "login", loadChildren: () => import('././nao-autenticado/login/login.module').then(m => m.LoginModule)},
-  {path: "contato", loadChildren: () => import('././nao-autenticado/contato/contato.module').then(m => m.ContatoModule)},
-  {path: "cadastro-paciente", loadChildren: () => import('././nao-autenticado/pacientes/tela-cadastro/tela-cadastro.module').then(m => m.TelaCadastroModule)},
+  { path: "notAuth", loadChildren: () => import('./nao-autenticado/nao-autenticado-routing.module').then(m => m.NaoAutenticadoRoutingModule)},
+  { path: "auth", loadChildren: () => import('./autenticado/autenticado-routing.module').then(m => m.AutenticadoRoutingModule)},
+  { path: "", loadChildren: () => import('./generico-autenticacao/generico-autenticacao-routing.module').then(m => m.GenericoAutenticacaoRoutingModule)},
   {
     path: '**',
     redirectTo: 'home'

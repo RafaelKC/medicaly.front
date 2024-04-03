@@ -11,6 +11,7 @@ import { IMaskModule } from 'angular-imask';
 import { RadioButtonModule } from 'primeng/radiobutton';
 import { MatIconModule } from '@angular/material/icon';
 import {ContatoRoutingModule} from "./contato-routing.module";
+import {HttpMedicalyModule} from "../../http-medicaly.module";
 
 
 
@@ -23,7 +24,7 @@ import {ContatoRoutingModule} from "./contato-routing.module";
     MatInputModule,
     MatButton,
     MatRadioModule,
-    HttpClientModule,
+    HttpMedicalyModule,
     IMaskModule,
     RadioButtonModule,
     MatButtonModule,

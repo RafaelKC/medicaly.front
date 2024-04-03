@@ -1,10 +1,19 @@
 <mat-drawer-container class="container" autosize>
   <mat-toolbar color="primary">
     <mat-toolbar-row>
-      <button class="medicaly-icon" (click)="navegar('/home')">
-        <img src="assets/medica.ly-icon.jpeg" alt="Medica.ly" >
-        <h3>Medica.ly</h3>
-      </button>
+      <div class="logo-container mat-typography">
+        <button class="medicaly-icon" (click)="navegar(['/'])">
+          <img src="assets/medica.ly-icon.jpeg" alt="Medica.ly" >
+          <h3>Medica.ly</h3>
+        </button>
+
+        @if (authentication.autenticado && authentication.user) {
+          <h4 class="mat-h3 mat-subheading-2">{{authentication.user.nome}}</h4>
+          <h4 class="mat-h3 mat-subheading-2">{{authentication.user.sobrenome}}</h4>
+          <h4>|</h4>
+          <h5>{{getTipoUsurio()}}</h5>
+        }
+      </div>
 
       <span class="spacer"></span>
       <button mat-icon-button class="example-icon" (click)="drawer.toggle()">
@@ -15,19 +24,19 @@
   <router-outlet/>
 
   <mat-drawer #drawer class="sidenav" mode="side" position="end">
-    <button mat-fab extended color="primary" (click)="navegar('/home')">
+    <button mat-fab extended color="primary" (click)="navegar(['/'])">
       <mat-icon>home</mat-icon>
       Tela Inicial
     </button>
-    <button mat-fab extended color="primary" (click)="navegar('/login')">
+    <button  mat-fab extended color="primary" *ngIf="!authentication.autenticado" (click)="navegar(['/notAuth/login'], loginPacienteParams)">
       <mat-icon>login</mat-icon>
       Acessar
     </button>
-    <button mat-fab extended color="primary" (click)="navegar('/cadastro-paciente')">
+    <button  mat-fab extended color="primary" *ngIf="!authentication.autenticado" (click)="navegar(['/notAuth/cadastro-paciente'])">
       <mat-icon>sentiment_satisfied_alt</mat-icon>
       Cadastrar-se
     </button>
-    <button mat-fab extended color="primary" (click)="navegar('/contato')">
+    <button mat-fab extended color="primary" (click)="navegar(['/', 'contato'])">
       <mat-icon>contact_mail</mat-icon>
       Contato
     </button>
@@ -35,6 +44,11 @@
       <mat-icon>medicaly-logo</mat-icon>
       Sobre Nós
     </button>
+    <button mat-fab extended color="primary" (click)="authentication.sair()" *ngIf="authentication.autenticado">
+      <fa-icon class="icon" [icon]="sairIcon" ></fa-icon>
+      Sair
+    </button>
+
   </mat-drawer>
 
 </mat-drawer-container>
