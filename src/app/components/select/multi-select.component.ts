@@ -17,6 +17,7 @@ import {debounceTime} from "rxjs";
 })
 export class MultiSelectComponent<T extends any> extends BaseInput<T[]> implements OnInit, OnDestroy {
   @Input() public options: SelectOption<T>[];
+  @Input() public placeholder: string;
 
   public internControl = new FormControl<Array<SelectOption<T>>>([]);
 

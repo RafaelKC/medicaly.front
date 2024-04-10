@@ -1,9 +1,15 @@
 import {Component, OnInit} from '@angular/core';
-import {CPF_MASK, EnderecoInput, GenericValidators, Genero, TELEFONE_MASK} from "../../../tokens";
+import {
+  CPF_MASK,
+  DiasSemana,
+  EnderecoInput,
+  GenericValidators,
+  Genero,
+  SelectOption,
+  TELEFONE_MASK,
+  TipoProfissional
+} from "../../../tokens";
 import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
-import {TipoProfissional} from "../../../tokens/enums/tipo-profissional";
-import {DiasSemana} from "../../../tokens/enums/dias-semana";
-import {Expecialidade} from "../../../tokens/enums/expecialidade";
 
 class ProfissionalForm {
   public nome: FormControl<string|null>;
@@ -14,12 +20,13 @@ class ProfissionalForm {
   public dataNascimento: FormControl<Date|null>;
   public genero: FormControl<Genero|null>;
   public credencialDeSaude: FormControl<string|null>;
-  public atuacoes: FormControl<Array<Expecialidade>|null>;
-  public especialidades: FormControl<Array<Expecialidade>|null>;
+  public atuacoes: FormControl<Array<string>|null>;
+  public especialidades: FormControl<Array<string>|null>;
   public tipo: FormControl<TipoProfissional|null>;
   public fimExpedienteExpediente: FormControl<number|null>;
   public inicioExpediente: FormControl<number|null>;
   public diasAtendidos: FormControl<DiasSemana[]|null>;
+  public senha: FormControl<string|null>;
 }
 
 @Component({
@@ -40,6 +47,21 @@ export class CadastroProfissionalComponent implements OnInit {
   public generos = Genero;
   public tipoProfissional = TipoProfissional;
 
+  public especialidadeOptions = [
+    { key: 'Oftalmologia', value: 'Oftalmologia' },
+    { key: 'Pediatria', value: 'Pediatria' },
+  ] as SelectOption<string>[]
+
+  public diasSemanaOptions = [
+    { key: 'Domingo', value: DiasSemana.Domingo },
+    { key: 'Segunda-feira', value: DiasSemana.Segunda },
+    { key: 'Terça-feira', value: DiasSemana.Terca },
+    { key: 'Quarta-feira', value: DiasSemana.Quarta },
+    { key: 'Quinta-feira', value: DiasSemana.Quinta },
+    { key: 'Sexta', value: DiasSemana.Sexta },
+    { key: 'Sábado', value: DiasSemana.Sabado },
+  ] as SelectOption<DiasSemana>[]
+
   constructor(private formBuilder: FormBuilder) {
   }
 
@@ -55,7 +77,7 @@ export class CadastroProfissionalComponent implements OnInit {
   public serEndereco(endereco: EnderecoInput): void {
   }
 
-  public salvar(): void {
+  public prosseguir(): void {
     if (!this.podeProsseguir) return;
     this.etapaProfissionalConcluido = true;
   }
@@ -78,7 +100,8 @@ export class CadastroProfissionalComponent implements OnInit {
       fimExpedienteExpediente: new FormControl(0, { validators: [Validators.required] }),
       inicioExpediente: new FormControl(0, { validators: [Validators.required] }),
       credencialDeSaude: new FormControl('', { validators: [Validators.required] }),
-      diasAtendidos: new FormControl([], {validators: [Validators.required]})
+      diasAtendidos: new FormControl([], {validators: [Validators.required]}),
+      senha: new FormControl('', { validators: [Validators.required] }),
     });
     this.carregado = true;
   }

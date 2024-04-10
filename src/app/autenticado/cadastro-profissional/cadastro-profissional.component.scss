@@ -13,15 +13,70 @@
 
   form {
     display: grid;
+    width: 100%;
     gap: 16px;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+    align-items: center;
+    grid-template-areas:
+      "nome nome sobrenome sobrenome cpf cpf"
+      "dataNascimento dataNascimento dataNascimento genero genero genero"
+      "email email email telefone telefone telefone"
+      "tipoProfissional tipoProfissional tipoProfissional credencial credencial credencial"
+      "especialidades especialidades especialidades atuacoes atuacoes atuacoes"
+      "dias dias dias dias inicioExpediente fimExpediente"
+      "senha senha senha x x x"
+      "prosseguir prosseguir y y y y";
+    * {
+      width: 100%;
+    }
   }
 
-  .nome {}
-  .sobrenome {}
-  .cpf {}
-  .data-nascimento {}
-  .email {}
-  .telefone {}
-  .nome {}
-  .nome {}
+  .nome {
+    grid-area: nome;
+  }
+  .sobrenome {
+    grid-area: sobrenome;
+  }
+  .cpf {
+    grid-area: cpf;
+  }
+  .data-nascimento {
+    grid-area: dataNascimento;
+  }
+  .genero {
+    grid-area: genero;
+  }
+  .email {
+    grid-area: email;
+  }
+  .telefone {
+    grid-area: telefone;
+  }
+  .tipo-profissional {
+    grid-area: tipoProfissional;
+  }
+  .credencial {
+    grid-area: credencial;
+  }
+  .especialidades {
+    grid-area: especialidades;
+  }
+  .atuacoes {
+    grid-area: atuacoes;
+  }
+  .dias {
+    grid-area: dias;
+  }
+  .inicioExpediente {
+    grid-area: inicioExpediente;
+  }
+  .fimExpediente {
+    grid-area: fimExpediente;
+  }
+  .senha {
+    grid-area: senha;
+  }
+  .prosseguir {
+    grid-area: prosseguir;
+  }
 }

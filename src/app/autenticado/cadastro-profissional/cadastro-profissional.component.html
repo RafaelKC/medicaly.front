@@ -18,11 +18,17 @@
     </mat-form-field>
 
     <mat-form-field class="data-nascimento">
-      <mat-label>Selecione uma Data</mat-label>
+      <mat-label>Data de Nascimento</mat-label>
       <input matInput formControlName="dataNascimento" [max]="maxDate" [min]="minDate" [matDatepicker]="picker">
       <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
       <mat-datepicker #picker></mat-datepicker>
     </mat-form-field>
+
+    <mat-radio-group aria-label="Select an option" class="genero" formControlName="genero">
+      <mat-radio-button [value]="generos.Masculino">Homem</mat-radio-button>
+      <mat-radio-button [value]="generos.Feminino">Mulher</mat-radio-button>
+      <mat-radio-button [value]="generos.Outro">Outro</mat-radio-button>
+    </mat-radio-group>
 
     <mat-form-field class="email">
       <mat-label>Email</mat-label>
@@ -35,24 +41,46 @@
              placeholder="Digite seu telefone">
     </mat-form-field>
 
-    <mat-form-field appearance="fill" class="credencial">
-      <mat-label>Credencial de Saúde</mat-label>
-      <input formControlName="credencialDeSaude" matInput placeholder="Credencial">
-    </mat-form-field>
-
-    <span class="atuacao"></span>
-    <span class="especialidades"></span>
-
-    <mat-radio-group aria-label="Select an option" class="genero" formControlName="genero">
-      <mat-radio-button [value]="generos.Masculino">Homem</mat-radio-button>
-      <mat-radio-button [value]="generos.Feminino">Mulher</mat-radio-button>
-      <mat-radio-button [value]="generos.Outro">Outro</mat-radio-button>
-    </mat-radio-group>
-
     <mat-radio-group aria-label="Select an option" class="tipo-profissional" formControlName="genero">
       <mat-radio-button [value]="tipoProfissional.Medico">Médico</mat-radio-button>
       <mat-radio-button [value]="tipoProfissional.Enfermeiro">Enfermeiro</mat-radio-button>
     </mat-radio-group>
 
+    <mat-form-field appearance="fill" class="credencial">
+      <mat-label>Credencial de Saúde</mat-label>
+      <input formControlName="credencialDeSaude" matInput placeholder="Credencial">
+    </mat-form-field>
+
+    <app-multi-select
+      [options]="especialidadeOptions"
+      formControlName="especialidades"
+      placeholder="Especialidades"
+      class="especialidades"
+    ></app-multi-select>
+
+    <app-multi-select
+      [options]="especialidadeOptions"
+      formControlName="atuacoes"
+      placeholder="Atuações"
+      class="atuacoes"
+    ></app-multi-select>
+
+    <app-multi-select
+      [options]="diasSemanaOptions"
+      formControlName="diasAtendidos"
+      placeholder="Dias atendidos"
+      class="dias"
+    ></app-multi-select>
+
+    <span class="inicioExpediente"></span>
+    <span class="fimExpediente"></span>
+
+    <mat-form-field appearance="fill" class="senha">
+      <mat-label>Senha</mat-label>
+      <input formControlName="senha" matInput type="password" placeholder="Digite a senha">
+    </mat-form-field>
+
+    <button mat-raised-button class="prosseguir" color="primary" [disabled]="!podeProsseguir" (click)="prosseguir()">Proseeguir</button>
   </form>
+
 </div>

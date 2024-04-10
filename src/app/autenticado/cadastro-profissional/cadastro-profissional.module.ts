@@ -8,6 +8,8 @@ import {MatInput} from "@angular/material/input";
 import {MatRadioButton, MatRadioGroup} from "@angular/material/radio";
 import {MatDatepicker, MatDatepickerInput, MatDatepickerToggle} from "@angular/material/datepicker";
 import {IMaskDirective} from "angular-imask";
+import {SelectModule} from "../../components/select/select.module";
+import {MatButton} from "@angular/material/button";
 
 const routes: Routes = [
   { path: '', component: CadastroProfissionalComponent }
@@ -30,7 +32,9 @@ const routes: Routes = [
     MatDatepickerInput,
     MatDatepickerToggle,
     MatSuffix,
-    IMaskDirective
+    IMaskDirective,
+    SelectModule,
+    MatButton
   ]
 })
 export class CadastroProfissionalModule { }
