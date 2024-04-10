@@ -1,2 +1,5 @@
 export * from './genero'
 export * from './user-tipo'
+export * from './tipo-profissional'
+export * from './expecialidade'
+export * from './dias-semana'

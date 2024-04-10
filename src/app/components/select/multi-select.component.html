@@ -1,0 +1,5 @@
+<mat-form-field>
+  <mat-select placeholder="Toppings" [(ngModel)]="value" multiple>
+    <mat-option *ngFor="let option of options" [value]="option.value">{{option.key}}</mat-option>
+  </mat-select>
+</mat-form-field>

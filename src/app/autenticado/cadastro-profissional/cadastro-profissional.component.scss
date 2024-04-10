@@ -1,0 +1,27 @@
+:host{
+  display: flex;
+  justify-content: center;
+  height: 100%;
+}
+
+.container{
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  width: 60%;
+  align-items: center;
+
+  form {
+    display: grid;
+    gap: 16px;
+  }
+
+  .nome {}
+  .sobrenome {}
+  .cpf {}
+  .data-nascimento {}
+  .email {}
+  .telefone {}
+  .nome {}
+  .nome {}
+}
