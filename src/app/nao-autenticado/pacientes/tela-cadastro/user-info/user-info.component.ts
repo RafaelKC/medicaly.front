@@ -14,6 +14,7 @@ class PacienteForm {
   public telefone: FormControl<string | null>;
   public dataNascimento: FormControl<Date | null>;
   public genero: FormControl<Genero | null>;
+  public senha: FormControl<string | null>;
 }
 
 @Component({
@@ -66,6 +67,7 @@ export class UserInfoComponent implements OnInit {
             Validators.required, GenericValidators.isValidCpf() ] }),
         dataNascimento: new FormControl(null, { validators: [Validators.required], nonNullable: true }),
         genero: new FormControl(Genero.Masculino, { validators: [Validators.required] }),
+        senha: new FormControl('', {validators: [Validators.required]})
       });
       this.carregado = true;
   }

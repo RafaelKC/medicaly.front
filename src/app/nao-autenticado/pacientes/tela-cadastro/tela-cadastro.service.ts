@@ -10,6 +10,6 @@ export class TelaCadastroService {
   constructor( private httpClient:HttpClient) { }
 
   public createPaciente(paciente: PacienteInput):Observable<PacienteInput[]>{
-    return this.httpClient.post<PacienteInput[]>(environment.apiUrl, paciente)
+    return this.httpClient.post<PacienteInput[]>(`${environment.apiUrl}/auth/paciente/register`, paciente)
   }
 }
