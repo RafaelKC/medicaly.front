@@ -16,5 +16,5 @@ export class ProfissionalInput {
   public tipo?: TipoProfissional | null;
   public inicioExpediente?: number | null;
   public fimExpediente?: number | null;
-  public dias?: DiasSemana[] | null;
+  public diasAtendidos?: DiasSemana[] | null;
 }
