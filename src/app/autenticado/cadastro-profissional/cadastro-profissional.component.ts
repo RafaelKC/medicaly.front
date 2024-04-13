@@ -5,14 +5,29 @@ import {
   EnderecoInput,
   GenericValidators,
   Genero,
-  SelectOption,
+  SelectOption, SubscriptionsManagerUtil,
   TELEFONE_MASK,
   TipoProfissional
 } from "../../../tokens";
-import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
+import {
+  AbstractControl,
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  ValidationErrors,
+  ValidatorFn,
+  Validators
+} from "@angular/forms";
+import {v4 as uuidv4} from "uuid";
+import {ProfissionalInput} from "../../../tokens/models/profissional-input";
+import {CreateProfissionalInput} from "../../../tokens/models/create-profissional-input";
+import {CreateProfissionalService} from "./create-profissional.service";
+import {first} from "rxjs";
+import {Router} from "@angular/router";
 
 class ProfissionalForm {
   public nome: FormControl<string|null>;
+  public id: FormControl<string|null>;
   public sobrenome: FormControl<string|null>;
   public cpf: FormControl<string|null>;
   public email: FormControl<string|null>;
@@ -23,7 +38,7 @@ class ProfissionalForm {
   public atuacoes: FormControl<Array<string>|null>;
   public especialidades: FormControl<Array<string>|null>;
   public tipo: FormControl<TipoProfissional|null>;
-  public fimExpedienteExpediente: FormControl<number|null>;
+  public fimExpediente: FormControl<number|null>;
   public inicioExpediente: FormControl<number|null>;
   public diasAtendidos: FormControl<DiasSemana[]|null>;
   public senha: FormControl<string|null>;
@@ -62,7 +77,12 @@ export class CadastroProfissionalComponent implements OnInit {
     { key: 'Sábado', value: DiasSemana.Sabado },
   ] as SelectOption<DiasSemana>[]
 
-  constructor(private formBuilder: FormBuilder) {
+  private subs = new SubscriptionsManagerUtil();
+
+  constructor(
+    private formBuilder: FormBuilder,
+    private service: CreateProfissionalService,
+    private router: Router) {
   }
 
   public ngOnInit(): void {
@@ -75,6 +95,17 @@ export class CadastroProfissionalComponent implements OnInit {
 
 
   public serEndereco(endereco: EnderecoInput): void {
+    const profissional = this.profissionalForm.value;
+    const createInput = new CreateProfissionalInput();
+    createInput.password = this.profissionalForm.value.senha as string;
+    createInput.endereco = endereco;
+    createInput.profissional = profissional as ProfissionalInput;
+
+    this.service.create(createInput).pipe(first()).subscribe({
+      next: () => {
+        this.router.navigate(['/'])
+      }
+    });
   }
 
   public prosseguir(): void {
@@ -84,6 +115,7 @@ export class CadastroProfissionalComponent implements OnInit {
 
   private createForm(): void {
     this.profissionalForm = this.formBuilder.group<ProfissionalForm>({
+      id: new FormControl(uuidv4(), { validators: [Validators.required] }),
       nome: new FormControl('', { validators: [Validators.required] }),
       sobrenome: new FormControl('', { validators: [Validators.required] }),
       email: new FormControl('', { validators: [Validators.required, Validators.email] }),
@@ -97,12 +129,29 @@ export class CadastroProfissionalComponent implements OnInit {
       atuacoes: new FormControl([], { validators: [Validators.required] }),
       especialidades: new FormControl([], { validators: [Validators.required] }),
       tipo: new FormControl(TipoProfissional.Enfermeiro, { validators: [Validators.required] }),
-      fimExpedienteExpediente: new FormControl(0, { validators: [Validators.required] }),
+      fimExpediente: new FormControl(0, { validators: [Validators.required, this.validarFimExpediente] }),
       inicioExpediente: new FormControl(0, { validators: [Validators.required] }),
       credencialDeSaude: new FormControl('', { validators: [Validators.required] }),
       diasAtendidos: new FormControl([], {validators: [Validators.required]}),
       senha: new FormControl('', { validators: [Validators.required] }),
     });
+    const inicioSub = this.profissionalForm.controls.inicioExpediente
+      .valueChanges.subscribe({
+        next: value => {
+          this.profissionalForm.controls.fimExpediente.updateValueAndValidity();
+        }
+      });
+
+    this.subs.add(inicioSub);
+
     this.carregado = true;
+  }
+
+  public validarFimExpediente: ValidatorFn = (control: AbstractControl): ValidationErrors | null => {
+    const inicioExpediente = this.profissionalForm?.get('inicioExpediente')?.value;
+    const fimExpediente = control.value;
+    if (!inicioExpediente || !fimExpediente) {return null}
+    if (inicioExpediente >= fimExpediente) return {rangeError:true} as ValidationErrors;
+    return null;
   }
 }

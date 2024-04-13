@@ -5,7 +5,7 @@ import {
   FormBuilder,
   FormControl,
   FormGroup,
-  FormGroupDirective
+  FormGroupDirective, Validators
 } from "@angular/forms";
 import {BehaviorSubject} from "rxjs";
 
@@ -25,9 +25,15 @@ export class BaseInput<T extends any> implements ControlValueAccessor, OnInit {
 
   protected internalValue: T;
 
-  public disabled = false;
-
   constructor(private fgDirective: FormGroupDirective) {
+  }
+
+  public get required(): boolean {
+    return this.control?.hasValidator(Validators.required);
+  }
+
+  public get disabled(): boolean {
+    return this.control?.disabled;
   }
 
   public get control(): AbstractControl<T> {
@@ -45,7 +51,6 @@ export class BaseInput<T extends any> implements ControlValueAccessor, OnInit {
 
   public set value(newValue: T) {
     this.internalValue = newValue;
-    console.log(this.internalValue)
     this.onChange(newValue);
     this.onValueChange.next({ newValue, internalChange: true });
   }
@@ -66,10 +71,6 @@ export class BaseInput<T extends any> implements ControlValueAccessor, OnInit {
 
   public writeValue(value: T): void {
     this.setValue(value);
-  }
-
-  public setDisabledState(disabled: boolean): void {
-    this.disabled = disabled;
   }
 
   protected onChange: any = () => { };

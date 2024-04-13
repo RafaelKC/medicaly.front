@@ -17,7 +17,6 @@ export class AuthenticationInterceptor implements HttpInterceptor {
 
     public intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         const token = this.authSerivce.token;
-        console.log(token)
         if (!stringIsNullOrEmptyOrWhitespace(token)) {
           req = req.clone({
             headers: req.headers.set('Authorization', `Bearer ${token}`)

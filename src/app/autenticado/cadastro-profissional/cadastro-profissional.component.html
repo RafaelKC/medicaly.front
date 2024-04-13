@@ -71,9 +71,17 @@
       placeholder="Dias atendidos"
       class="dias"
     ></app-multi-select>
+    <app-timer-select
+      placeholder="Início Expediente"
+      formControlName="inicioExpediente"
+      class="inicioExpediente"
+    ></app-timer-select>
 
-    <span class="inicioExpediente"></span>
-    <span class="fimExpediente"></span>
+    <app-timer-select
+      placeholder="Fim Expediente"
+      formControlName="fimExpediente"
+      class="fimExpediente"
+    ></app-timer-select>
 
     <mat-form-field appearance="fill" class="senha">
       <mat-label>Senha</mat-label>
@@ -82,5 +90,9 @@
 
     <button mat-raised-button class="prosseguir" color="primary" [disabled]="!podeProsseguir" (click)="prosseguir()">Proseeguir</button>
   </form>
-
 </div>
+
+<app-endereco-form
+  *ngIf="etapaProfissionalConcluido"
+  (setEndereco)="serEndereco($event)"
+></app-endereco-form>

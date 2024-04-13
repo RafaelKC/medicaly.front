@@ -10,6 +10,10 @@ import {MatDatepicker, MatDatepickerInput, MatDatepickerToggle} from "@angular/m
 import {IMaskDirective} from "angular-imask";
 import {SelectModule} from "../../components/select/select.module";
 import {MatButton} from "@angular/material/button";
+import {TimeSelectModule} from "../../components/time-select/time-select.module";
+import {EnderecoFormModule} from "../../components/endereco-form/endereco-form.module";
+import {CreateProfissionalService} from "./create-profissional.service";
+import {HttpMedicalyModule} from "../../http-medicaly.module";
 
 const routes: Routes = [
   { path: '', component: CadastroProfissionalComponent }
@@ -34,7 +38,11 @@ const routes: Routes = [
     MatSuffix,
     IMaskDirective,
     SelectModule,
-    MatButton
-  ]
+    MatButton,
+    TimeSelectModule,
+    EnderecoFormModule,
+    HttpMedicalyModule
+  ],
+  providers: [CreateProfissionalService]
 })
 export class CadastroProfissionalModule { }

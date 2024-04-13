@@ -22,6 +22,5 @@ export class CepServiceService {
   public buscarEndereco(cep: string): Observable<EnderecoResult> {
     return this
       .httpClient.get<EnderecoResult>(`https://viacep.com.br/ws/${cep}/json/`)
-
   }
 }
