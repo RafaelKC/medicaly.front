@@ -96,7 +96,6 @@ export class AuthenticationService {
         first(),
         tap(value => {
           this.route.navigate(['/'], { relativeTo: this.router.parent });
-          console.log(this.router.parent)
           this.user = value;
           this.autenticado = true;
         }));

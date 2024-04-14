@@ -61,7 +61,9 @@ export class EnderecoFormComponent implements OnInit, OnDestroy {
   public salvar(): void {
     if (!this.podeSalvar) return;
 
-    const endereco = this.form.value as EnderecoInput;
+    console.log(this.form)
+
+    const endereco = this.form.getRawValue() as EnderecoInput;
     this.setEndereco.next(endereco);
   }
 
