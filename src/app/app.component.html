@@ -9,7 +9,6 @@
 
         @if (authentication.autenticado && authentication.user) {
           <h4 class="mat-h3 mat-subheading-2">{{authentication.user.nome}}</h4>
-          <h4 class="mat-h3 mat-subheading-2">{{authentication.user.sobrenome}}</h4>
           <h4>|</h4>
           <h5>{{getTipoUsurio()}}</h5>
         }
@@ -28,9 +27,9 @@
       <mat-icon>home</mat-icon>
       Tela Inicial
     </button>
-    <button  mat-fab extended color="primary" *ngIf="!authentication.autenticado" (click)="navegar(['/notAuth/login'], loginPacienteParams)">
+    <button  mat-fab extended color="primary" (click)="navegar(['/auth/cadastro-profissional'])">
       <mat-icon>login</mat-icon>
-      Acessar
+      Saude
     </button>
     <button  mat-fab extended color="primary" *ngIf="!authentication.autenticado" (click)="navegar(['/notAuth/cadastro-paciente'])">
       <mat-icon>sentiment_satisfied_alt</mat-icon>

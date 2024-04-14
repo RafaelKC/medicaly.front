@@ -9,8 +9,8 @@ const routes: Routes = [
     canActivate: [authGuard],
     children: [
       {
-        path: '**',
-        redirectTo: 'abc'
+        path: 'cadastro-profissional',
+        loadChildren: () => import('./cadastro-profissional/cadastro-profissional.module').then(m => m.CadastroProfissionalModule)
       },
     ],
   },

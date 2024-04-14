@@ -17,7 +17,7 @@ export class TelaCadastroComponent {
     private fb: FormBuilder,
     private telaCadastroService: TelaCadastroService
   ) {
-    
+
   }
 
   public setPaciente(paciente: PacienteInput): void {
@@ -38,7 +38,7 @@ export class TelaCadastroComponent {
           console.log('Paciente criado com sucesso:', this.paciente.id, this.paciente);
         },
         (error) => {
-          
+
           console.error('Erro ao criar paciente:', error);
         }
       );
