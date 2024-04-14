@@ -1,14 +1,15 @@
-import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, OnInit, Output, input} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {PacienteInput} from "../../../../tokens/models/paciente-input";
 import {Genero} from "../../../../tokens/enums/genero";
 import {CPF_MASK} from "../../../../tokens/masks/cpf.mask";
 import {GenericValidators} from "../../../../tokens/utils/generic-validators.util";
 import {TELEFONE_MASK} from "../../../../tokens/masks/telefone.mask";
-import { CreateUserInput, EnderecoInput } from '../../../../tokens';
+import { AuthenticationService, CreateUserInput, EnderecoInput, LoginInput, UserTipo } from '../../../../tokens';
 import { TelaCadastroService } from './tela-cadastro.service';
-import { first } from 'rxjs';
+import { first, of, switchMap } from 'rxjs';
 import {Router} from '@angular/router'
+import { LoginService } from '../../login/login.service';
 
 class PacienteForm {
   public nome: FormControl<string | null>;
@@ -25,7 +26,8 @@ class PacienteForm {
 @Component({
   selector: 'tela-cadastro',
   templateUrl: 'tela-cadastro.component.html',
-  styleUrl: 'tela-cadastro.component.scss'
+  styleUrl: 'tela-cadastro.component.scss',
+  providers:[LoginService]
 })
 export class TelaCadastroComponent implements OnInit {
   @Output() setPaciente = new EventEmitter<PacienteInput>();
@@ -39,11 +41,10 @@ export class TelaCadastroComponent implements OnInit {
   public carregado = false;
   public form: FormGroup<PacienteForm>;
   public generos = Genero;
-  public router: Router
   public etapaUsuario = true
+  private userTipo = UserTipo.Paciente;
 
-
-  constructor(private formBuilder: FormBuilder, private service: TelaCadastroService) {
+  constructor(private formBuilder: FormBuilder, private service: TelaCadastroService, private loginService: LoginService, private authentication: AuthenticationService, private router: Router) {
   }
 
   public ngOnInit(): void {
@@ -75,6 +76,26 @@ export class TelaCadastroComponent implements OnInit {
   public salvar(): void {
     if (!this.podeSalvar) return;
 
+    const input = this.form.value as LoginInput;
+    this.loginService.login(input, this.userTipo)
+      .pipe(
+        first(),
+        switchMap(resultado => {
+          if (resultado.success) {
+            return this.authentication.setToken(resultado.token)
+          }
+          return of(false);
+        }),
+        first(),
+        )
+      .subscribe({
+        next: (resultado) => {
+          if (!resultado) {
+            this.setFormError()
+          }
+        },
+        error: () => this.setFormError()
+      })
     
     const user = this.form.value as PacienteInput;
     this.setPaciente.next(user);
@@ -98,6 +119,11 @@ export class TelaCadastroComponent implements OnInit {
       }),
      
       this.carregado = true;
+  }
+
+  private setFormError(): void {
+    this.form.controls.email.setErrors({ invalid: true });
+    this.form.controls.senha.setErrors({ invalid: true });
   }
 }
 
