@@ -7,7 +7,6 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatButton} from "@angular/material/button";
 import {MatRadioModule} from '@angular/material/radio';
-import {UserInfoComponent} from './user-info/user-info.component';
 import {HttpClientModule} from '@angular/common/http';
 import {IMaskModule} from 'angular-imask';
 import {RadioButtonModule} from "primeng/radiobutton";
@@ -20,7 +19,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  declarations: [TelaCadastroComponent, UserInfoComponent],
+  declarations: [TelaCadastroComponent],
   exports: [RouterModule],
   imports: [
     CommonModule,

@@ -1,75 +1,103 @@
-import { Component } from '@angular/core';
-import { PacienteInput } from '../../../../tokens/models/paciente-input';
-import { EnderecoInput } from '../../../../tokens/models/endereco-input';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
+import {PacienteInput} from "../../../../tokens/models/paciente-input";
+import {Genero} from "../../../../tokens/enums/genero";
+import {CPF_MASK} from "../../../../tokens/masks/cpf.mask";
+import {GenericValidators} from "../../../../tokens/utils/generic-validators.util";
+import {TELEFONE_MASK} from "../../../../tokens/masks/telefone.mask";
+import { CreateUserInput, EnderecoInput } from '../../../../tokens';
 import { TelaCadastroService } from './tela-cadastro.service';
+import { first } from 'rxjs';
+import {Router} from '@angular/router'
+
+class PacienteForm {
+  public nome: FormControl<string | null>;
+  public sobrenome: FormControl<string | null>;
+  public cpf: FormControl<string | null>;
+  public email: FormControl<string | null>;
+  public telefone: FormControl<string | null>;
+  public dataNascimento: FormControl<Date | null>;
+  public genero: FormControl<Genero | null>;
+  public senha: FormControl<String | null>;
+}
+
 
 @Component({
-  selector: 'app-tela-cadastro',
-  templateUrl: './tela-cadastro.component.html',
-  styleUrl: './tela-cadastro.component.scss',
+  selector: 'tela-cadastro',
+  templateUrl: 'tela-cadastro.component.html',
+  styleUrl: 'tela-cadastro.component.scss'
 })
-export class TelaCadastroComponent {
-  public etapaUsuario = true;
-  public paciente: PacienteInput;
-  public endereco: EnderecoInput;
-  public form: FormGroup;
-  constructor(
-    private fb: FormBuilder,
-    private telaCadastroService: TelaCadastroService
-  ) {
-    this.form = this.fb.group({
-      nome: ['', Validators.required],
-      sobrenome: ['', Validators.required],
-      cpf: ['', Validators.required],
-      dataNascimento: ['', Validators.required],
-      email: ['', [Validators.required, Validators.email]],
-      telefone: ['', Validators.required],
-      genero: ['', Validators.required],
-    });
+export class TelaCadastroComponent implements OnInit {
+  @Output() setPaciente = new EventEmitter<PacienteInput>();
+  
+  public cpfMask = CPF_MASK;
+  public telefoneMask = TELEFONE_MASK;
+
+  public minDate: Date = new Date('01-01-1940');
+  public maxDate = new Date();
+
+  public carregado = false;
+  public form: FormGroup<PacienteForm>;
+  public generos = Genero;
+  public router: Router
+  public etapaUsuario = true
+
+
+  constructor(private formBuilder: FormBuilder, private service: TelaCadastroService) {
   }
 
-  public setPaciente(paciente: PacienteInput): void {
-    this.paciente = paciente;
-    this.etapaUsuario = false;
+  public ngOnInit(): void {
+    this.createForm();
   }
 
-  public serEndereco(endereco: EnderecoInput): void {
-    this.endereco = endereco;
-    console.log(endereco);
-    console.log(this.paciente);
-  }
-
-  get podeSalvar(): boolean {
+  public get podeSalvar(): boolean {
     return this.form.valid;
   }
 
-  salvar(): void {
-    if (this.podeSalvar) {
-      // Crie um objeto PacienteInput com os dados do formulário
-      const paciente: PacienteInput = {
-        nome: this.form.get('nome')?.value,
-        sobrenome: this.form.get('sobrenome')?.value,
-        cpf: this.form.get('cpf')?.value,
-        dataNascimento: this.form.get('dataNascimento')?.value,
-        email: this.form.get('email')?.value,
-        telefone: this.form.get('telefone')?.value,
-        genero: this.form.get('genero')?.value,
-        enderecoId: null,
-        id: '',
-      };
+  public serEndereco(endereco: EnderecoInput): void {
+    const paciente = this.form.value;
+    const createInput = new CreateUserInput<PacienteInput>();
+    createInput.password = this.form.value.senha as string;
+    createInput.endereco = endereco;
+    createInput.user = paciente as PacienteInput;
+    console.log(createInput)
+    console.log(createInput.endereco)
+    console.log(createInput.user)
+    console.log(createInput.password)
 
-      // Chame o serviço para criar o paciente no banco de dados
-      this.telaCadastroService.createPaciente(paciente).subscribe(
-        (response) => {
-          // Lógica de sucesso
-          console.log('Paciente criado com sucesso:', response);
-        },
-        (error) => {
-          // Lógica de tratamento de erro
-          console.error('Erro ao criar paciente:', error);
-        }
-      );
-    }
+    this.service.createPaciente(createInput).pipe(first()).subscribe({
+      next: () => {
+        this.router.navigate(['/'])
+      }
+    });
+  }
+
+  public salvar(): void {
+    if (!this.podeSalvar) return;
+
+    
+    const user = this.form.value as PacienteInput;
+    this.setPaciente.next(user);
+    this.etapaUsuario = false
+  }
+
+
+  public createForm(): void {
+      this.form = this.formBuilder.group<PacienteForm>({
+        nome: new FormControl('', { validators: [Validators.required] }),
+        sobrenome: new FormControl('', { validators: [Validators.required] }),
+        email: new FormControl('', { validators: [Validators.required, Validators.email] }),
+        telefone: new FormControl('', { validators: [
+            Validators.minLength(10), Validators.maxLength(11), Validators.required ] }),
+        cpf: new FormControl('', { validators: [
+          Validators.minLength(11), Validators.maxLength(11),
+            Validators.required, GenericValidators.isValidCpf() ] }),
+        dataNascimento: new FormControl(null, { validators: [Validators.required], nonNullable: true }),
+        genero: new FormControl(Genero.Masculino, { validators: [Validators.required] }),
+        senha: new FormControl('', { validators: [Validators.required] })
+      }),
+     
+      this.carregado = true;
   }
 }
+
