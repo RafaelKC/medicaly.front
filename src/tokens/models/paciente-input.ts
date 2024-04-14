@@ -11,4 +11,5 @@ export class PacienteInput extends EntityDto implements IUser {
   public dataNascimento: Date;
   public enderecoId: string | null;
   public genero: Genero;
+  public senha: string;
 }
