@@ -1,0 +1,20 @@
+<div class="container" *ngIf="etapaUsuario">
+    <div class="center-content">
+        <h1>Cadastro de unidade</h1>
+        <form [formGroup]="unidadeForm" class="form-group" *ngIf="carregado">
+            <mat-form-field appearance="fill">
+                <mat-label>Nome</mat-label>
+                <input formControlName="nome" matInput placeholder="Placeholder">
+            </mat-form-field>
+
+            <mat-radio-group aria-label="Select an option" class="tipo-UnidadetipoUnidade" formControlName="tipo">
+                <mat-radio-button [value]="tipoUnidade.Hospital">Hospital</mat-radio-button>
+                <mat-radio-button [value]="tipoUnidade.Clinica">Clinica</mat-radio-button>
+                <mat-radio-button [value]="tipoUnidade.Consultorio">Consultorio</mat-radio-button>
+            </mat-radio-group>
+            
+            <button  mat-raised-button class="prosseguir" color="primary" (click)="getForm($event)" >Cadastrar Unidade</button>
+        </form>
+    </div>
+</div>
+<app-endereco-form *ngIf="!etapaUsuario" (setEndereco)="serEndereco($event)"></app-endereco-form>
