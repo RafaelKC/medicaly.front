@@ -9,6 +9,7 @@ import {httpInterceptorsProvider} from "../../interceptors";
 import {HttpMedicalyModule} from "../../http-medicaly.module";
 import { UnidadeFormComponent } from './unidade-form.component';
 import { EnderecoFormModule } from "../endereco-form/endereco-form.module";
+import { MatRadioButton } from '@angular/material/radio';
 
 const routes: Routes = [
   { path: '', component: UnidadeFormComponent }
@@ -21,6 +22,7 @@ const routes: Routes = [
         ReactiveFormsModule,
         MatFormFieldModule,
         MatInputModule,
+        MatRadioButton,
         RouterLink,
         RouterModule.forChild(routes),
         MatButton,
