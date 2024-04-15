@@ -1,0 +1,18 @@
+<div class="container" *ngIf="etapaUsuario">
+    <div class="center-content">
+        <h1>Cadastro de unidade</h1>
+        <form [formGroup]="unidadeForm" class="form-group">
+            <mat-form-field appearance="fill">
+                <mat-label>Nome</mat-label>
+                <input formControlName="nome" matInput placeholder="Placeholder">
+            </mat-form-field>
+
+            <mat-form-field appearance="fill">
+                <mat-label>Tipo</mat-label>
+                <input formControlName="tipo" matInput placeholder="Placeholder">
+            </mat-form-field>
+            <button  mat-raised-button color="primary" (click)="getForm()" type="submit">Cadastrar Unidade</button>
+        </form>
+    </div>
+</div>
+<app-endereco-form *ngIf="!etapaUsuario"></app-endereco-form>
