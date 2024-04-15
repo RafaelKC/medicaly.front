@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Params, Router, RouterModule, RouterOutlet} from '@angular/router';
 import {TelaCadastroModule} from './nao-autenticado/pacientes/tela-cadastro/tela-cadastro.module';
 import {MatToolbarModule} from '@angular/material/toolbar';
@@ -14,6 +14,11 @@ import {FontAwesomeModule} from "@fortawesome/angular-fontawesome";
 import {faRightFromBracket} from "@fortawesome/free-solid-svg-icons";
 import {LoginModule} from "./nao-autenticado/login/login.module";
 import {HttpMedicalyModule} from "./http-medicaly.module";
+import {ToastModule} from "primeng/toast";
+import {RippleModule} from "primeng/ripple";
+import {MessageService} from "primeng/api";
+import {MessageModule} from "primeng/message";
+import {MessagesModule} from "primeng/messages";
 
 
 @Component({
@@ -32,7 +37,11 @@ import {HttpMedicalyModule} from "./http-medicaly.module";
     ContatoModule,
     FontAwesomeModule,
     LoginModule,
-    HttpMedicalyModule
+    HttpMedicalyModule,
+    ToastModule,
+    RippleModule,
+    MessageModule,
+    MessagesModule,
   ],
   providers: [
     provideNativeDateAdapter(),
@@ -44,7 +53,6 @@ import {HttpMedicalyModule} from "./http-medicaly.module";
 
 
 export class AppComponent {
-  public title = 'medicaly.front';
   public sairIcon = faRightFromBracket;
 
   public loginPacienteParams = {
@@ -55,7 +63,7 @@ export class AppComponent {
     private router: Router,
     private iconRegistry: MatIconRegistry,
     private sanitizer: DomSanitizer,
-    public authentication: AuthenticationService
+    public authentication: AuthenticationService,
   ){
     this.iconRegistry.addSvgIcon(
       'medicaly-logo',

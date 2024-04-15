@@ -23,3 +23,13 @@ a{
 mat-form-field {
   width: 100%;
 }
+
+.submit-container {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  span {
+    width: 40px;
+  }
+}

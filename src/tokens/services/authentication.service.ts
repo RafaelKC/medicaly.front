@@ -7,6 +7,7 @@ import {User} from "../models";
 import {catchError, first, map, Observable, of, tap} from "rxjs";
 import {DOCUMENT} from "@angular/common";
 import {ActivatedRoute, Router} from "@angular/router";
+import {MessageService} from "primeng/api";
 
 @Injectable({
   providedIn: 'root'
@@ -24,6 +25,7 @@ export class AuthenticationService {
     private httpClient: HttpClient,
     @Inject(DOCUMENT) private document: Document,
     private router: ActivatedRoute,
+    private messageService: MessageService,
     private route: Router) {
     afterNextRender(() => {
       this.setLocalStorage();
@@ -52,6 +54,7 @@ export class AuthenticationService {
         }),
         map(v => {
           if (!v) return false;
+          this.messageService.add({ severity: 'success', summary: 'Autenticado com sucesso' })
           return true;
         })
     )

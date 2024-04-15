@@ -5,7 +5,8 @@ import {routes} from './app.routes';
 import {provideClientHydration} from '@angular/platform-browser';
 import {provideAnimationsAsync} from '@angular/platform-browser/animations/async';
 import {provideHttpClient, withFetch} from "@angular/common/http";
+import {MessageService} from "primeng/api";
 
 export const appConfig: ApplicationConfig = {
-  providers: [provideRouter(routes), provideClientHydration(), provideAnimationsAsync(), provideHttpClient(withFetch())]
+  providers: [provideRouter(routes), provideClientHydration(), MessageService, provideAnimationsAsync(), provideHttpClient(withFetch())]
 };
