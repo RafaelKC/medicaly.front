@@ -27,9 +27,9 @@
       <mat-icon>home</mat-icon>
       Tela Inicial
     </button>
-    <button  mat-fab extended color="primary" (click)="navegar(['/auth/cadastro-profissional'])">
+    <button  mat-fab extended color="primary" *ngIf="!authentication.autenticado" (click)="navegar(['/notAuth/login'], loginPacienteParams)">
       <mat-icon>login</mat-icon>
-      Saude
+      Acessar
     </button>
     <button  mat-fab extended color="primary" *ngIf="!authentication.autenticado" (click)="navegar(['/notAuth/cadastro-paciente'])">
       <mat-icon>sentiment_satisfied_alt</mat-icon>
@@ -51,6 +51,9 @@
   </mat-drawer>
 
 </mat-drawer-container>
+
+<p-toast ></p-toast>
+
 
 
 

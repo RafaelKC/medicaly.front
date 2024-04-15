@@ -9,6 +9,7 @@ import {LoginService} from "./login.service";
 import {NgIf} from "@angular/common";
 import {httpInterceptorsProvider} from "../../interceptors";
 import {HttpMedicalyModule} from "../../http-medicaly.module";
+import {ProgressSpinnerModule} from "primeng/progressspinner";
 
 const routes: Routes = [
   {
@@ -19,16 +20,17 @@ const routes: Routes = [
 
 @NgModule({
   declarations: [LoginComponent],
-  imports: [
-    ReactiveFormsModule,
-    MatFormFieldModule,
-    MatInputModule,
-    RouterLink,
-    RouterModule.forChild(routes),
-    MatButton,
-    NgIf,
-    HttpMedicalyModule
-  ],
+    imports: [
+        ReactiveFormsModule,
+        MatFormFieldModule,
+        MatInputModule,
+        RouterLink,
+        RouterModule.forChild(routes),
+        MatButton,
+        NgIf,
+        HttpMedicalyModule,
+        ProgressSpinnerModule
+    ],
   exports: [RouterModule],
   providers: [LoginService, httpInterceptorsProvider]
 })

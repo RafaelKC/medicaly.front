@@ -11,7 +11,12 @@
                 <mat-label>Senha</mat-label>
                 <input type="password" formControlName="password" matInput placeholder="Placeholder">
             </mat-form-field>
-            <button [disabled]="!podeSalvar" (click)="onSubmit()" mat-raised-button color="primary" type="submit">Fazer login</button>
+            <div class="submit-container">
+              <span></span>
+              <button [disabled]="!podeSalvar" (click)="onSubmit()" mat-raised-button color="primary" type="submit">Fazer login</button>
+              <span *ngIf="!salvando"></span>
+              <p-progressSpinner *ngIf="salvando" [style]="{width: '40px', height: '40px'}" ></p-progressSpinner>
+            </div>
         </form>
         <p>Ainda não tem cadastro conosco? <a routerLink="/cadastro-paciente">Clique aqui.</a></p>
     </div>

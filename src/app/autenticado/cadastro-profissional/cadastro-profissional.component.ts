@@ -24,6 +24,7 @@ import {CreateProfissionalInput} from "../../../tokens/models/create-profissiona
 import {CreateProfissionalService} from "./create-profissional.service";
 import {first} from "rxjs";
 import {Router} from "@angular/router";
+import {MessageService} from "primeng/api";
 
 class ProfissionalForm {
   public nome: FormControl<string|null>;
@@ -82,6 +83,7 @@ export class CadastroProfissionalComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private service: CreateProfissionalService,
+    private messageService: MessageService,
     private router: Router) {
   }
 
@@ -94,7 +96,7 @@ export class CadastroProfissionalComponent implements OnInit {
   }
 
 
-  public serEndereco(endereco: EnderecoInput): void {
+  public setEndereco(endereco: EnderecoInput): void {
     const profissional = this.profissionalForm.value;
     const createInput = new CreateProfissionalInput();
     createInput.password = this.profissionalForm.value.senha as string;
@@ -103,6 +105,7 @@ export class CadastroProfissionalComponent implements OnInit {
 
     this.service.create(createInput).pipe(first()).subscribe({
       next: () => {
+        this.messageService.add({ summary: 'Médico criado crom sucesso', severity: 'success' });
         this.router.navigate(['/'])
       }
     });
