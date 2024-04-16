@@ -12,6 +12,7 @@ import { response } from 'express';
 })
 export class ListMedicosComponent {
   public medicos: ProfissionalInput[]
+  public medico: ProfissionalInput
 
   constructor(http: HttpClient, private listService: ListMedicosService){
 

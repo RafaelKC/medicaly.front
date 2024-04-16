@@ -13,7 +13,9 @@
 
 .filtros-container{
     display: flex;
+    flex-direction: row;
     justify-content: center;
     align-items: center;
     text-align: center;
+    margin-top: 15px;
 }

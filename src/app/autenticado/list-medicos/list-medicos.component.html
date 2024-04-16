@@ -1,27 +1,32 @@
-<div class="filtros-container">
-    <mat-form-field class="example-full-width">
-        <mat-label>Nome do médico</mat-label>
-        <input matInput placeholder="Insira o nome do médico que deseja" >
-      </mat-form-field>
-    <mat-select>aaaaa</mat-select>
-</div>
-
-<div class="medicos-container">
-    @for (medico of medicos; track $index) {
-        <mat-card class="example-card">
-            <mat-card-header>
-                <mat-card-title>{{medico.nome}} {{medico.sobrenome}}</mat-card-title>
-                <mat-card-subtitle>Atuacao: {{medico.atuacoes}}</mat-card-subtitle>
+<div>
+    <div class="filtros-container">
+        <mat-form-field class="example-full-width">
+            <mat-label>Nome do médico</mat-label>
+            <input matInput placeholder="Insira o nome do médico que deseja" >
+          </mat-form-field>
+        <mat-select width="30%">
+            <mat-option>oftalmologista</mat-option>
+        </mat-select>
+    </div>
+    
+    <div class="medicos-container">
+        @for (medico of medicos; track $index) {
+            <mat-card class="example-card">
+                <mat-card-header>
+                    <mat-card-title>{{medico.nome}} {{medico.sobrenome}}</mat-card-title>
+                    <mat-card-subtitle>Atuacao: {{medico.atuacoes}}</mat-card-subtitle>
+                    
+                </mat-card-header>
                 
-            </mat-card-header>
-            
-            <mat-card-content>
-                <p>Email: {{medico.email}}</p>
-                <p>{{medico.genero}}</p>
-            </mat-card-content>
-            <mat-card-actions>
-                <button mat-flat-button color="primary">Agendar</button>
-            </mat-card-actions>
-        </mat-card>
-    }
+                <mat-card-content>
+                    <p>Email: {{medico.email}}</p>
+                    <p>{{medico.genero}}</p>
+                </mat-card-content>
+                <mat-card-actions>
+                    <button mat-flat-button color="primary">Agendar</button>
+                </mat-card-actions>
+            </mat-card>
+        }
+    </div>
+    
 </div>
