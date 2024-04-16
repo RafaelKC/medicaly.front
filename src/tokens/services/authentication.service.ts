@@ -90,14 +90,12 @@ export class AuthenticationService {
     this.httpClient.post<null>(`${ensureTrailingSlash(environment.apiUrl)}auth/logout`, null, {headers})
       .pipe(
         first(),
-        tap(() => {
-          this.autenticado = false;
-          this.user = undefined;
-          this.token = undefined;
-          this.storage.removeItem(this.AUTH_STORAGE_KEY);
-          this.route.navigate(['/home']); //visto
-        })
       ).subscribe();
+    this.autenticado = false;
+    this.user = undefined;
+    this.token = undefined;
+    this.storage.removeItem(this.AUTH_STORAGE_KEY);
+    this.route.navigate(['/home']); //visto
   }
 
   private setAuthInicial(): void {

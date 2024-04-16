@@ -111,7 +111,7 @@ export class CadastroProfissionalComponent implements OnInit, OnDestroy {
     this.service.create(createInput).pipe(first()).subscribe({
       next: () => {
         this.messageService.add({ summary: 'Médico criado com sucesso', severity: 'success' });
-        this.router.navigate(['/home'])
+        this.router.navigate(['/auth/dashboard-adm'])
       }
     });
   }
