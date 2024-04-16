@@ -72,6 +72,7 @@ export class AuthenticationService {
           this.user = undefined;
           this.token = undefined;
           this.storage.removeItem(this.AUTH_STORAGE_KEY);
+          this.route.navigate(['/']);
         })
       ).subscribe();
   }

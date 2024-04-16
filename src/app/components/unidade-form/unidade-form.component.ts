@@ -23,6 +23,7 @@ interface UnidadeForm {
   styleUrl: './unidade-form.component.scss',
 })
 export class UnidadeFormComponent {
+
   constructor(
     private _fb: FormBuilder,
     private unidadeService: UnidadeFormService
@@ -31,7 +32,7 @@ export class UnidadeFormComponent {
   public unidadeForm: FormGroup<UnidadeForm>;
   public etapaUsuario: boolean = true;
   public tipoUnidade = TipoUnidade;
-  public carregado:boolean
+  public carregado = false;
 
   public ngOnInit(): void {
     this.setForm();
@@ -44,7 +45,7 @@ export class UnidadeFormComponent {
   }
 
   private setForm(): void {
-    
+
     this.unidadeForm = this._fb.group<UnidadeForm>({
       id: new FormControl(uuidv4(), { validators: [Validators.required] }),
       nome: new FormControl('', [Validators.required]),

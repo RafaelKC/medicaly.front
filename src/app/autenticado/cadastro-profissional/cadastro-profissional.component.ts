@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {
   CPF_MASK,
   DiasSemana,
@@ -50,7 +50,7 @@ class ProfissionalForm {
   templateUrl: './cadastro-profissional.component.html',
   styleUrl: './cadastro-profissional.component.scss'
 })
-export class CadastroProfissionalComponent implements OnInit {
+export class CadastroProfissionalComponent implements OnInit, OnDestroy {
   public etapaProfissionalConcluido = false;
   public carregado = false;
 
@@ -84,12 +84,17 @@ export class CadastroProfissionalComponent implements OnInit {
     private formBuilder: FormBuilder,
     private service: CreateProfissionalService,
     private messageService: MessageService,
-    private router: Router) {
+    private router: Router
+  ) {
   }
 
   public ngOnInit(): void {
     this.createForm();
     }
+
+  public ngOnDestroy(): void {
+    this.subs.clear();
+  }
 
   public get podeProsseguir(): boolean {
     return this.profissionalForm.valid;
@@ -105,7 +110,7 @@ export class CadastroProfissionalComponent implements OnInit {
 
     this.service.create(createInput).pipe(first()).subscribe({
       next: () => {
-        this.messageService.add({ summary: 'Médico criado crom sucesso', severity: 'success' });
+        this.messageService.add({ summary: 'Médico criado com sucesso', severity: 'success' });
         this.router.navigate(['/'])
       }
     });

@@ -1,7 +1,7 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, input, OnDestroy, OnInit} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {ActivatedRoute, Router} from '@angular/router';
-import {AuthenticationService, LoginInput, UserTipo} from "../../../tokens";
+import {AuthenticationService, LoginInput, SubscriptionsManagerUtil, UserTipo} from "../../../tokens";
 import {catchError, first, of, switchMap} from "rxjs";
 import {LoginService} from "./login.service";
 import {MessageService} from "primeng/api";
@@ -16,12 +16,14 @@ interface LoginForm {
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss'
 })
-export class LoginComponent implements OnInit{
+export class LoginComponent implements OnInit, OnDestroy {
   public loginForm: FormGroup<LoginForm>;
   public carregado = false;
   public salvando = false;
 
   private tipoUsuario: UserTipo;
+
+  private readonly subs = new SubscriptionsManagerUtil();
 
   constructor(private _fb: FormBuilder,
               private router: ActivatedRoute,
@@ -32,6 +34,10 @@ export class LoginComponent implements OnInit{
   public ngOnInit(): void {
     this.setForm();
     this.setTipoUsuario();
+  }
+
+  public ngOnDestroy(): void {
+    this.subs.clear();
   }
 
   public get podeSalvar(): boolean {
@@ -71,8 +77,7 @@ export class LoginComponent implements OnInit{
   }
 
   private setTipoUsuario(): void {
-    this.router.queryParams
-      .pipe(first())
+    const sub = this.router.queryParams
       .subscribe({
         next: (params) => {
           this.tipoUsuario = params['tipoUsuario'] as UserTipo;
@@ -81,6 +86,7 @@ export class LoginComponent implements OnInit{
           }
         }
       });
+    this.subs.add(sub);
   }
 
   private setFormError(): void {

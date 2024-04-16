@@ -16,6 +16,10 @@ const routes: Routes = [
       {
         path: 'cadastro-unidade',
         loadChildren: () => import('../components/unidade-form/unidade-form.module').then(m => m.UnidadeFormModule)
+      },
+      {
+        path: 'cadastro-administrador',
+        loadChildren: () => import('./cadastro-administrador/cadastro-administrador.module').then(m => m.CadastroAdministradorModule)
       }
     ],
   },

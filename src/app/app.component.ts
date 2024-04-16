@@ -59,6 +59,16 @@ export class AppComponent {
     tipoUsuario: UserTipo.Paciente
   } as Params;
 
+  public loginAdministradorParams = {
+    tipoUsuario: UserTipo.Administrador
+  } as Params;
+
+  public loginProfissionalParams = {
+    tipoUsuario: UserTipo.ProfissionalSaude
+  } as Params;
+
+  public tiposUsuario = UserTipo;
+
   constructor(
     private router: Router,
     private iconRegistry: MatIconRegistry,
@@ -71,7 +81,12 @@ export class AppComponent {
   }
 
   public navegar(link: string[], queryParams: Params | undefined = undefined): void{
-    this.router.navigate(link, { queryParams,  })
+    const navegandoParaLogin = link.includes('/notAuth/login');
+    this.router.navigate(link, {
+      queryParams,
+      onSameUrlNavigation: navegandoParaLogin ? 'reload' : 'ignore',
+      skipLocationChange: false
+    })
   }
 
   public getTipoUsurio(): string {
