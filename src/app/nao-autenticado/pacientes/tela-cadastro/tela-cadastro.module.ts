@@ -6,7 +6,7 @@ import {MatInputModule} from '@angular/material/input';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatButton} from "@angular/material/button";
-import {MatRadioModule} from '@angular/material/radio';
+import {MatRadioGroup, MatRadioModule} from '@angular/material/radio';
 import {HttpClientModule} from '@angular/common/http';
 import {IMaskModule} from 'angular-imask';
 import {RadioButtonModule} from "primeng/radiobutton";
@@ -33,7 +33,8 @@ const routes: Routes = [
     IMaskModule,
     RadioButtonModule,
     EnderecoFormModule,
-    RouterModule.forChild(routes)
+    RouterModule.forChild(routes),
+    MatRadioGroup,
   ],
 })
 export class TelaCadastroModule { }
