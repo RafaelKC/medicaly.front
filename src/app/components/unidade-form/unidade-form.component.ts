@@ -11,9 +11,9 @@ import { UnidadeFormService } from './unidade-form.service';
 import { UnidadeAtendimentoInput } from '../../../tokens/models/unidade-atendimento-input';
 import { CreateUnidadeInput } from '../../../tokens/models/create-unidade-input';
 import {v4 as uuidv4} from "uuid";
+import { MessageService } from 'primeng/api';
 
 interface UnidadeForm {
-  id: FormControl<string  | null>
   nome: FormControl<string | null>;
   tipo: FormControl<TipoUnidade | null>;
 }
@@ -25,7 +25,8 @@ interface UnidadeForm {
 export class UnidadeFormComponent {
   constructor(
     private _fb: FormBuilder,
-    private unidadeService: UnidadeFormService
+    private unidadeService: UnidadeFormService,
+    private message: MessageService
   ) {}
   @Output() setEndereco = new EventEmitter<EnderecoInput>();
   public unidadeForm: FormGroup<UnidadeForm>;
@@ -40,13 +41,13 @@ export class UnidadeFormComponent {
   public getForm(event: Event) {
     event.preventDefault();
     console.log(this.unidadeForm.getRawValue());
+    
     this.etapaUsuario = false;
   }
 
   private setForm(): void {
     
     this.unidadeForm = this._fb.group<UnidadeForm>({
-      id: new FormControl(uuidv4(), { validators: [Validators.required] }),
       nome: new FormControl('', [Validators.required]),
       tipo: new FormControl(TipoUnidade.Clinica, [Validators.required]),
     });
@@ -56,7 +57,7 @@ export class UnidadeFormComponent {
   public serEndereco(endereco: EnderecoInput): void {
     const unidade = this.unidadeForm.value
     const unidadeInput = new CreateUnidadeInput();
-    unidadeInput.unidade = unidade as UnidadeAtendimentoInput
+    unidadeInput.unidadeAtendimento = unidade as UnidadeAtendimentoInput
     unidadeInput.endereco = endereco;
     console.log(unidadeInput)
     this.unidadeService.create(unidadeInput).subscribe()
