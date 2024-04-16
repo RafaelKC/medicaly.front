@@ -4,7 +4,7 @@ import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {ensureTrailingSlash} from "../functions/ensure-trailing-slash";
 import {environment} from "../../environments/environment";
 import {User} from "../models";
-import {catchError, first, map, Observable, of, tap} from "rxjs";
+import {BehaviorSubject, catchError, first, map, Observable, of, Subject, tap} from "rxjs";
 import {DOCUMENT} from "@angular/common";
 import {ActivatedRoute, Router} from "@angular/router";
 import {MessageService} from "primeng/api";
@@ -13,9 +13,12 @@ import {MessageService} from "primeng/api";
   providedIn: 'root'
 })
 export class AuthenticationService {
-  public autenticado = false;
+  public autenticadoChange = new BehaviorSubject<{ inicial: boolean }>({ inicial: true });
+  public userChange = new BehaviorSubject<{ inicial: boolean }>({ inicial: true });
+
+  private _autenticado = false;
   public token?: string;
-  public user?: User;
+  private _user?: User;
 
   private storage: Storage;
 
@@ -27,9 +30,29 @@ export class AuthenticationService {
     private router: ActivatedRoute,
     private messageService: MessageService,
     private route: Router) {
+    this.autenticado = true;
     afterNextRender(() => {
       this.setLocalStorage();
     });
+  }
+
+  public get autenticado(): boolean {
+    return this._autenticado;
+  }
+
+  public set autenticado(auth: boolean) {
+    this._autenticado = auth;
+    this.autenticadoChange.next({ inicial: false })
+  }
+
+
+  public get user(): User | undefined {
+    return this._user;
+  }
+
+  public set user(auth: User | undefined) {
+    this._user = auth;
+    this.userChange.next({ inicial: false })
   }
 
   private setLocalStorage(): void {
@@ -72,7 +95,7 @@ export class AuthenticationService {
           this.user = undefined;
           this.token = undefined;
           this.storage.removeItem(this.AUTH_STORAGE_KEY);
-          this.route.navigate(['/']);
+          this.route.navigate(['/home']); //visto
         })
       ).subscribe();
   }
@@ -88,6 +111,9 @@ export class AuthenticationService {
           this.storage.removeItem(this.AUTH_STORAGE_KEY);
         }
       });
+    } else {
+      this.autenticado = false;
+      this.user = undefined;
     }
   }
 
@@ -99,7 +125,6 @@ export class AuthenticationService {
       .pipe(
         first(),
         tap(value => {
-          this.route.navigate(['/'], { relativeTo: this.router.parent });
           this.user = value;
           this.autenticado = true;
         }));

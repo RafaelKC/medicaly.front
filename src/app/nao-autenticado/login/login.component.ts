@@ -27,6 +27,7 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   constructor(private _fb: FormBuilder,
               private router: ActivatedRoute,
+              private route: Router,
               private loginService: LoginService,
               private messageService: MessageService,
               private authentication: AuthenticationService){}
@@ -63,6 +64,8 @@ export class LoginComponent implements OnInit, OnDestroy {
         next: (resultado) => {
           if (!resultado) {
             this.setFormError()
+          } else {
+            this.route.navigate(['/'])
           }
         },
         error: () => this.setFormError()

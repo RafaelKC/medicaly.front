@@ -84,7 +84,7 @@ export class CadastroProfissionalComponent implements OnInit, OnDestroy {
     private formBuilder: FormBuilder,
     private service: CreateProfissionalService,
     private messageService: MessageService,
-    private router: Router
+    private router: Router,
   ) {
   }
 
@@ -111,7 +111,7 @@ export class CadastroProfissionalComponent implements OnInit, OnDestroy {
     this.service.create(createInput).pipe(first()).subscribe({
       next: () => {
         this.messageService.add({ summary: 'Médico criado com sucesso', severity: 'success' });
-        this.router.navigate(['/'])
+        this.router.navigate(['/home'])
       }
     });
   }
