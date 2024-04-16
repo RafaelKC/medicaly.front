@@ -1,7 +1,8 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from "@angular/router";
 import {authGuard} from "./auth.guard";
-
+import {tipoUsuarioGuard} from "./tipo-usuario.guard";
+import {UserTipo} from "../../tokens";
 
 
 const routes: Routes = [
@@ -19,7 +20,13 @@ const routes: Routes = [
       },
       {
         path: 'cadastro-administrador',
-        loadChildren: () => import('./cadastro-administrador/cadastro-administrador.module').then(m => m.CadastroAdministradorModule)
+        loadChildren: () => import('./cadastro-administrador/cadastro-administrador.module').then(m => m.CadastroAdministradorModule),
+        canActivate: [tipoUsuarioGuard([UserTipo.Administrador])],
+      },
+      {
+        path: 'dashboard-adm',
+        loadChildren: () => import('./dashboard-adm/dashboard-adm.module').then(m => m.DashboardAdmModule),
+        canActivate: [tipoUsuarioGuard([UserTipo.Administrador])],
       }
     ],
   },

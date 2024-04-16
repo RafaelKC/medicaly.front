@@ -61,10 +61,20 @@
       extended
       color="primary"
       *ngIf="authentication.autenticado && authentication.user?.tipo === tiposUsuario.Paciente"
-      (click)="navegar(['/auth/cadastro-administrador'])"
     >
       <mat-icon>favorite</mat-icon>
       Agendar consulta
+    </button>
+
+    <button
+      mat-fab
+      extended
+      color="primary"
+      *ngIf="authentication.autenticado && authentication.user?.tipo === tiposUsuario.Administrador"
+      (click)="navegar(['/auth/dashboard-adm'])"
+    >
+      <mat-icon>dataset</mat-icon>
+      Dashboard
     </button>
 
     <button
