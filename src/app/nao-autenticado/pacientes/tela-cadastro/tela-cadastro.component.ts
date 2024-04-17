@@ -99,6 +99,7 @@ export class TelaCadastroComponent implements OnInit {
           if (!resultado) {
             this.setFormError();
           }
+          this.router.navigate(['/'])
         },
         error: () => this.setFormError(),
       });

@@ -20,8 +20,7 @@ export class HttpErrorInterceptor implements HttpInterceptor {
       .pipe(
         catchError((error: HttpErrorResponse) => {
           if (
-            error.status !== HttpStatusCode.UnprocessableEntity
-            && error.status !== HttpStatusCode.Unauthorized
+            error.status !== HttpStatusCode.Unauthorized
           ) {
             this.messageService.add({summary: 'Erro com o service', severity: 'error', detail: error.message})
           }

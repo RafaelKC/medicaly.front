@@ -14,7 +14,7 @@ import {StatusProcedimento} from "../../../../tokens/enums/status-procedimento";
   templateUrl: './selecionar-horario.component.html',
   styleUrl: './selecionar-horario.component.scss'
 })
-export class SelecionarHorarioComponent implements OnInit{
+export class SelecionarHorarioComponent implements OnInit {
   selected: Date | null;
   public agendamentoForm: FormGroup<AgendamentoForm>;
   public carregado = false;
@@ -31,12 +31,14 @@ export class SelecionarHorarioComponent implements OnInit{
   }
 
 
-  public updateFormDate(event: Date):void {
+  public updateFormDate(event: Date): void {
     this.agendamentoForm.get('dataProcedimento')?.setValue(event);
   }
 
-  public converterMilissegundosParaHorasMinutos(milissegundos: number|null|undefined): string {
-    if(milissegundos==null || isNaN(milissegundos)){return ''}
+  public converterMilissegundosParaHorasMinutos(milissegundos: number | null | undefined): string {
+    if (milissegundos == null || isNaN(milissegundos)) {
+      return ''
+    }
     const segundosTotal = Math.floor(milissegundos / 1000);
     const horas = Math.floor(segundosTotal / 3600);
     const minutos = Math.floor((segundosTotal % 3600) / 60);
@@ -47,26 +49,29 @@ export class SelecionarHorarioComponent implements OnInit{
     return `${horasStr}:${minutosStr}`;
   }
 
-  public salvar(){
+  public salvar() {
 
     const data = this.agendamentoForm.value.dataProcedimento;
     data?.setMilliseconds(Number(this.agendamentoForm.value.horarioProcedimento))
     const procedimento = {
       status: StatusProcedimento.Ativo,
-        tipoProcedimento: TipoProcedimento.Consulta,
-        idProfissional: this.medico.id,
-        idPaciente: this.authService.user?.id,
-        codigoTuss: '123456',
+      tipoProcedimento: TipoProcedimento.Consulta,
+      idProfissional: this.medico.id,
+      idPaciente: this.authService.user?.id,
+      codigoTuss: '123456',
+      idUnidadeAtendimento: '8bfa40b0-fe09-4859-9a5f-8b8694a985cf',
       data: data
-      } as ProcedimentoInput
+    } as ProcedimentoInput
 
-  this.selecionarService.createProcedimento(procedimento).subscribe({
-    next: () => {this.router.navigate(['/home'])}
-  })
+    this.selecionarService.createProcedimento(procedimento).subscribe({
+      next: () => {
+        this.router.navigate(['/home'])
+      }
+    })
 
   }
 
-  public get podeSalvar():boolean{
+  public get podeSalvar(): boolean {
     return this.agendamentoForm.valid
   }
 
@@ -77,7 +82,8 @@ export class SelecionarHorarioComponent implements OnInit{
     private router: Router,
     private formBuilder: FormBuilder,
     private authService: AuthenticationService
-  ) {}
+  ) {
+  }
 
   ngOnInit() {
     this.route.parent?.params.pipe(first()).subscribe(params => {
@@ -97,9 +103,9 @@ export class SelecionarHorarioComponent implements OnInit{
 }
 
 class AgendamentoForm {
-  public dataProcedimento: FormControl<Date|null>;
-  public horarioProcedimento: FormControl<number|null>;
-  public tipoProcedimento: FormControl<TipoProcedimento|null>;
+  public dataProcedimento: FormControl<Date | null>;
+  public horarioProcedimento: FormControl<number | null>;
+  public tipoProcedimento: FormControl<TipoProcedimento | null>;
 
 }
 
