@@ -1,6 +1,39 @@
-<div *ngIf="medico">
-    <h2>{{ medico.nome }}</h2>
-    <p>Especialidade: {{ medico.especialidades }}</p>
-    <p>Outras informações: {{ medico.cpf }}</p>
-   
-  </div>
+<div class="container">
+  <form [formGroup]="agendamentoForm" *ngIf="carregado">
+    <div>
+      <mat-card class="example-card">
+        <mat-card-header>
+          <mat-card-title>{{ medico.nome }} {{medico.sobrenome}}</mat-card-title>
+          <mat-card-subtitle> {{medico.atuacoes}} </mat-card-subtitle>
+        </mat-card-header>
+        <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu">
+        <mat-card-content>
+          <p>
+            Inicio expedinete: {{converterMilissegundosParaHorasMinutos(medico.inicioExpediente)}}
+            Fim expedinete: {{converterMilissegundosParaHorasMinutos(medico.fimExpediente)}}
+            Contato: {{medico.email}}
+          </p>
+        </mat-card-content>
+      </mat-card>
+    </div>
+
+    <div>
+      <h1>Selecione a data da consulta</h1>
+      <mat-card class="demo-inline-calendar-card">
+        <mat-calendar [(selected)]="agendamentoForm.value.dataProcedimento" (selectedChange)="updateFormDate($event)"></mat-calendar>
+      </mat-card>
+
+      <app-timer-select
+        placeholder="Horario da consulta"
+        formControlName="horarioProcedimento"
+        class="horarioConsulta"
+      ></app-timer-select>
+
+      <p>Data Selecionada: {{agendamentoForm.value.dataProcedimento | date:"dd/MM/yyyy"}} as {{converterMilissegundosParaHorasMinutos(agendamentoForm.value.horarioProcedimento)}}</p>
+      <button mat-raised-button color="primary" [disabled]="!podeSalvar" (click)="salvar()">Agendar</button>
+
+
+    </div>
+  </form>
+
+</div>
