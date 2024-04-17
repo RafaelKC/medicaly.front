@@ -14,13 +14,16 @@ import {
   AuthenticationService,
   CreateUserInput,
   EnderecoInput,
-  LoginInput,
+  LoginInput, stringIsNullOrEmptyOrWhitespace,
   UserTipo,
 } from '../../../../tokens';
 import { TelaCadastroService } from './tela-cadastro.service';
 import { first, of, switchMap } from 'rxjs';
-import { Router } from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import { LoginService } from '../../login/login.service';
+import {PacienteOutput} from "../../../../tokens/models/paciente-output";
+import {UnidadeAtendimentoInput} from "../../../../tokens/models/unidade-atendimento-input";
+import {MessageService} from "primeng/api";
 
 class PacienteForm {
   public nome: FormControl<string | null>;
@@ -48,22 +51,33 @@ export class TelaCadastroComponent implements OnInit {
   public minDate: Date = new Date('01-01-1940');
   public maxDate = new Date();
 
-  public carregado = true;
+  public carregado = false;
   public form: FormGroup<PacienteForm>;
   public generos = Genero;
   public etapaUsuario = true;
   private userTipo = UserTipo.Paciente;
 
+  public editando = false;
+  public paciente: PacienteOutput;
+
   constructor(
     private formBuilder: FormBuilder,
     private service: TelaCadastroService,
-    private loginService: LoginService,
     private authentication: AuthenticationService,
-    private router: Router
+    private router: Router,
+    private messageService: MessageService,
+    private route: ActivatedRoute
   ) {}
 
   public ngOnInit(): void {
-    this.createForm();
+    this.route.params.subscribe(params => {
+      const id = params['id'];
+      if (stringIsNullOrEmptyOrWhitespace(id)) {
+        this.setNovoPaciente();
+      } else {
+        this.setPacienteEditar(id);
+      }
+    })
   }
 
   public get podeSalvar(): boolean {
@@ -108,27 +122,39 @@ export class TelaCadastroComponent implements OnInit {
   public salvar(): void {
     if (!this.podeSalvar) return;
 
-    const user = this.form.value as PacienteInput;
-    this.setPaciente.next(user);
-    this.etapaUsuario = false;
-    this.carregado = false;
+    if (!this.editando) {
+      const user = this.form.value as PacienteInput;
+      this.setPaciente.next(user);
+      this.etapaUsuario = false;
+    } else {
+      const paciente = {
+        ...this.form.value,
+        enderecoId: this.paciente.enderecoId,
+      } as PacienteInput;
+
+      this.service.update(this.paciente.id, paciente).pipe(first())
+        .subscribe(() => {
+          this.messageService.add({ summary: 'Paciente atualizada crom sucesso', severity: 'success' });
+          this.router.navigate(['/auth/dashboard-adm'])
+        })
+    }
   }
 
   public createForm(): void {
     (this.form = this.formBuilder.group<PacienteForm>({
-      nome: new FormControl('', { validators: [Validators.required] }),
-      sobrenome: new FormControl('', { validators: [Validators.required] }),
-      email: new FormControl('', {
+      nome: new FormControl(this.paciente.nome, { validators: [Validators.required] }),
+      sobrenome: new FormControl(this.paciente.sobrenome, { validators: [Validators.required] }),
+      email: new FormControl(this.paciente.email, {
         validators: [Validators.required, Validators.email],
       }),
-      telefone: new FormControl('', {
+      telefone: new FormControl(this.paciente.telefone, {
         validators: [
           Validators.minLength(10),
           Validators.maxLength(11),
           Validators.required,
         ],
       }),
-      cpf: new FormControl('', {
+      cpf: new FormControl(this.paciente.cpf, {
         validators: [
           Validators.minLength(11),
           Validators.maxLength(11),
@@ -136,19 +162,38 @@ export class TelaCadastroComponent implements OnInit {
           GenericValidators.isValidCpf(),
         ],
       }),
-      dataNascimento: new FormControl(null, {
+      dataNascimento: new FormControl(this.paciente.dataNascimento, {
         validators: [Validators.required],
         nonNullable: true,
       }),
-      genero: new FormControl(Genero.Masculino, {
+      genero: new FormControl(this.paciente.genero, {
         validators: [Validators.required],
       }),
-      senha: new FormControl('', { validators: [Validators.required] }),
+      senha: new FormControl('', { validators: this.editando ? [] : [Validators.required] }),
     }))
+    this.carregado = true;
   }
 
   private setFormError(): void {
     this.form.controls.email.setErrors({ invalid: true });
     this.form.controls.senha.setErrors({ invalid: true });
+  }
+
+  private setNovoPaciente(): void {
+    this.paciente = new PacienteInput();
+    this.paciente.genero = Genero.Masculino;
+    this.createForm();
+  }
+
+  private setPacienteEditar(id: string): void {
+    this.service.get(id).pipe(first())
+      .subscribe({
+        next: (paciente) => {
+          this.paciente = paciente;
+          this.editando = true;
+          this.createForm();
+        },
+        error: () => this.setNovoPaciente()
+      })
   }
 }
