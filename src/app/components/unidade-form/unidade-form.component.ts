@@ -66,7 +66,7 @@ export class UnidadeFormComponent {
     this.unidadeService.create(unidadeInput).subscribe({
       next: () => {
         this.messageService.add({ summary: 'Unidade de atendimento criada crom sucesso', severity: 'success' });
-        this.router.navigate(['/'])
+        this.router.navigate(['/auth/dashboard-adm'])
       }
     })
   }
