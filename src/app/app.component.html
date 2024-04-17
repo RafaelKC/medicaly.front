@@ -46,6 +46,12 @@
       Acessar como profissional
     </button>
 
+<button mat-fab extended color="primary" *ngIf="authentication.autenticado"
+            (click)="navegar(['/auth/list-medicos'], loginProfissionalParams)">
+      <mat-icon>add</mat-icon>
+      Agendar Proceidmento
+    </button>
+
     <button
       mat-fab extended
       color="primary"
