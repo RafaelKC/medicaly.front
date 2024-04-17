@@ -3,6 +3,7 @@ import { ProfissionalInput } from '../../../tokens/models/profissional-input';
 import { HttpClient } from '@angular/common/http';
 import { ListMedicosService } from './list-medicos.service';
 import { response } from 'express';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -12,9 +13,11 @@ import { response } from 'express';
 })
 export class ListMedicosComponent {
   public medicos: ProfissionalInput[]
+  public clicado = false
   public medico: ProfissionalInput
+  public procuraNomeMedico = ''
 
-  constructor(http: HttpClient, private listService: ListMedicosService){
+  constructor( private listService: ListMedicosService, private route: Router){
 
   }
 
@@ -23,5 +26,16 @@ export class ListMedicosComponent {
       this.medicos = response.items
       console.log(response)
     })
+  }
+
+
+
+  navegar(id?: string) {
+    if (id) {
+      this.route.navigate(['/auth/selecionar-horario/' + id])
+      this.clicado = true
+      this.medico.id = id
+      console.log(id)
+    }
   }
 }

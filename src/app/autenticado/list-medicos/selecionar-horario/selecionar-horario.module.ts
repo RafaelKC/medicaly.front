@@ -10,9 +10,11 @@ const routes: Routes = [
 
 @NgModule({
   declarations: [SelecionarHorarioComponent],
+  exports:[SelecionarHorarioComponent],
   imports: [
     CommonModule,
     RouterModule.forChild(routes),
-  ]
+  ],
+  providers:[]
 })
 export class SelecionarHorarioModule { }

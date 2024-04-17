@@ -8,6 +8,9 @@ import {MatCardModule} from '@angular/material/card';
 import {MatButtonModule} from '@angular/material/button';
 import {MatSelectModule} from '@angular/material/select';
 import {MatInputModule} from '@angular/material/input';
+import { NgModel } from '@angular/forms';
+
+
 
 const routes: Routes = [
   { path: '', component: ListMedicosComponent }
