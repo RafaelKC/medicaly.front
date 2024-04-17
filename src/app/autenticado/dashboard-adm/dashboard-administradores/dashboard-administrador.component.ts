@@ -86,7 +86,7 @@ export class DashboardAdministradorComponent implements OnInit, OnDestroy {
 
 
   public edit(id: string): void {
-
+    this.router.navigate([`auth/editar-administrador/${id}`])
   }
 
   public setAdministradores(evento?: TableLazyLoadEvent) {

@@ -42,6 +42,11 @@ const routes: Routes = [
         canActivate: [tipoUsuarioGuard([UserTipo.Administrador])],
       },
       {
+        path: `editar-administrador/:id`,
+        loadChildren: () => import('./cadastro-administrador/cadastro-administrador.module').then(m => m.CadastroAdministradorModule),
+        canActivate: [tipoUsuarioGuard([UserTipo.Administrador])],
+      },
+      {
         path: `editar-unidade/:id`,
         loadChildren: () => import('../components/unidade-form/unidade-form.module').then(m => m.UnidadeFormModule)
       },
