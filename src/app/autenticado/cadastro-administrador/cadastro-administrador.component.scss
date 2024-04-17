@@ -1,0 +1,55 @@
+:host{
+  display: flex;
+  justify-content: center;
+  height: 100%;
+}
+
+.container{
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  width: 60%;
+  align-items: center;
+
+  form {
+    display: grid;
+    width: 100%;
+    gap: 16px;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    align-items: center;
+    grid-template-areas:
+      "nome nome sobrenome sobrenome"
+      "cpf dataNascimento genero genero"
+      "email email telefone telefone"
+      "senha senha senha senha";
+
+    * {
+      width: 100%;
+    }
+  }
+
+  .nome {
+    grid-area: nome;
+  }
+  .sobrenome {
+    grid-area: sobrenome;
+  }
+  .cpf {
+    grid-area: cpf;
+  }
+  .data-nascimento {
+    grid-area: dataNascimento;
+  }
+  .genero {
+    grid-area: genero;
+  }
+  .email {
+    grid-area: email;
+  }
+  .telefone {
+    grid-area: telefone;
+  }
+  .senha {
+    grid-area: senha;
+  }
+}

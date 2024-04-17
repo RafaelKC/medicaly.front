@@ -1,0 +1,61 @@
+<div>
+  <mat-form-field appearance="fill">
+    <mat-label>Filtro</mat-label>
+    <input [formControl]="filtroControl" matInput placeholder="Digite o nome">
+  </mat-form-field>
+
+  <button (click)="add()" mat-icon-button aria-label="Adicionar Paciente">
+    <mat-icon>add</mat-icon>
+  </button>
+</div>
+
+<p-table
+  *ngIf="carregado"
+  [value]="profissionais"
+  [scrollable]="true"
+  scrollHeight="425px"
+  [tableStyle]="{ 'width': '100%' , 'height': '100%' }"
+  [lazy]="true" (onLazyLoad)="setProfissionais($event)"
+  [rows]="maxRows"
+  [totalRecords]="totalProficional"
+  [loading]="carregandoProficional"
+  [paginator]="true"
+>
+  <ng-template pTemplate="header">
+    <tr>
+      <th>Ações</th>
+      <th>Nome</th>
+      <th>Credencial</th>
+      <th>Email</th>
+      <th>Telefone</th>
+      <th>Data de nascimento</th>
+      <th>Gênero</th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-profissionais>
+    <tr>
+      <td>
+        <button (click)="delete(profissionais.id)" mat-icon-button aria-label="Adicionar Paciente">
+          <mat-icon>delete</mat-icon>
+        </button>
+        <button (click)="edit(profissionais.id)" mat-icon-button aria-label="Editar Paciente">
+          <mat-icon>edit</mat-icon>
+        </button>
+      </td>
+      <td>{{ profissionais.nome }} {{profissionais.sobrenome}}</td>
+      <td>{{ profissionais.credencialDeSaude }}</td>
+      <td>{{ profissionais.email }}</td>
+      <td>{{ profissionais.telefone }}</td>
+      <td>{{ profissionais.dataNascimento | date:"dd/MM/yyyy" }}</td>
+      <td>
+        @if (profissionais.genero == generos.Masculino) {
+          <h3>M</h3>
+        } @else if (profissionais.genero == generos.Feminino) {
+          <h3>F</h3>
+        } @else {
+          <h3>O</h3>
+        }
+      </td>
+    </tr>
+  </ng-template>
+</p-table>
