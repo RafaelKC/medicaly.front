@@ -1,0 +1,59 @@
+<div>
+  <mat-form-field appearance="fill">
+    <mat-label>Filtro</mat-label>
+    <input [formControl]="filtroControl" matInput placeholder="Digite o nome">
+  </mat-form-field>
+
+  <button (click)="add()" mat-icon-button aria-label="Adicionar Paciente">
+    <mat-icon>add</mat-icon>
+  </button>
+</div>
+
+<p-table
+  *ngIf="carregado"
+  [value]="pacientes"
+  [scrollable]="true"
+  scrollHeight="425px"
+  [tableStyle]="{ 'width': '100%' , 'height': '100%' }"
+  [lazy]="true" (onLazyLoad)="setPacientes($event)"
+  [rows]="maxRows"
+  [totalRecords]="totalPacientes"
+  [loading]="carregandoPaciente"
+  [paginator]="true"
+>
+  <ng-template pTemplate="header">
+    <tr>
+      <th>Ações</th>
+      <th>Nome</th>
+      <th>Email</th>
+      <th>Telefone</th>
+      <th>Data de nascimento</th>
+      <th>Gênero</th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-paciente>
+    <tr>
+      <td>
+        <button (click)="delete(paciente.id)" mat-icon-button aria-label="Adicionar Paciente">
+          <mat-icon>delete</mat-icon>
+        </button>
+        <button (click)="edit(paciente.id)" mat-icon-button aria-label="Editar Paciente">
+          <mat-icon>edit</mat-icon>
+        </button>
+      </td>
+      <td>{{ paciente.nome }} {{paciente.sobrenome}}</td>
+      <td>{{ paciente.email }}</td>
+      <td>{{ paciente.telefone }}</td>
+      <td>{{ paciente.dataNascimento | date:"dd/MM/yyyy" }}</td>
+      <td>
+        @if (paciente.genero == generos.Masculino) {
+          <h3>M</h3>
+        } @else if (paciente.genero == generos.Feminino) {
+          <h3>F</h3>
+        } @else {
+          <h3>O</h3>
+        }
+      </td>
+    </tr>
+  </ng-template>
+</p-table>

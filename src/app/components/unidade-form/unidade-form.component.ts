@@ -24,6 +24,7 @@ interface UnidadeForm {
   styleUrl: './unidade-form.component.scss',
 })
 export class UnidadeFormComponent {
+
   constructor(
     private _fb: FormBuilder,
     private unidadeService: UnidadeFormService,
@@ -34,7 +35,7 @@ export class UnidadeFormComponent {
   public unidadeForm: FormGroup<UnidadeForm>;
   public etapaUsuario: boolean = true;
   public tipoUnidade = TipoUnidade;
-  public carregado:boolean
+  public carregado = false;
 
   public ngOnInit(): void {
     this.setForm();
@@ -65,7 +66,7 @@ export class UnidadeFormComponent {
     this.unidadeService.create(unidadeInput).subscribe({
       next: () => {
         this.messageService.add({ summary: 'Unidade de atendimento criada crom sucesso', severity: 'success' });
-        this.router.navigate(['/'])
+        this.router.navigate(['/auth/dashboard-adm'])
       }
     })
   }
