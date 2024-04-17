@@ -47,6 +47,11 @@ const routes: Routes = [
         canActivate: [tipoUsuarioGuard([UserTipo.Administrador])],
       },
       {
+        path: `editar-paciente/:id`,
+        loadChildren: () => import('../nao-autenticado/pacientes/tela-cadastro/tela-cadastro.module').then(m => m.TelaCadastroModule),
+        canActivate: [tipoUsuarioGuard([UserTipo.Administrador])]
+      },
+      {
         path: `editar-unidade/:id`,
         loadChildren: () => import('../components/unidade-form/unidade-form.module').then(m => m.UnidadeFormModule)
       },

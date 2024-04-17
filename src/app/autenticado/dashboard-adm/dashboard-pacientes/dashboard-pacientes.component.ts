@@ -79,7 +79,7 @@ export class DashboardPacientesComponent implements OnInit, OnDestroy {
 
 
   public edit(id: string): void {
-
+    this.router.navigate([`auth/editar-paciente/${id}`])
   }
 
   public setPacientes(evento?: TableLazyLoadEvent) {
