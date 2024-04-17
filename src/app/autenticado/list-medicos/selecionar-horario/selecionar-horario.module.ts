@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {RouterModule, Routes} from "@angular/router";
-import {CadastroProfissionalComponent} from "../../cadastro-profissional/cadastro-profissional.component";
 import {SelecionarHorarioComponent} from "./selecionar-horario.component";
 import {
   MatCard,
@@ -16,7 +15,7 @@ import {HttpMedicalyModule} from "../../../http-medicaly.module";
 import {MatCalendar} from "@angular/material/datepicker";
 import {FormControl, ReactiveFormsModule} from "@angular/forms";
 import {TimeSelectModule} from "../../../components/time-select/time-select.module";
-import {DiasSemana, Genero, TipoProfissional} from "../../../../tokens";
+import {SelecionarHorarioService} from "./selecionar-horario.service";
 
 const routes: Routes = [
   { path: '', component: SelecionarHorarioComponent }

@@ -1,7 +1,13 @@
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {TipoProcedimento} from "../../../../tokens/enums/tipo-procedimento";
-import { ProfissionalInput } from '../../../../tokens/models/profissional-input';
+import {ProfissionalInput} from '../../../../tokens/models/profissional-input';
+import {AuthenticationService, stringIsNullOrEmptyOrWhitespace} from "../../../../tokens";
+import {SelecionarHorarioService} from "./selecionar-horario.service";
+import {ActivatedRoute, Router} from "@angular/router";
+import {first} from "rxjs";
+import {ProcedimentoInput} from "../../../../tokens/models/procedimento";
+import {StatusProcedimento} from "../../../../tokens/enums/status-procedimento";
 
 @Component({
   selector: 'app-selecionar-horario',
@@ -14,10 +20,6 @@ export class SelecionarHorarioComponent implements OnInit{
   public carregado = false;
   medico: ProfissionalInput;
 
-  constructor(private formBuilder: FormBuilder,) {
-
-
-  }
 
   private createForm(): void {
     this.agendamentoForm = this.formBuilder.group<AgendamentoForm>({
@@ -26,10 +28,6 @@ export class SelecionarHorarioComponent implements OnInit{
       dataProcedimento: new FormControl(null, [Validators.required]),
     })
     this.carregado = true;
-  }
-
-  public ngOnInit():void{
-    this.createForm()
   }
 
 
@@ -49,10 +47,36 @@ export class SelecionarHorarioComponent implements OnInit{
     return `${horasStr}:${minutosStr}`;
   }
 
+  public salvar(){
+
+    const data = this.agendamentoForm.value.dataProcedimento;
+    data?.setMilliseconds(Number(this.agendamentoForm.value.horarioProcedimento))
+    const procedimento = {
+      status: StatusProcedimento.Ativo,
+        tipoProcedimento: TipoProcedimento.Consulta,
+        idProfissional: this.medico.id,
+        idPaciente: this.authService.user?.id,
+        codigoTuss: '123456',
+      data: data
+      } as ProcedimentoInput
+
+  this.selecionarService.createProcedimento(procedimento).subscribe({
+    next: () => {this.router.navigate(['/home'])}
+  })
+
+  }
+
+  public get podeSalvar():boolean{
+    return this.agendamentoForm.valid
+  }
+
+
   constructor(
     private selecionarService: SelecionarHorarioService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private formBuilder: FormBuilder,
+    private authService: AuthenticationService
   ) {}
 
   ngOnInit() {
@@ -61,9 +85,11 @@ export class SelecionarHorarioComponent implements OnInit{
       if (stringIsNullOrEmptyOrWhitespace(id)) {
         this.router.navigate(['/auth/list-medicos']);
       } else {
-        this.id = id;
         this.selecionarService.getProfissional(id).subscribe((medico: ProfissionalInput) => {
           this.medico = medico;
+          console.log(this.medico);
+          this.createForm()
+
         });
       }
     });
