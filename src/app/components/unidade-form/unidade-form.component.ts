@@ -15,7 +15,6 @@ import { MessageService } from 'primeng/api';
 import { Router } from '@angular/router';
 
 interface UnidadeForm {
-  id: FormControl<string  | null>
   nome: FormControl<string | null>;
   tipo: FormControl<TipoUnidade | null>;
 }
@@ -44,13 +43,13 @@ export class UnidadeFormComponent {
   public getForm(event: Event) {
     event.preventDefault();
     console.log(this.unidadeForm.getRawValue());
+
     this.etapaUsuario = false;
   }
 
   private setForm(): void {
-    
+
     this.unidadeForm = this._fb.group<UnidadeForm>({
-      id: new FormControl(uuidv4(), { validators: [Validators.required] }),
       nome: new FormControl('', [Validators.required]),
       tipo: new FormControl(TipoUnidade.Clinica, [Validators.required]),
     });
