@@ -5,7 +5,9 @@ import {
   EnderecoInput,
   GenericValidators,
   Genero,
-  SelectOption, SubscriptionsManagerUtil,
+  SelectOption,
+  stringIsNullOrEmptyOrWhitespace,
+  SubscriptionsManagerUtil,
   TELEFONE_MASK,
   TipoProfissional
 } from "../../../tokens";
@@ -23,8 +25,9 @@ import {ProfissionalInput} from "../../../tokens/models/profissional-input";
 import {CreateProfissionalInput} from "../../../tokens/models/create-profissional-input";
 import {CreateProfissionalService} from "./create-profissional.service";
 import {first} from "rxjs";
-import {Router} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {MessageService} from "primeng/api";
+import {ProfissionalOutput} from "../../../tokens/models/profissional-output";
 
 class ProfissionalForm {
   public nome: FormControl<string|null>;
@@ -80,16 +83,27 @@ export class CadastroProfissionalComponent implements OnInit, OnDestroy {
 
   private subs = new SubscriptionsManagerUtil();
 
+  private profissional: ProfissionalOutput;
+  public editando = false;
+
   constructor(
     private formBuilder: FormBuilder,
     private service: CreateProfissionalService,
     private messageService: MessageService,
     private router: Router,
+    private route: ActivatedRoute
   ) {
   }
 
   public ngOnInit(): void {
-    this.createForm();
+    this.route.parent?.params.pipe(first()).subscribe(params => {
+      const id = params['id']; // (+) converts string 'id' to a number
+      if (stringIsNullOrEmptyOrWhitespace(id)) {
+        this.setNovoProfissional();
+      } else {
+        this.setEditandoProfissional(id);
+      }
+    });
     }
 
   public ngOnDestroy(): void {
@@ -117,31 +131,44 @@ export class CadastroProfissionalComponent implements OnInit, OnDestroy {
   }
 
   public prosseguir(): void {
-    if (!this.podeProsseguir) return;
-    this.etapaProfissionalConcluido = true;
+    if(!this.editando) {
+      if (!this.podeProsseguir) return;
+      this.etapaProfissionalConcluido = true;
+    } else {
+      const profissional = {
+        ...this.profissionalForm.value
+      } as ProfissionalInput;
+
+      this.service.update(this.profissional.id, profissional).pipe(first()).subscribe({
+        next: () => {
+          this.messageService.add({ summary: 'Profissional alterado com sucesso', severity: 'success' });
+          this.router.navigate(['/auth/dashboard-adm'])
+        }
+      });
+    }
   }
 
   private createForm(): void {
     this.profissionalForm = this.formBuilder.group<ProfissionalForm>({
-      id: new FormControl(uuidv4(), { validators: [Validators.required] }),
-      nome: new FormControl('', { validators: [Validators.required] }),
-      sobrenome: new FormControl('', { validators: [Validators.required] }),
-      email: new FormControl('', { validators: [Validators.required, Validators.email] }),
-      telefone: new FormControl('', { validators: [
+      id: new FormControl(this.profissional.id, { validators: [Validators.required] }),
+      nome: new FormControl(this.profissional.nome, { validators: [Validators.required] }),
+      sobrenome: new FormControl(this.profissional.sobrenome, { validators: [Validators.required] }),
+      email: new FormControl(this.profissional.email, { validators: [Validators.required, Validators.email] }),
+      telefone: new FormControl(this.profissional.telefone, { validators: [
           Validators.minLength(10), Validators.maxLength(11), Validators.required ] }),
-      cpf: new FormControl('', { validators: [
+      cpf: new FormControl(this.profissional.cpf, { validators: [
           Validators.minLength(11), Validators.maxLength(11),
           Validators.required, GenericValidators.isValidCpf() ] }),
-      dataNascimento: new FormControl(null, { validators: [Validators.required], nonNullable: true }),
-      genero: new FormControl(Genero.Masculino, { validators: [Validators.required] }),
-      atuacoes: new FormControl([], { validators: [Validators.required] }),
-      especialidades: new FormControl([], { validators: [Validators.required] }),
-      tipo: new FormControl(TipoProfissional.Enfermeiro, { validators: [Validators.required] }),
-      fimExpediente: new FormControl(0, { validators: [Validators.required, this.validarFimExpediente] }),
-      inicioExpediente: new FormControl(0, { validators: [Validators.required] }),
-      credencialDeSaude: new FormControl('', { validators: [Validators.required] }),
-      diasAtendidos: new FormControl([], {validators: [Validators.required]}),
-      senha: new FormControl('', { validators: [Validators.required] }),
+      dataNascimento: new FormControl(this.profissional.dataNascimento, { validators: [Validators.required], nonNullable: true }),
+      genero: new FormControl(this.profissional.genero, { validators: [Validators.required] }),
+      atuacoes: new FormControl(this.profissional.atuacoes, { validators: [Validators.required] }),
+      especialidades: new FormControl(this.profissional.especialidades, { validators: [Validators.required] }),
+      tipo: new FormControl(this.profissional.tipo, { validators: [Validators.required] }),
+      fimExpediente: new FormControl(this.profissional.fimExpediente, { validators: [Validators.required, this.validarFimExpediente] }),
+      inicioExpediente: new FormControl(this.profissional.inicioExpediente, { validators: [Validators.required] }),
+      credencialDeSaude: new FormControl(this.profissional.credencialDeSaude, { validators: [Validators.required] }),
+      diasAtendidos: new FormControl(this.profissional.diasAtendidos, {validators: [Validators.required]}),
+      senha: new FormControl('', { validators: this.editando ? [] : [Validators.required] }),
     });
     const inicioSub = this.profissionalForm.controls.inicioExpediente
       .valueChanges.subscribe({
@@ -161,5 +188,27 @@ export class CadastroProfissionalComponent implements OnInit, OnDestroy {
     if (!inicioExpediente || !fimExpediente) {return null}
     if (inicioExpediente >= fimExpediente) return {rangeError:true} as ValidationErrors;
     return null;
+  }
+
+  private setNovoProfissional(): void {
+    this.profissional = new ProfissionalOutput();
+    this.profissional.id = uuidv4();
+    this.profissional.diasAtendidos = [];
+    this.profissional.atuacoes = [];
+    this.profissional.especialidades = [];
+    this.profissional.tipo = TipoProfissional.Medico;
+    this.profissional.genero = Genero.Masculino;
+    this.createForm();
+  }
+
+  private setEditandoProfissional(id: string): void {
+    this.service.getById(id).pipe(first()).subscribe({
+      next: result => {
+        this.profissional = result;
+        this.editando = true;
+        this.createForm();
+      },
+      error: () => this.setNovoProfissional()
+    })
   }
 }

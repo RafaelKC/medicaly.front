@@ -82,7 +82,7 @@ export class DashboardProfissionalComponent implements OnInit, OnDestroy {
 
 
   public edit(id: string): void {
-
+    this.router.navigate([`auth/editar-profissional/${id}`])
   }
 
   public setProfissionais(evento?: TableLazyLoadEvent) {

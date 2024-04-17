@@ -83,10 +83,14 @@
       class="fimExpediente"
     ></app-timer-select>
 
-    <mat-form-field appearance="fill" class="senha">
-      <mat-label>Senha</mat-label>
-      <input formControlName="senha" matInput type="password" placeholder="Digite a senha">
-    </mat-form-field>
+    @if (!editando) {
+      <mat-form-field appearance="fill" class="senha">
+        <mat-label>Senha</mat-label>
+        <input formControlName="senha" matInput type="password" placeholder="Digite a senha">
+      </mat-form-field>
+    } @else {
+      <span class="senha"></span>
+    }
 
     <button mat-raised-button class="prosseguir" color="primary" [disabled]="!podeProsseguir" (click)="prosseguir()">Prosseguir</button>
   </form>
