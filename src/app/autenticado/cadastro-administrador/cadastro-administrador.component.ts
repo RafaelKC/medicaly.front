@@ -66,7 +66,7 @@ export class CadastroAdministradorComponent implements OnInit {
     this.service.create(createInput).pipe(first()).subscribe({
       next: () => {
         this.messageService.add({ summary: 'Administrador criado com sucesso', severity: 'success' });
-        this.router.navigate(['/home'])
+        this.router.navigate(['/auth/dashboard-adm'])
       }
     });
   }
