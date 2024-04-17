@@ -6,31 +6,39 @@
           <mat-card-title>{{ medico.nome }} {{medico.sobrenome}}</mat-card-title>
           <mat-card-subtitle> {{medico.atuacoes}} </mat-card-subtitle>
         </mat-card-header>
-        <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu">
+        <img mat-card-image src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/59/User-avatar.svg/2048px-User-avatar.svg.png" alt="Photo of a Shiba Inu">
         <mat-card-content>
-          <p>
-            Inicio expedinete: {{converterMilissegundosParaHorasMinutos(medico.inicioExpediente)}}
-            Fim expedinete: {{converterMilissegundosParaHorasMinutos(medico.fimExpediente)}}
-            Contato: {{medico.email}}
-          </p>
+          <div class="info-medico">
+            <p>
+              Inicio expediente: {{converterMilissegundosParaHorasMinutos(medico.inicioExpediente)}}
+            </p>
+            <p> Fim expediente: {{converterMilissegundosParaHorasMinutos(medico.fimExpediente)}}</p>
+            <p> Contato: {{medico.email}}</p>
+          </div>
+          
         </mat-card-content>
       </mat-card>
     </div>
 
-    <div>
+    <div  class="horario-container">
       <h1>Selecione a data da consulta</h1>
       <mat-card class="demo-inline-calendar-card">
         <mat-calendar [(selected)]="agendamentoForm.value.dataProcedimento" (selectedChange)="updateFormDate($event)"></mat-calendar>
       </mat-card>
 
+      <br>
+      <div>
+        <h2>Selecione o horário</h2>
       <app-timer-select
         placeholder="Horario da consulta"
         formControlName="horarioProcedimento"
-        class="horarioConsulta"
+        class="horario-consulta"
       ></app-timer-select>
 
       <p>Data Selecionada: {{agendamentoForm.value.dataProcedimento | date:"dd/MM/yyyy"}} as {{converterMilissegundosParaHorasMinutos(agendamentoForm.value.horarioProcedimento)}}</p>
       <button mat-raised-button color="primary" [disabled]="!podeSalvar" (click)="salvar()">Agendar</button>
+      </div>
+      
 
 
     </div>

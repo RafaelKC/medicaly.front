@@ -24,3 +24,16 @@ form{
 .demo-inline-calendar-card {
   width: 300px;
 }
+
+.horario-container{
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+}
+
+.horario-consulta{
+  width: 300px;
+}
