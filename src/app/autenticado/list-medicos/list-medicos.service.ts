@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Input } from '@angular/core';
 import { ProfissionalInput } from '../../../tokens/models/profissional-input';
 import { ensureTrailingSlash } from '../../../tokens/functions/ensure-trailing-slash';
 import { environment } from '../../../environments/environment';
@@ -9,6 +9,7 @@ import { GetProfissionaisOutput } from '../../../tokens/models/get-profissionais
 @Injectable(
 )
 export class ListMedicosService {
+
 
   public getProfissionais(maxResultCount?: number): Observable<GetProfissionaisOutput> {
     let params = new HttpParams();

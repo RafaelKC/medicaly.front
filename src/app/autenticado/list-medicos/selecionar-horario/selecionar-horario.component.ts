@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {TipoProcedimento} from "../../../../tokens/enums/tipo-procedimento";
+import { ProfissionalInput } from '../../../../tokens/models/profissional-input';
 
 @Component({
   selector: 'app-selecionar-horario',
@@ -11,6 +12,7 @@ export class SelecionarHorarioComponent implements OnInit{
   selected: Date | null;
   public agendamentoForm: FormGroup<AgendamentoForm>;
   public carregado = false;
+  medico: ProfissionalInput;
 
   constructor(private formBuilder: FormBuilder,) {
 
@@ -47,6 +49,25 @@ export class SelecionarHorarioComponent implements OnInit{
     return `${horasStr}:${minutosStr}`;
   }
 
+  constructor(
+    private selecionarService: SelecionarHorarioService,
+    private route: ActivatedRoute,
+    private router: Router
+  ) {}
+
+  ngOnInit() {
+    this.route.parent?.params.pipe(first()).subscribe(params => {
+      const id = params['id'];
+      if (stringIsNullOrEmptyOrWhitespace(id)) {
+        this.router.navigate(['/auth/list-medicos']);
+      } else {
+        this.id = id;
+        this.selecionarService.getProfissional(id).subscribe((medico: ProfissionalInput) => {
+          this.medico = medico;
+        });
+      }
+    });
+  }
 }
 
 class AgendamentoForm {
