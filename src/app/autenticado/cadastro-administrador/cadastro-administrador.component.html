@@ -40,12 +40,16 @@
              placeholder="Digite seu telefone">
     </mat-form-field>
 
-    <mat-form-field appearance="fill" class="senha">
-      <mat-label>Senha</mat-label>
-      <input formControlName="senha" matInput type="password" placeholder="Digite a senha">
-    </mat-form-field>
+    @if (!editando) {
+      <mat-form-field appearance="fill" class="senha">
+        <mat-label>Senha</mat-label>
+        <input formControlName="senha" matInput type="password" placeholder="Digite a senha">
+      </mat-form-field>
+    } @else {
+      <span class="senha"></span>
+    }
 
-    <button mat-raised-button class="prosseguir" color="primary" [disabled]="!formGroup.valid" (click)="etapaAdministradorFinalizado = true">Prosseguir</button>
+    <button mat-raised-button class="prosseguir" color="primary" [disabled]="!formGroup.valid" (click)="this.prosseguir()">Prosseguir</button>
   </form>
 </div>
 

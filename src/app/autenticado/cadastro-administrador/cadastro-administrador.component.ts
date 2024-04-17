@@ -1,13 +1,21 @@
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
-import {CPF_MASK, EnderecoInput, GenericValidators, Genero, TELEFONE_MASK} from "../../../tokens";
+import {
+  CPF_MASK,
+  EnderecoInput,
+  GenericValidators,
+  Genero,
+  stringIsNullOrEmptyOrWhitespace,
+  TELEFONE_MASK
+} from "../../../tokens";
 import {MessageService} from "primeng/api";
-import {Router} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {CreateAdministradorService} from "./create-administrador.service";
 import {v4 as uuidv4} from "uuid"
 import {CreateAdministradorInput} from "../../../tokens/models/create-administrador-input";
 import {AdministradorModel} from "../../../tokens/models/administrador-model";
 import {first} from "rxjs";
+import {UnidadeAtendimentoInput} from "../../../tokens/models/unidade-atendimento-input";
 
 class AdministradorForm {
   public nome: FormControl<string|null>;
@@ -37,16 +45,44 @@ export class CadastroAdministradorComponent implements OnInit {
   public maxDate = new Date();
   public generos = Genero;
 
+  public editando = false;
+  public administrador: AdministradorModel;
+
   constructor(
     private formBuilder: FormBuilder,
     private service: CreateAdministradorService,
     private messageService: MessageService,
-    private router: Router
+    private router: Router,
+    private route: ActivatedRoute
   ) {
   }
 
   public ngOnInit(): void {
-    this.createForm();
+    this.route.params.subscribe(params => {
+      const id = params['id'];
+      if (stringIsNullOrEmptyOrWhitespace(id)) {
+        this.setNovoAdministrador();
+      } else {
+        this.setAdministradorEditar(id);
+      }
+    })
+  }
+
+  public prosseguir(): void {
+    if (!this.editando) {
+      this.etapaAdministradorFinalizado = true
+    } else {
+      const administrador = {
+        ...this.formGroup.value,
+        enderecoId: this.administrador.enderecoId,
+      } as AdministradorModel;
+
+      this.service.update(this.administrador.id, administrador).pipe(first())
+        .subscribe(() => {
+          this.messageService.add({ summary: 'Administrador atualizada crom sucesso', severity: 'success' });
+          this.router.navigate(['/auth/dashboard-adm'])
+        })
+    }
   }
 
   public setEndereco(endereco: EnderecoInput): void {
@@ -73,19 +109,37 @@ export class CadastroAdministradorComponent implements OnInit {
 
   private createForm(): void {
     this.formGroup = this.formBuilder.group<AdministradorForm>({
-      nome: new FormControl('', { validators: [Validators.required] }),
-      sobrenome: new FormControl('', { validators: [Validators.required] }),
-      email: new FormControl('', { validators: [Validators.required, Validators.email] }),
-      telefone: new FormControl('', { validators: [
+      nome: new FormControl(this.administrador.nome, { validators: [Validators.required] }),
+      sobrenome: new FormControl(this.administrador.sobrenome, { validators: [Validators.required] }),
+      email: new FormControl(this.administrador.email, { validators: [Validators.required, Validators.email] }),
+      telefone: new FormControl(this.administrador.telefone, { validators: [
           Validators.minLength(10), Validators.maxLength(11), Validators.required ] }),
-      cpf: new FormControl('', { validators: [
+      cpf: new FormControl(this.administrador.cpf, { validators: [
           Validators.minLength(11), Validators.maxLength(11),
           Validators.required, GenericValidators.isValidCpf() ] }),
-      dataNascimento: new FormControl(null, { validators: [Validators.required], nonNullable: true }),
-      genero: new FormControl(Genero.Masculino, { validators: [Validators.required] }),
-      senha: new FormControl('', { validators: [Validators.required] }),
+      dataNascimento: new FormControl(this.administrador.dataNascimento, { validators: [Validators.required], nonNullable: true }),
+      genero: new FormControl(this.administrador.genero, { validators: [Validators.required] }),
+      senha: new FormControl('', { validators: this.editando ? [] : [Validators.required] }),
     });
 
     this.carregado = true;
+  }
+
+  private setNovoAdministrador(): void {
+    this.administrador = new AdministradorModel();
+    this.administrador.genero = Genero.Masculino;
+    this.createForm();
+  }
+
+  private setAdministradorEditar(id: string): void {
+    this.service.get(id).pipe(first())
+      .subscribe({
+        next: (administrador) => {
+          this.administrador = administrador;
+          this.editando = true;
+          this.createForm();
+        },
+        error: () => this.setNovoAdministrador()
+      })
   }
 }
