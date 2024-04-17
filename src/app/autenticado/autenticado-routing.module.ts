@@ -18,6 +18,10 @@ const routes: Routes = [
         loadChildren: () => import('../components/unidade-form/unidade-form.module').then(m => m.UnidadeFormModule)
       },
       {
+        path: 'sobre',
+        loadChildren: () => import('../components/unidade-form/unidade-form.module').then(m => m.UnidadeFormModule)
+      },
+      {
         path: 'list-medicos',
         loadChildren: () => import('./list-medicos/list-medicos.module').then(m => m.ListMedicosModule)
       },
