@@ -6,14 +6,13 @@ import { ensureTrailingSlash } from '../../../../tokens/functions/ensure-trailin
 import { GetProfissionalOutput } from '../../../../tokens/models/get-profissional-output';
 import { ProfissionalInput } from '../../../../tokens/models/profissional-input';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class SelecionarHorarioService {
 
 
-  public getProfissionais(id: string): Observable<ProfissionalInput> {
-    return this.http.get<ProfissionalInput>(this.basePath);
+  public getProfissional(id: string): Observable<ProfissionalInput> {
+    const url = `${this.basePath}/${id}`
+    return this.http.get<ProfissionalInput>(url);
   }
 
   public get basePath(): string {

@@ -1,11 +1,4 @@
 <div>
-    <div class="filtros-container">
-        <mat-form-field class="example-full-width">
-            <mat-label>Nome do médico</mat-label>
-            <input matInput  placeholder="Insira o nome do médico que deseja"  >
-          </mat-form-field>
-    </div>
-    
     <div class="medicos-container" >
         @for (medico of medicos; track $index) {
             <mat-card class="example-card">
@@ -17,7 +10,8 @@
                 
                 <mat-card-content>
                     <p>Email: {{medico.email}}</p>
-                    <p>{{medico.genero}}</p>
+                    <p>Telefone: {{medico.telefone}}</p>
+                    <p>CRM: {{medico.credencialDeSaude}}</p>
                 </mat-card-content>
                 <mat-card-actions>
                     <button mat-flat-button color="primary" (click)="navegar(medico.id)">Agendar</button>
