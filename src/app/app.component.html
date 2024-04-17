@@ -46,9 +46,9 @@
       Acessar como profissional
     </button>
 
-<button mat-fab extended color="primary" *ngIf="authentication.autenticado"
+<button mat-fab extended color="primary" *ngIf="authentication.autenticado &&  authentication.user?.tipo === tiposUsuario.Paciente"
             (click)="navegar(['/auth/list-medicos'], loginProfissionalParams)">
-      <mat-icon>add</mat-icon>
+      <mat-icon>favorite</mat-icon>
       Agendar Proceidmento
     </button>
 
@@ -60,16 +60,6 @@
     >
       <mat-icon>sentiment_satisfied_alt</mat-icon>
       Cadastrar-se
-    </button>
-
-    <button
-      mat-fab
-      extended
-      color="primary"
-      *ngIf="authentication.autenticado && authentication.user?.tipo === tiposUsuario.Paciente"
-    >
-      <mat-icon>favorite</mat-icon>
-      Agendar consulta
     </button>
 
     <button
