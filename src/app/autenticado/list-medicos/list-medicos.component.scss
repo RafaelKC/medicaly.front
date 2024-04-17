@@ -1,0 +1,21 @@
+.medicos-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.example-card {
+    flex: 1 0 30%; 
+    margin: 10px;
+    text-align: center;
+    align-items: center;
+}
+
+.filtros-container{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    margin-top: 15px;
+}

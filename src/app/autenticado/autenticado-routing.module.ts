@@ -27,7 +27,16 @@ const routes: Routes = [
         path: 'dashboard-adm',
         loadChildren: () => import('./dashboard-adm/dashboard-adm.module').then(m => m.DashboardAdmModule),
         canActivate: [tipoUsuarioGuard([UserTipo.Administrador])],
+      },
+      {
+        path: 'list-medicos',
+        loadChildren: () => import('./list-medicos/list-medicos.module').then(m => m.ListMedicosModule)
+      },
+      {
+        path: 'selecionar-horario',
+        loadChildren: () => import('./list-medicos/selecionar-horario/selecionar-horario.module').then(m => m.SelecionarHorarioModule)
       }
+
     ],
   },
 ];
