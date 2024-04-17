@@ -1,1 +1,6 @@
-<p>selecionar-horario works!</p>
+<div *ngIf="medico">
+    <h2>{{ medico.nome }}</h2>
+    <p>Especialidade: {{ medico.especialidades }}</p>
+    <p>Outras informações: {{ medico.cpf }}</p>
+   
+  </div>

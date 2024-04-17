@@ -9,6 +9,9 @@ import {MatButtonModule} from '@angular/material/button';
 import {MatSelectModule} from '@angular/material/select';
 import {MatInputModule} from '@angular/material/input';
 
+
+
+
 const routes: Routes = [
   { path: '', component: ListMedicosComponent }
 ];

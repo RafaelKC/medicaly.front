@@ -33,7 +33,7 @@ const routes: Routes = [
         loadChildren: () => import('./list-medicos/list-medicos.module').then(m => m.ListMedicosModule)
       },
       {
-        path: 'selecionar-horario',
+        path: 'selecionar-horario/:id',
         loadChildren: () => import('./list-medicos/selecionar-horario/selecionar-horario.module').then(m => m.SelecionarHorarioModule)
       },
       {
