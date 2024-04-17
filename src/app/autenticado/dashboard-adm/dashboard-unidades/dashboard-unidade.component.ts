@@ -77,7 +77,7 @@ export class DashboardUnidadeComponent implements OnInit, OnDestroy {
 
 
   public edit(id: string): void {
-
+    this.router.navigate([`auth/editar-unidade/${id}`])
   }
 
   public setUnidaes(evento?: TableLazyLoadEvent) {

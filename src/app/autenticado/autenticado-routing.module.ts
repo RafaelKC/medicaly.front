@@ -24,11 +24,6 @@ const routes: Routes = [
         canActivate: [tipoUsuarioGuard([UserTipo.Administrador])],
       },
       {
-        path: `editar-profissional/:id`,
-        loadChildren: () => import('./cadastro-profissional/cadastro-profissional.module').then(m => m.CadastroProfissionalModule),
-        canActivate: [tipoUsuarioGuard([UserTipo.Administrador])],
-      },
-      {
         path: 'dashboard-adm',
         loadChildren: () => import('./dashboard-adm/dashboard-adm.module').then(m => m.DashboardAdmModule),
         canActivate: [tipoUsuarioGuard([UserTipo.Administrador])],
@@ -40,7 +35,16 @@ const routes: Routes = [
       {
         path: 'selecionar-horario',
         loadChildren: () => import('./list-medicos/selecionar-horario/selecionar-horario.module').then(m => m.SelecionarHorarioModule)
-      }
+      },
+      {
+        path: `editar-profissional/:id`,
+        loadChildren: () => import('./cadastro-profissional/cadastro-profissional.module').then(m => m.CadastroProfissionalModule),
+        canActivate: [tipoUsuarioGuard([UserTipo.Administrador])],
+      },
+      {
+        path: `editar-unidade/:id`,
+        loadChildren: () => import('../components/unidade-form/unidade-form.module').then(m => m.UnidadeFormModule)
+      },
 
     ],
   },
