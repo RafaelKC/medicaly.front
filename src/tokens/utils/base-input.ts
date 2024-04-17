@@ -41,7 +41,11 @@ export class BaseInput<T extends any> implements ControlValueAccessor, OnInit {
   }
 
   public ngOnInit(): void {
+    console.log(this.formControlName)
+
     this.formGroup = this.fgDirective.form
+    console.log(this.formGroup)
+
     this.internalValue = this.control.value;
   }
 
