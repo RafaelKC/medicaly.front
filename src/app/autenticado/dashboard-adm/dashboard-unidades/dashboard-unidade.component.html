@@ -1,0 +1,53 @@
+<div>
+  <mat-form-field appearance="fill">
+    <mat-label>Filtro</mat-label>
+    <input [formControl]="filtroControl" matInput placeholder="Digite o nome">
+  </mat-form-field>
+
+  <button (click)="add()" mat-icon-button aria-label="Adicionar Paciente">
+    <mat-icon>add</mat-icon>
+  </button>
+</div>
+
+<p-table
+  *ngIf="carregado"
+  [value]="unidades"
+  [scrollable]="true"
+  scrollHeight="425px"
+  [tableStyle]="{ 'width': '100%' , 'height': '100%' }"
+  [lazy]="true" (onLazyLoad)="setUnidaes($event)"
+  [rows]="maxRows"
+  [totalRecords]="totalUnidade"
+  [loading]="carregandoUnidades"
+  [paginator]="true"
+>
+  <ng-template pTemplate="header">
+    <tr>
+      <th>Ações</th>
+      <th>Nome</th>
+      <th>Tipo</th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-unidade>
+    <tr>
+      <td>
+        <button (click)="delete(unidade.id)" mat-icon-button aria-label="Adicionar Paciente">
+          <mat-icon>delete</mat-icon>
+        </button>
+        <button (click)="edit(unidade.id)" mat-icon-button aria-label="Editar Paciente">
+          <mat-icon>edit</mat-icon>
+        </button>
+      </td>
+      <td>{{ unidade.nome }} {{unidade.sobrenome}}</td>
+      <td>
+        @if (unidade.tipoUnidade == tipos.Clinica) {
+          <h3>Clínica</h3>
+        } @else if (unidade.tipoUnidade == tipos.Consultorio) {
+          <h3>Consultório</h3>
+        } @else {
+          <h3>Hospital</h3>
+        }
+      </td>
+    </tr>
+  </ng-template>
+</p-table>
