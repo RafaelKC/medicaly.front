@@ -16,7 +16,16 @@ const routes: Routes = [
       {
         path: 'cadastro-unidade',
         loadChildren: () => import('../components/unidade-form/unidade-form.module').then(m => m.UnidadeFormModule)
+      },
+      {
+        path: 'list-medicos',
+        loadChildren: () => import('./list-medicos/list-medicos.module').then(m => m.ListMedicosModule)
+      },
+      {
+        path: 'selecionar-horario',
+        loadChildren: () => import('./list-medicos/selecionar-horario/selecionar-horario.module').then(m => m.SelecionarHorarioModule)
       }
+
     ],
   },
 ];

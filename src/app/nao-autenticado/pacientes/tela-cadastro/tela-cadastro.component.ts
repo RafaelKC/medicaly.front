@@ -48,7 +48,7 @@ export class TelaCadastroComponent implements OnInit {
   public minDate: Date = new Date('01-01-1940');
   public maxDate = new Date();
 
-  public carregado = false;
+  public carregado = true;
   public form: FormGroup<PacienteForm>;
   public generos = Genero;
   public etapaUsuario = true;
@@ -110,6 +110,7 @@ export class TelaCadastroComponent implements OnInit {
     const user = this.form.value as PacienteInput;
     this.setPaciente.next(user);
     this.etapaUsuario = false;
+    this.carregado = false;
   }
 
   public createForm(): void {
@@ -142,8 +143,7 @@ export class TelaCadastroComponent implements OnInit {
         validators: [Validators.required],
       }),
       senha: new FormControl('', { validators: [Validators.required] }),
-    })),
-      (this.carregado = true);
+    }))
   }
 
   private setFormError(): void {

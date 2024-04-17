@@ -12,6 +12,7 @@ import { UnidadeAtendimentoInput } from '../../../tokens/models/unidade-atendime
 import { CreateUnidadeInput } from '../../../tokens/models/create-unidade-input';
 import {v4 as uuidv4} from "uuid";
 import { MessageService } from 'primeng/api';
+import { Router } from '@angular/router';
 
 interface UnidadeForm {
   nome: FormControl<string | null>;
@@ -26,7 +27,8 @@ export class UnidadeFormComponent {
   constructor(
     private _fb: FormBuilder,
     private unidadeService: UnidadeFormService,
-    private message: MessageService
+    private messageService: MessageService,
+    private router: Router
   ) {}
   @Output() setEndereco = new EventEmitter<EnderecoInput>();
   public unidadeForm: FormGroup<UnidadeForm>;
@@ -41,12 +43,12 @@ export class UnidadeFormComponent {
   public getForm(event: Event) {
     event.preventDefault();
     console.log(this.unidadeForm.getRawValue());
-    
+
     this.etapaUsuario = false;
   }
 
   private setForm(): void {
-    
+
     this.unidadeForm = this._fb.group<UnidadeForm>({
       nome: new FormControl('', [Validators.required]),
       tipo: new FormControl(TipoUnidade.Clinica, [Validators.required]),
@@ -60,6 +62,12 @@ export class UnidadeFormComponent {
     unidadeInput.unidadeAtendimento = unidade as UnidadeAtendimentoInput
     unidadeInput.endereco = endereco;
     console.log(unidadeInput)
-    this.unidadeService.create(unidadeInput).subscribe()
+    this.unidadeService.create(unidadeInput).subscribe({
+      next: () => {
+        this.messageService.add({ summary: 'Unidade de atendimento criada crom sucesso', severity: 'success' });
+        this.router.navigate(['/'])
+      }
+    })
   }
 }
+
