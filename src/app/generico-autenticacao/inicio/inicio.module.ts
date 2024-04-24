@@ -12,3 +12,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
 })
 export class InicioModule { }
+
