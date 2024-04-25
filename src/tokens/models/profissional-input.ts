@@ -11,8 +11,8 @@ export class ProfissionalInput {
   public enderecoId?: string | null;
   public genero?: Genero | null;
   public credencialDeSaude?: string | null;
-  public atuacoes?: string[] | null;
-  public especialidades?: string[] | null;
+  public atuacoesIds?: string[] | null;
+  public especialidadesIds?: string[] | null;
   public tipo?: TipoProfissional | null;
   public inicioExpediente?: number | null;
   public fimExpediente?: number | null;

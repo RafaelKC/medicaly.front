@@ -90,10 +90,6 @@ export class TelaCadastroComponent implements OnInit {
     createInput.password = this.form.value.senha as string;
     createInput.endereco = endereco;
     createInput.user = paciente as PacienteInput;
-    console.log(createInput);
-    console.log(createInput.endereco);
-    console.log(createInput.user);
-    console.log(createInput.password);
 
     this.service
       .createPaciente(createInput)

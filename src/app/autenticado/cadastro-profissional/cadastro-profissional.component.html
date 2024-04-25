@@ -51,19 +51,17 @@
       <input formControlName="credencialDeSaude" matInput placeholder="Credencial">
     </mat-form-field>
 
-    <app-multi-select
-      [options]="especialidadeOptions"
-      formControlName="especialidades"
+    <app-select-especialidade
+      formControlName="especialidadesIds"
       placeholder="Especialidades"
       class="especialidades"
-    ></app-multi-select>
+    ></app-select-especialidade>
 
-    <app-multi-select
-      [options]="especialidadeOptions"
-      formControlName="atuacoes"
+    <app-select-especialidade
+      formControlName="atuacoesIds"
       placeholder="Atuações"
       class="atuacoes"
-    ></app-multi-select>
+    ></app-select-especialidade>
 
     <app-multi-select
       [options]="diasSemanaOptions"
