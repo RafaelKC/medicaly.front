@@ -1,0 +1,12 @@
+<div class="container">
+  <h1> Cadastro Especialidade</h1>
+  <form [formGroup]="formGroup" *ngIf="carregado">
+
+    <mat-form-field appearance="fill" class="nome">
+      <mat-label>Nome</mat-label>
+      <input formControlName="nome" matInput placeholder="Digite o nome">
+    </mat-form-field>
+
+    <button mat-raised-button class="prosseguir" color="primary" [disabled]="!formGroup.valid" (click)="salvar()">Salvar</button>
+  </form>
+</div>

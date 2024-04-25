@@ -55,7 +55,24 @@ const routes: Routes = [
         path: `editar-unidade/:id`,
         loadChildren: () => import('../components/unidade-form/unidade-form.module').then(m => m.UnidadeFormModule)
       },
-
+      {
+        path: `especialidade`,
+        canActivate: [tipoUsuarioGuard([UserTipo.Administrador])],
+        children: [
+          {
+            path: '',
+            loadChildren: () => import('./cadastro-especialidade/cadastro-especialidade.module').then(m => m.CadastroEspecialidadeModule),
+          },
+          {
+            path: ':id',
+            loadChildren: () => import('./cadastro-especialidade/cadastro-especialidade.module').then(m => m.CadastroEspecialidadeModule),
+          },
+          {
+            path: '*',
+            redirectTo: ''
+          }
+        ]
+      },
     ],
   },
 ];

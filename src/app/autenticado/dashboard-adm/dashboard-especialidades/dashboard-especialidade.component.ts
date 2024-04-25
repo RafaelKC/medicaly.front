@@ -61,7 +61,7 @@ export class DashboardEspecialidadeComponent implements OnInit, OnDestroy {
   }
 
   public add(): void {
-    this.router.navigate(['/auth/cadastro-especialidade'])
+    this.router.navigate(['/auth/especialidade'])
   }
 
   public delete(id: string): void {
@@ -75,7 +75,7 @@ export class DashboardEspecialidadeComponent implements OnInit, OnDestroy {
 
 
   public edit(id: string): void {
-    this.router.navigate([`auth/editar-especialidade/${id}`])
+    this.router.navigate([`auth/especialidade/${id}`])
   }
 
   public setEspecialidades(evento?: TableLazyLoadEvent) {
