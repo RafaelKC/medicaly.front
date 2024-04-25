@@ -14,6 +14,7 @@ import {TimeSelectModule} from "../../components/time-select/time-select.module"
 import {EnderecoFormModule} from "../../components/endereco-form/endereco-form.module";
 import {CreateProfissionalService} from "./create-profissional.service";
 import {HttpMedicalyModule} from "../../http-medicaly.module";
+import {SelectEspecialidadeModule} from "../../components/select-especialidade/select-especialidade.module";
 
 const routes: Routes = [
   { path: '', component: CadastroProfissionalComponent }
@@ -22,27 +23,28 @@ const routes: Routes = [
 @NgModule({
   declarations: [CadastroProfissionalComponent],
   exports: [RouterModule],
-  imports: [
-    CommonModule,
-    EnderecoFormModule,
-    FormsModule,
-    HttpMedicalyModule,
-    IMaskDirective,
-    MatButton,
-    MatDatepicker,
-    MatDatepickerInput,
-    MatDatepickerToggle,
-    MatFormField,
-    MatInput,
-    MatLabel,
-    MatRadioButton,
-    MatRadioGroup,
-    MatSuffix,
-    ReactiveFormsModule,
-    RouterModule.forChild(routes),
-    SelectModule,
-    TimeSelectModule
-  ],
+    imports: [
+        CommonModule,
+        EnderecoFormModule,
+        FormsModule,
+        HttpMedicalyModule,
+        IMaskDirective,
+        MatButton,
+        MatDatepicker,
+        MatDatepickerInput,
+        MatDatepickerToggle,
+        MatFormField,
+        MatInput,
+        MatLabel,
+        MatRadioButton,
+        MatRadioGroup,
+        MatSuffix,
+        ReactiveFormsModule,
+        RouterModule.forChild(routes),
+        SelectModule,
+        TimeSelectModule,
+        SelectEspecialidadeModule
+    ],
   providers: [CreateProfissionalService]
 })
 export class CadastroProfissionalModule { }

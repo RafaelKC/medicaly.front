@@ -93,7 +93,6 @@ export class SelecionarHorarioComponent implements OnInit {
       } else {
         this.selecionarService.getProfissional(id).subscribe((medico: ProfissionalInput) => {
           this.medico = medico;
-          console.log(this.medico);
           this.createForm()
 
         });

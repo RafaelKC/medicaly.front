@@ -1,0 +1,6 @@
+<mat-form-field *ngIf="carregado">
+  <mat-label>{{placeholder}}</mat-label>
+  <mat-select [disabled]="disabled" [(ngModel)]="value" multiple>
+    <mat-option *ngFor="let option of options" [value]="option.value">{{option.key}}</mat-option>
+  </mat-select>
+</mat-form-field>

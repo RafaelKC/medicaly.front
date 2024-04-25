@@ -24,7 +24,6 @@ export class ListMedicosComponent {
   ngOnInit(){
     this.listService.getProfissionais(10).subscribe((response) => {
       this.medicos = response.items
-      console.log(response)
     })
   }
 
@@ -35,7 +34,6 @@ export class ListMedicosComponent {
       this.route.navigate(['/auth/selecionar-horario/' + id])
       this.clicado = true
       this.medico.id = id
-      console.log(id)
     }
   }
 }

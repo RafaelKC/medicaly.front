@@ -12,6 +12,8 @@ import {
 import {DashboardAdministradorComponent} from "./dashboard-administradores/dashboard-administrador.component";
 import {DashboardUnidadesServiceService} from "./dashboard-unidades/dashboard-unidades-service.service";
 import {DashboardUnidadeComponent} from "./dashboard-unidades/dashboard-unidade.component";
+import {DashboardEspecialidadeComponent} from "./dashboard-especialidades/dashboard-especialidade.component";
+import {DashboardEspecialidadeService} from "./dashboard-especialidades/dashboard-especialidade.service";
 
 const routes: Routes = [
   { path: '', component: DashboardAdmComponent }
@@ -21,11 +23,12 @@ const routes: Routes = [
 @NgModule({
   declarations: [DashboardAdmComponent],
   exports: [RouterModule],
-  imports: [RouterModule.forChild(routes), MatTabGroup, MatTab, DashboardPacientesComponent, DashboardProfissionalComponent, DashboardAdministradorComponent, DashboardUnidadeComponent,],
+  imports: [RouterModule.forChild(routes), MatTabGroup, MatTab, DashboardPacientesComponent, DashboardProfissionalComponent, DashboardAdministradorComponent, DashboardUnidadeComponent, DashboardEspecialidadeComponent,],
   providers: [
     DashboardPacientesServiceService,
     DashboardProfissionaisServiceService,
     DashboardAdministradoresServiceService,
+    DashboardEspecialidadeService,
     DashboardUnidadesServiceService]
 })
 export class DashboardAdmModule { }

@@ -11,12 +11,11 @@ import {MatInput} from "@angular/material/input";
 import {FormControl, ReactiveFormsModule} from "@angular/forms";
 import {Router} from "@angular/router";
 import {HttpMedicalyModule} from "../../../http-medicaly.module";
-import {UnidadeAtendimentoOutput} from "../../../../tokens/models/unidade-atendimento-output";
-import {TipoUnidade} from "../../../../tokens/enums/tipo-unidade";
-import {DashboardUnidadesServiceService} from "./dashboard-unidades-service.service";
+import {DashboardEspecialidadeService} from "./dashboard-especialidade.service";
+import {EspecialidadeModel} from "../../../../tokens/models/especialidade-model";
 
 @Component({
-  selector: 'app-dashboard-unidades',
+  selector: 'app-dashboard-especialidades',
   standalone: true,
   imports: [
     TableModule,
@@ -31,24 +30,23 @@ import {DashboardUnidadesServiceService} from "./dashboard-unidades-service.serv
     ReactiveFormsModule,
     HttpMedicalyModule
   ],
-  templateUrl: './dashboard-unidade.component.html',
-  styleUrl: './dashboard-unidade.component.scss'
+  templateUrl: './dashboard-especialidade.component.html',
+  styleUrl: './dashboard-especialidade.component.scss'
 })
-export class DashboardUnidadeComponent implements OnInit, OnDestroy {
+export class DashboardEspecialidadeComponent implements OnInit, OnDestroy {
   public carregado = false;
-  public unidades: Array<UnidadeAtendimentoOutput>;
+  public especialidades: Array<EspecialidadeModel>;
 
   public maxRows = 20;
-  public tipos = TipoUnidade;
-  public totalUnidade: number;
-  public carregandoUnidades = true;
+  public totalEspecialidade: number;
+  public carregandoEspecialidades = true;
 
   public filtroControl = new FormControl<string>('');
 
   private subs = new SubscriptionsManagerUtil();
 
   constructor(
-    private service: DashboardUnidadesServiceService,
+    private service: DashboardEspecialidadeService,
     private router: Router
     ) {
   }
@@ -63,25 +61,25 @@ export class DashboardUnidadeComponent implements OnInit, OnDestroy {
   }
 
   public add(): void {
-    this.router.navigate(['/auth/cadastro-unidade'])
+    this.router.navigate(['/auth/especialidade'])
   }
 
   public delete(id: string): void {
     this.service.delete(id).pipe(first())
       .subscribe({
         next: result => {
-          this.setUnidaes();
+          this.setEspecialidades();
         }
       })
   }
 
 
   public edit(id: string): void {
-    this.router.navigate([`auth/editar-unidade/${id}`])
+    this.router.navigate([`auth/especialidade/${id}`])
   }
 
-  public setUnidaes(evento?: TableLazyLoadEvent) {
-    this.carregandoUnidades = true
+  public setEspecialidades(evento?: TableLazyLoadEvent) {
+    this.carregandoEspecialidades = true
     const filter = new FilteredInput();
     filter.maxResultCount = Number(this.maxRows);
 
@@ -97,9 +95,9 @@ export class DashboardUnidadeComponent implements OnInit, OnDestroy {
     this.service.getList(filter).pipe(first())
       .subscribe({
         next: (pagedResult => {
-          this.unidades = pagedResult.items;
-          this.totalUnidade = pagedResult.totalCount;
-          this.carregandoUnidades = false;
+          this.especialidades = pagedResult.items;
+          this.totalEspecialidade = pagedResult.totalCount;
+          this.carregandoEspecialidades = false;
         })
       })
   }
@@ -110,7 +108,7 @@ export class DashboardUnidadeComponent implements OnInit, OnDestroy {
       .pipe(debounceTime(200))
       .subscribe({
         next: (v) => {
-          this.setUnidaes();
+          this.setEspecialidades();
         }
       })
   }

@@ -39,8 +39,8 @@ class ProfissionalForm {
   public dataNascimento: FormControl<Date|null>;
   public genero: FormControl<Genero|null>;
   public credencialDeSaude: FormControl<string|null>;
-  public atuacoes: FormControl<Array<string>|null>;
-  public especialidades: FormControl<Array<string>|null>;
+  public atuacoesIds: FormControl<Array<string>|null>;
+  public especialidadesIds: FormControl<Array<string>|null>;
   public tipo: FormControl<TipoProfissional|null>;
   public fimExpediente: FormControl<number|null>;
   public inicioExpediente: FormControl<number|null>;
@@ -65,11 +65,6 @@ export class CadastroProfissionalComponent implements OnInit, OnDestroy {
   public maxDate = new Date();
   public generos = Genero;
   public tipoProfissional = TipoProfissional;
-
-  public especialidadeOptions = [
-    { key: 'Oftalmologia', value: 'Oftalmologia' },
-    { key: 'Pediatria', value: 'Pediatria' },
-  ] as SelectOption<string>[]
 
   public diasSemanaOptions = [
     { key: 'Domingo', value: DiasSemana.Domingo },
@@ -149,6 +144,9 @@ export class CadastroProfissionalComponent implements OnInit, OnDestroy {
   }
 
   private createForm(): void {
+    const atuacoesIds = this.profissional.atuacoes?.map(a => a.id).filter(a => a)
+    const especialidadesIds = this.profissional.especialidades?.map(a => a.id).filter(a => a)
+
     this.profissionalForm = this.formBuilder.group<ProfissionalForm>({
       id: new FormControl(this.profissional.id, { validators: [Validators.required] }),
       nome: new FormControl(this.profissional.nome, { validators: [Validators.required] }),
@@ -161,8 +159,8 @@ export class CadastroProfissionalComponent implements OnInit, OnDestroy {
           Validators.required, GenericValidators.isValidCpf() ] }),
       dataNascimento: new FormControl(this.profissional.dataNascimento, { validators: [Validators.required], nonNullable: true }),
       genero: new FormControl(this.profissional.genero, { validators: [Validators.required] }),
-      atuacoes: new FormControl(this.profissional.atuacoes, { validators: [Validators.required] }),
-      especialidades: new FormControl(this.profissional.especialidades, { validators: [Validators.required] }),
+      atuacoesIds: new FormControl(atuacoesIds, { validators: [Validators.required] }),
+      especialidadesIds: new FormControl(especialidadesIds, { validators: [Validators.required] }),
       tipo: new FormControl(this.profissional.tipo, { validators: [Validators.required] }),
       fimExpediente: new FormControl(this.profissional.fimExpediente, { validators: [Validators.required, this.validarFimExpediente] }),
       inicioExpediente: new FormControl(this.profissional.inicioExpediente, { validators: [Validators.required] }),

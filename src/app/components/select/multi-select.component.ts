@@ -34,15 +34,6 @@ export class MultiSelectComponent<T extends any> extends BaseInput<T[]> implemen
     this.subs.clear();
   }
 
-  public get formValues(): SelectOption<T>[] {
-    return this.internControl.value ?? [];
-  };
-
-  public onRemove(option: T): void {
-    let internValues = this.internControl.value;
-
-    this.internControl.setValue(this.removeFirstInternal(internValues!, option));
-  }
 
   private removeFirstInternal<T>(array: SelectOption<T>[], toRemove: T): SelectOption<T>[] {
     const copy = JSON.parse(JSON.stringify(array))as SelectOption<T>[];
@@ -69,7 +60,6 @@ export class MultiSelectComponent<T extends any> extends BaseInput<T[]> implemen
         .map(v => v.value);
     }
     setTimeout(() => this.value = values, 1);
-
   }
 
   private setInitialValue(): void {
