@@ -7,12 +7,13 @@ import {MatChipsModule} from "@angular/material/chips";
 import {ReactiveFormsModule} from "@angular/forms";
 import {MatIcon} from "@angular/material/icon";
 import {PaginatorModule} from "primeng/paginator";
+import {SelectSingleComponent} from "./select-single/select-single.component";
 
 
 
 @NgModule({
-  declarations: [MultiSelectComponent],
-  exports: [MultiSelectComponent],
+  declarations: [MultiSelectComponent, SelectSingleComponent],
+  exports: [MultiSelectComponent, SelectSingleComponent],
     imports: [
         CommonModule,
         MatFormField,

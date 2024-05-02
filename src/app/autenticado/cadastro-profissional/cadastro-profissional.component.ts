@@ -28,6 +28,7 @@ import {first} from "rxjs";
 import {ActivatedRoute, Router} from "@angular/router";
 import {MessageService} from "primeng/api";
 import {ProfissionalOutput} from "../../../tokens/models/profissional-output";
+import {DashboardUnidadesServiceService} from "../dashboard-adm/dashboard-unidades/dashboard-unidades-service.service";
 
 class ProfissionalForm {
   public nome: FormControl<string|null>;
@@ -46,12 +47,14 @@ class ProfissionalForm {
   public inicioExpediente: FormControl<number|null>;
   public diasAtendidos: FormControl<DiasSemana[]|null>;
   public senha: FormControl<string|null>;
+  public unidadeId: FormControl<string|null>;
 }
 
 @Component({
   selector: 'app-cadastro-profissional',
   templateUrl: './cadastro-profissional.component.html',
-  styleUrl: './cadastro-profissional.component.scss'
+  styleUrl: './cadastro-profissional.component.scss',
+  providers: [DashboardUnidadesServiceService]
 })
 export class CadastroProfissionalComponent implements OnInit, OnDestroy {
   public etapaProfissionalConcluido = false;
@@ -76,6 +79,8 @@ export class CadastroProfissionalComponent implements OnInit, OnDestroy {
     { key: 'Sábado', value: DiasSemana.Sabado },
   ] as SelectOption<DiasSemana>[]
 
+  public unidadesOptions: SelectOption<string>[];
+
   private subs = new SubscriptionsManagerUtil();
 
   private profissional: ProfissionalOutput;
@@ -86,7 +91,8 @@ export class CadastroProfissionalComponent implements OnInit, OnDestroy {
     private service: CreateProfissionalService,
     private messageService: MessageService,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private unidadeService: DashboardUnidadesServiceService
   ) {
   }
 
@@ -166,6 +172,7 @@ export class CadastroProfissionalComponent implements OnInit, OnDestroy {
       inicioExpediente: new FormControl(this.profissional.inicioExpediente, { validators: [Validators.required] }),
       credencialDeSaude: new FormControl(this.profissional.credencialDeSaude, { validators: [Validators.required] }),
       diasAtendidos: new FormControl(this.profissional.diasAtendidos, {validators: [Validators.required]}),
+      unidadeId: new FormControl(this.profissional.unidadeId, {validators: [Validators.required]}),
       senha: new FormControl('', { validators: this.editando ? [] : [Validators.required] }),
     });
     const inicioSub = this.profissionalForm.controls.inicioExpediente
@@ -177,7 +184,7 @@ export class CadastroProfissionalComponent implements OnInit, OnDestroy {
 
     this.subs.add(inicioSub);
 
-    this.carregado = true;
+    this.setUnidades()
   }
 
   public validarFimExpediente: ValidatorFn = (control: AbstractControl): ValidationErrors | null => {
@@ -207,6 +214,21 @@ export class CadastroProfissionalComponent implements OnInit, OnDestroy {
         this.createForm();
       },
       error: () => this.setNovoProfissional()
+    })
+  }
+
+  private setUnidades() {
+    this.unidadeService.getList({ maxResultCount: 999, skipCount: 0 })
+      .pipe(first()).subscribe({
+      next: unidades => {
+        this.unidadesOptions = unidades.items.map(unidade => {
+          return {
+            key: unidade.nome,
+            value: unidade.id,
+          } as SelectOption<string>;
+        });
+        this.carregado = true;
+      }
     })
   }
 }

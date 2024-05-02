@@ -24,7 +24,7 @@
       "tipoProfissional tipoProfissional tipoProfissional credencial credencial credencial"
       "especialidades especialidades especialidades atuacoes atuacoes atuacoes"
       "dias dias dias dias inicioExpediente fimExpediente"
-      "senha senha senha x x x"
+      "unidade unidade unidade senha senha senha"
       "prosseguir prosseguir y y y y";
     * {
       width: 100%;
@@ -78,5 +78,8 @@
   }
   .prosseguir {
     grid-area: prosseguir;
+  }
+  .unidade {
+    grid-area: unidade;
   }
 }

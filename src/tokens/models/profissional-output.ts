@@ -1,6 +1,7 @@
 import {Genero} from "../enums/genero";
 import {DiasSemana, TipoProfissional} from "../enums";
 import {EspecialidadeModel} from "./especialidade-model";
+import {UnidadeAtendimentoOutput} from "./unidade-atendimento-output";
 
 export class ProfissionalOutput {
   public id: string
@@ -19,6 +20,8 @@ export class ProfissionalOutput {
   public inicioExpediente: number;
   public fimExpediente: number;
   public diasAtendidos: DiasSemana[];
+  public unidade: UnidadeAtendimentoOutput;
+  public unidadeId: string;
 
   public get atuacoesIds(): string[] {
     return this.atuacoes?.map(a => a.id).filter(a => a);

@@ -15,6 +15,7 @@ import {EnderecoFormModule} from "../../components/endereco-form/endereco-form.m
 import {CreateProfissionalService} from "./create-profissional.service";
 import {HttpMedicalyModule} from "../../http-medicaly.module";
 import {SelectEspecialidadeModule} from "../../components/select-especialidade/select-especialidade.module";
+import {DashboardUnidadesServiceService} from "../dashboard-adm/dashboard-unidades/dashboard-unidades-service.service";
 
 const routes: Routes = [
   { path: '', component: CadastroProfissionalComponent }

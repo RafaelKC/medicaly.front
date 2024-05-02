@@ -17,4 +17,5 @@ export class ProfissionalInput {
   public inicioExpediente?: number | null;
   public fimExpediente?: number | null;
   public diasAtendidos?: DiasSemana[] | null;
+  public unidadeId: string | null;
 }

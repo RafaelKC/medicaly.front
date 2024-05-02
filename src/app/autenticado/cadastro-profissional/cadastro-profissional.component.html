@@ -81,6 +81,13 @@
       class="fimExpediente"
     ></app-timer-select>
 
+    <app-select-single
+      class="unidade"
+      formControlName="unidadeId"
+      placeholder="Unidade"
+      [options]="unidadesOptions"
+    ></app-select-single>
+
     @if (!editando) {
       <mat-form-field appearance="fill" class="senha">
         <mat-label>Senha</mat-label>
