@@ -8,6 +8,7 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {first} from "rxjs";
 import {ProcedimentoInput} from "../../../../tokens/models/procedimento";
 import {StatusProcedimento} from "../../../../tokens/enums/status-procedimento";
+import {v4 as uuidv4} from "uuid"
 
 @Component({
   selector: 'app-selecionar-horario',
@@ -54,8 +55,9 @@ export class SelecionarHorarioComponent implements OnInit {
     const data = this.agendamentoForm.value.dataProcedimento;
     data?.setMilliseconds(Number(this.agendamentoForm.value.horarioProcedimento))
     const procedimento = {
+      id: uuidv4(),
       status: StatusProcedimento.Ativo,
-      tipoProcedimento: TipoProcedimento.Consulta,
+      tipoProcedimento: TipoProcedimento.Cirurgia,
       idProfissional: this.medico.id,
       idPaciente: this.authService.user?.id,
       codigoTuss: '123456',

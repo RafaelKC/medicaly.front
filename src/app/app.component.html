@@ -99,6 +99,14 @@
       <fa-icon class="icon" [icon]="sairIcon"></fa-icon>
       Sair
     </button>
+    <button
+      mat-fab
+      extended
+      color="secondary"
+      (click)="navegar(['/auth/ver-agendamento'])"
+      *ngIf="authentication.autenticado">
+      Meus agendamentos
+    </button>
   </mat-drawer>
 </mat-drawer-container>
 

@@ -56,6 +56,10 @@ const routes: Routes = [
         loadChildren: () => import('../components/unidade-form/unidade-form.module').then(m => m.UnidadeFormModule)
       },
       {
+        path: `ver-agendamento`,
+        loadChildren: () => import('./ver-agendamento-paciente/ver-agendamento-paciente.module').then(m => m.VerAgendamentoPacienteModule)
+      },
+      {
         path: `especialidade`,
         canActivate: [tipoUsuarioGuard([UserTipo.Administrador])],
         children: [

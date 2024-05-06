@@ -1,0 +1,9 @@
+<div>
+    <div *ngIf="procedimento"></div>
+    @for (item of procedimento; track $index) {
+        <p>{{item.idPaciente}}</p>
+    }
+    <div>
+        <p>Não há agendamentos!</p>
+    </div>
+</div>
