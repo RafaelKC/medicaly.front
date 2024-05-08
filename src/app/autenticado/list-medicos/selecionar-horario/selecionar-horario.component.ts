@@ -55,13 +55,12 @@ export class SelecionarHorarioComponent implements OnInit {
     const data = this.agendamentoForm.value.dataProcedimento;
     data?.setMilliseconds(Number(this.agendamentoForm.value.horarioProcedimento))
     const procedimento = {
-      id: uuidv4(),
       status: StatusProcedimento.Ativo,
       tipoProcedimento: TipoProcedimento.Cirurgia,
       idProfissional: this.medico.id,
       idPaciente: this.authService.user?.id,
       codigoTuss: '123456',
-      idUnidadeAtendimento: '8bfa40b0-fe09-4859-9a5f-8b8694a985cf',
+      idUnidadeAtendimento: this.medico.unidadeId,
       data: data
     } as ProcedimentoInput
 
