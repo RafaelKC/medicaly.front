@@ -90,6 +90,18 @@
       Sobre Nós
     </button>
 
+<button
+      mat-fab
+      extended
+      color="primary"
+      *ngIf="authentication.autenticado && authentication.user?.tipo === tiposUsuario.ProfissionalSaude"
+      (click)="navegar(['/auth/agenda-medico'])"
+>
+      <mat-icon>medicaly-logo</mat-icon>
+      Minha Agenda
+
+    </button>
+
     <button
       mat-fab
       extended
