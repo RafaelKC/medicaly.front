@@ -4,6 +4,9 @@ import { Observable } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { ensureTrailingSlash } from '../../../tokens/functions/ensure-trailing-slash';
 import { GetProcedimentoOutput } from '../../../tokens/models/get-procedimento-output';
+import {GetListProcedimentoInput} from "../../../tokens/models/get-list-procedimento-input";
+import {PagedResult} from "../../../tokens/models/paged-result";
+import {ProcedimentoOutput} from "../../../tokens/models/procedimento-output";
 
 @Injectable({
   providedIn: 'root'
@@ -12,12 +15,21 @@ export class VerAgendamentoService {
 
   constructor(private http:HttpClient) { }
 
-  public getAgendamentos(maxResultCount?: number): Observable<GetProcedimentoOutput>{
+  public getAgendamentos(input: GetListProcedimentoInput): Observable<PagedResult<ProcedimentoOutput>>{
     let params = new HttpParams();
-    if (maxResultCount) {
-      params = params.set('maxResultCount', maxResultCount.toString());
+    if (input.maxResultCount) {
+      params = params.set('maxResultCount', input.maxResultCount);
     }
-    return this.http.get<GetProcedimentoOutput>(this.basePathProcedimento, { params });
+    if (input.pacienteId) {
+      params = params.set('pacienteId', input.pacienteId);
+    }
+    if (input.filter) {
+      params = params.set('filter', input.filter);
+    }
+    if (input.skipCount) {
+      params = params.set('skipCount', input.skipCount);
+    }
+    return this.http.get<PagedResult<ProcedimentoOutput>>(this.basePathProcedimento, { params });
   }
 
   public cancelar(id:string): Observable<any>{
