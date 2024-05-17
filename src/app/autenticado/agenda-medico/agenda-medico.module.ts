@@ -6,7 +6,7 @@ import {HttpMedicalyModule} from "../../http-medicaly.module";
 import {LoginService} from "../../nao-autenticado/login/login.service";
 import {AgendaMedicoService} from "./agenda-medico.service";
 import {MatCard, MatCardActions, MatCardHeader, MatCardModule} from "@angular/material/card";
-
+import { FullCalendarModule } from '@fullcalendar/angular';
 
 const routes: Routes =  [
   {path: '', component: AgendaMedicoComponent}
@@ -22,8 +22,10 @@ const routes: Routes =  [
     MatCard,
     MatCardHeader,
     MatCardActions,
-    MatCardModule
+    MatCardModule,
+    FullCalendarModule
   ]
-  , providers: [AgendaMedicoService]
+  , providers: [AgendaMedicoService],
+  bootstrap: [AgendaMedicoComponent]
 })
 export class AgendaMedicoModule { }
