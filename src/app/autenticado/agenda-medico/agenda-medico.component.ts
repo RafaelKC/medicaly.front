@@ -1,18 +1,21 @@
-import { Component, signal, ChangeDetectorRef } from '@angular/core';
-import {ProcedimentoOutput} from "../../../tokens/models/procedimento-output";
-import {AgendaMedicoService} from "./agenda-medico.service";
-import {GetListProcedimentoInput} from "../../../tokens/models/get-list-procedimento-input";
-import {Router} from "@angular/router";
-import {AuthenticationService} from "../../../tokens";
+import { Component, signal, ChangeDetectorRef, ViewChild } from '@angular/core';
+import { ProcedimentoOutput } from "../../../tokens/models/procedimento-output";
+import { AgendaMedicoService } from "./agenda-medico.service";
+import { GetListProcedimentoInput } from "../../../tokens/models/get-list-procedimento-input";
+import { Router } from "@angular/router";
+import { AuthenticationService } from "../../../tokens";
 import { CommonModule } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
-import { FullCalendarModule } from '@fullcalendar/angular';
+import { FullCalendarComponent, FullCalendarModule } from '@fullcalendar/angular';
 import { CalendarOptions, DateSelectArg, EventClickArg, EventApi } from '@fullcalendar/core';
 import interactionPlugin from '@fullcalendar/interaction';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import listPlugin from '@fullcalendar/list';
 import { INITIAL_EVENTS, createEventId } from './event-utils';
+import { ProcedimentoInput } from "../../../tokens/models/procedimento";
+import { en } from "@fullcalendar/core/internal-common";
+import { Console } from "node:inspector";
 
 @Component({
   selector: 'app-agenda-medico',
@@ -20,8 +23,9 @@ import { INITIAL_EVENTS, createEventId } from './event-utils';
   styleUrl: './agenda-medico.component.scss',
 })
 export class AgendaMedicoComponent {
-  procedimento: ProcedimentoOutput[];
+  procedimentos: ProcedimentoOutput[];
 
+  @ViewChild('calendar') calendarComponent: FullCalendarComponent;
   calendarVisible = signal(true);
   calendarOptions = signal<CalendarOptions>({
     plugins: [
@@ -56,18 +60,42 @@ export class AgendaMedicoComponent {
   constructor(private procedimentoService: AgendaMedicoService,
               private auth: AuthenticationService,
               private changeDetector: ChangeDetectorRef) {
-
   }
-  getProcedimento(){
-    const filter = new GetListProcedimentoInput()
-    filter.profissionalId = this.auth.user?.id
+
+  getProcedimento() {
+    const filter = new GetListProcedimentoInput();
+    filter.profissionalId = this.auth.user?.id;
     this.procedimentoService.getProcedimento(filter).subscribe(res => {
-      this.procedimento=res.items;
-    })
+      this.procedimentos = res.items;
+      this.writeProcedimentosOnCalendar(); // Move this here
+    });
   }
 
-  ngOnInit(){
-    this.getProcedimento();
+  writeProcedimentosOnCalendar() {
+    let calendarApi = this.calendarComponent.getApi();
+
+    if (!this.procedimentos || !Array.isArray(this.procedimentos)) {
+      console.error('Procedimentos vazios');
+      return;
+    }
+
+    this.procedimentos.forEach(procedimento => {
+      console.log(procedimento);
+      const title = procedimento.idPaciente;
+      const id = procedimento.id;
+      const start = procedimento.data; // Directly use the date string
+
+      calendarApi.addEvent({
+        id: id,
+        title: title,
+        start: start,
+        // allDay: true
+      });
+    });
+  }
+
+  ngOnInit() {
+    this.getProcedimento(); // Just call getProcedimento() here
   }
 
   handleCalendarToggle() {
@@ -78,23 +106,23 @@ export class AgendaMedicoComponent {
     this.calendarOptions.update((options) => ({
       ...options,
       weekends: !options.weekends,
-    }))}
+    }));
+  }
 
   handleDateSelect(selectInfo: DateSelectArg) {
-    const title = prompt('Please enter a new title for your event');
-    const calendarApi = selectInfo.view.calendar;
-
-    calendarApi.unselect(); // clear date selection
-
-    if (title) {
-      calendarApi.addEvent({
-        id: createEventId(),
-        title,
-        start: selectInfo.startStr,
-        end: selectInfo.endStr,
-        allDay: selectInfo.allDay
-      });
-    }
+    // const a  = prompt(selectInfo.endStr);
+    // const title = prompt('Please enter a new title for your event');
+    //
+    // const calendarApi = selectInfo.view.calendar;
+    // calendarApi.unselect(); // clear date selection
+    // if (title) {
+    //   calendarApi.addEvent({
+    //     id: createEventId(),
+    //     title,
+    //     start: selectInfo.startStr,
+    //     end: selectInfo.endStr,
+    //   });
+    // }
   }
 
   handleEventClick(clickInfo: EventClickArg) {
