@@ -2,6 +2,6 @@ import { ProcedimentoInput } from "./procedimento";
 
 
 export class GetProcedimentoOutput{
-    totalCount: 0;
+    totalCount: number;
     items: [ProcedimentoInput]
 }

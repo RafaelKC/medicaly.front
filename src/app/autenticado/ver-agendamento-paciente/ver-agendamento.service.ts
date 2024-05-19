@@ -7,6 +7,7 @@ import { GetProcedimentoOutput } from '../../../tokens/models/get-procedimento-o
 import {GetListProcedimentoInput} from "../../../tokens/models/get-list-procedimento-input";
 import {PagedResult} from "../../../tokens/models/paged-result";
 import {ProcedimentoOutput} from "../../../tokens/models/procedimento-output";
+import {ProfissionalInput} from "../../../tokens/models/profissional-input";
 
 @Injectable({
   providedIn: 'root'
@@ -31,6 +32,8 @@ export class VerAgendamentoService {
     }
     return this.http.get<PagedResult<ProcedimentoOutput>>(this.basePathProcedimento, { params });
   }
+
+
 
   public cancelar(id:string): Observable<any>{
     return this.http.delete<any>(this.basePathProcedimento + `/${id}`)

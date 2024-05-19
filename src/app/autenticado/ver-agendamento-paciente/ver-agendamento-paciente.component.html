@@ -1,28 +1,30 @@
-<div>
-    <div *ngIf="procedimento"></div>
-    @for (item of procedimento; track $index) {
-        <mat-card class="example-card">
-            <mat-card-header>
-                <mat-card-title> {{item.status}} no dia {{item.data}}</mat-card-title>
-                <mat-card-subtitle>Médico {{item.idProfissional}}</mat-card-subtitle>
-              <mat-card-subtitle>Paciente {{item.idPaciente}}</mat-card-subtitle>
+<div class="teste">
+  <div *ngIf="procedimento"></div>
+  @for (item of procedimento; track $index) {
+    <mat-card class="example-card">
+      <mat-card-header>
+        <mat-card-title> {{ item.status }} no dia {{ item.data }}</mat-card-title>
+        <mat-card-subtitle>Médico {{ item.idProfissional }}</mat-card-subtitle>
+        <mat-card-subtitle>Paciente {{ item.idPaciente }}</mat-card-subtitle>
 
-            </mat-card-header>
+      </mat-card-header>
 
-            <!-- <mat-card-content>
-                <p>Email: {{item.email}}</p>
-                <p>Telefone: {{item.telefone}}</p>
-                <p>CRM: {{item.credencialDeSaude}}</p>
-            </mat-card-content> -->
-            <!-- <mat-card-actions>
-                <button mat-flat-button color="primary" (click)="navegar(item.id)">Agendar</button>
-            </mat-card-actions> -->
-            <mat-card-actions>
-                <button mat-raised-button color="warn"  (click)="cancelar(item.id)">Cancelar</button>
-            </mat-card-actions>
-        </mat-card>
-    }
-    <div *ngIf="!procedimento">
-        <p>Não há agendamentos!</p>
-    </div>
+      <!-- <mat-card-content>
+          <p>Email: {{item.email}}</p>
+          <p>Telefone: {{item.telefone}}</p>
+          <p>CRM: {{item.credencialDeSaude}}</p>
+      </mat-card-content> -->
+      <!-- <mat-card-actions>
+          <button mat-flat-button color="primary" (click)="navegar(item.id)">Agendar</button>
+      </mat-card-actions> -->
+      <mat-card-actions>
+        <button mat-raised-button color="primary" (click)="navegar(item.id)">Ver procedimento</button>
+
+        <button mat-raised-button color="warn" (click)="cancelar(item.id)">Cancelar</button>
+      </mat-card-actions>
+    </mat-card>
+  }
+  <div *ngIf="!procedimento">
+    <p>Não há agendamentos!</p>
+  </div>
 </div>

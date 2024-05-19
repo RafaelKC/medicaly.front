@@ -1,6 +1,14 @@
 .example-card {
-    flex: 1 0 30%; 
+
     margin: 10px;
     text-align: center;
     align-items: center;
+    width: 50%;
+    margin: 0;
+}
+
+.teste{
+  display: flex;
+  flex-wrap: wrap;
+
 }

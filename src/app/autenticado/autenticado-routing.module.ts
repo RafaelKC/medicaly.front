@@ -57,7 +57,12 @@ const routes: Routes = [
       },
       {
         path: `ver-agendamento`,
-        loadChildren: () => import('./ver-agendamento-paciente/ver-agendamento-paciente.module').then(m => m.VerAgendamentoPacienteModule)
+        loadChildren: () => import('./ver-agendamento-paciente/ver-agendamento-paciente.module').then(m => m.VerAgendamentoPacienteModule),
+        canActivate: [tipoUsuarioGuard([UserTipo.Paciente])],
+      },
+      {
+        path: `meus-procedimentos/:id`,
+        loadChildren: () => import('./ver-agendamento-paciente/meus-procedimentos/meus-procedimentos.module').then(m => m.MeusProcedimentosModule),
       },
       {
         path: `especialidade`,

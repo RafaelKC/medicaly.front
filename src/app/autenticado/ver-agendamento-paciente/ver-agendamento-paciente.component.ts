@@ -9,6 +9,7 @@ import {GetListProcedimentoInput} from "../../../tokens/models/get-list-procedim
 import {AuthenticationService} from "../../../tokens";
 import {error} from "@angular/compiler-cli/src/transformers/util";
 import {ProcedimentoOutput} from "../../../tokens/models/procedimento-output";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-ver-agendamento-paciente',
@@ -16,16 +17,21 @@ import {ProcedimentoOutput} from "../../../tokens/models/procedimento-output";
   styleUrl: './ver-agendamento-paciente.component.scss',
 })
 export class VerAgendamentoPacienteComponent {
-  constructor(private verAgendamentoService: VerAgendamentoService, private auth: AuthenticationService,) {
+  constructor(private verAgendamentoService: VerAgendamentoService, private auth: AuthenticationService, private route : Router) {
   }
 
   public procedimento: ProcedimentoOutput[];
   public medico: ProfissionalInput;
 
+
+
+
+
   ngOnInit() {
     if (this.auth.user?.id) {
       this.getProcedimento();
       console.log(this.procedimento);
+
     }
 
   }
@@ -36,7 +42,20 @@ export class VerAgendamentoPacienteComponent {
     this.verAgendamentoService.getAgendamentos(filter).subscribe(res => {
       this.procedimento = res.items;
       console.log(this.procedimento);
+
+
+
+
     })
+  }
+
+
+
+  navegar(id?: string) {
+    if (id) {
+      this.route.navigate(['auth/meus-procedimentos/' + id])
+
+    }
   }
 
   public cancelar(id: string): void {
