@@ -1,10 +1,9 @@
 import {NgModule} from '@angular/core';
 import {SobreComponent} from "./sobre.component";
 import {RouterModule, Routes} from "@angular/router";
-import { SobreComponentRoutingModule } from './sobre-routing.module';
 
 const routes: Routes = [
-  { path: 'sobre', component: SobreComponent }
+  { path: '', component: SobreComponent }
 ];
 
 @NgModule({
