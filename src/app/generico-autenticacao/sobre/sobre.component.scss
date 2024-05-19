@@ -1,0 +1,31 @@
+main {
+    padding: 20px;
+
+    section.sobre,
+    section.meus-resultados {
+        background-color: white;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        padding: 20px;
+        margin-bottom: 20px;
+
+        h1, h2 {
+            color: blue;
+        }
+
+        p {
+            line-height: 1.6;
+        }
+    }
+}
+
+footer {
+    background-color: blue($color: #000000);
+    text-align: center;
+    padding: 10px 0;
+    color: white;
+
+    p {
+        margin: 0;
+    }
+}

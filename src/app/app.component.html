@@ -49,7 +49,7 @@
 <button mat-fab extended color="primary" *ngIf="authentication.autenticado &&  authentication.user?.tipo === tiposUsuario.Paciente"
             (click)="navegar(['/auth/list-medicos'], loginProfissionalParams)">
       <mat-icon>favorite</mat-icon>
-      Agendar Proceidmento
+      Agendar Procedidmento
     </button>
 
     <button
@@ -82,11 +82,12 @@
       Contato
     </button>
 
-    <button
-      mat-fab
-      extended
-      color="primary">
-      <mat-icon>medicaly-logo</mat-icon>
+      <button 
+      mat-fab 
+      extended 
+      color="primary" 
+      (click)="navegar(['/','sobre'])">
+      <mat-icon>S</mat-icon>
       Sobre Nós
     </button>
 

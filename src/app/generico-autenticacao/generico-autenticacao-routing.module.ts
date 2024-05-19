@@ -8,6 +8,7 @@ const routes: Routes = [
     children: [
       {path: "home", loadChildren: () => import('./inicio/inicio.module').then(m => m.InicioModule)},
       {path: "contato", loadChildren: () => import('./contato/contato.module').then(m => m.ContatoModule)},
+      {path: "sobre", loadChildren: () => import('./sobre/sobre.module').then(m => m.SobreModule)},
       {
         path: '**',
         redirectTo: 'home'

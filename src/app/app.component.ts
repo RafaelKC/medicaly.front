@@ -19,6 +19,7 @@ import {RippleModule} from "primeng/ripple";
 import {MessageService} from "primeng/api";
 import {MessageModule} from "primeng/message";
 import {MessagesModule} from "primeng/messages";
+import { SobreComponentRoutingModule } from './generico-autenticacao/sobre/sobre-routing.module';
 
 
 @Component({
@@ -88,7 +89,7 @@ export class AppComponent {
       skipLocationChange: false
     })
   }
-
+  
   public getTipoUsurio(): string {
     switch (this.authentication.user?.tipo) {
       case UserTipo.Administrador: {
