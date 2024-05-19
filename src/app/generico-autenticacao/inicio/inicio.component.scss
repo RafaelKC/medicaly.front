@@ -1,33 +1,94 @@
-body{
-  background-color: red($color: #000000)!important;
+body {
+  margin: 0;
+  font-family: 'Roboto', 'Helvetica Neue', sans-serif;
+  background-color: #f4f4f4;
+  color: #333;
+  text-align: center;
+  position: relative;
 }
 
-.cta-button:hover {
-  background-color: #003366;
-}
-
-.features {
-  margin-top: 50px;
-}
-
-.feature-item {
-  margin-bottom: 20px;
-}
-
-.feature-item h2 {
-  color: #0056b3;
-}
-
-.feature-item p {
-  color: #444;
-}
 .container {
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  justify-content: flex-start;
   align-items: center;
   height: 100vh;
+  position: relative;
+  background-image: url('/assets/imagens/medicina-2.jpg');
+  background-size: cover;
+  background-position: center;
+}
+
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(255, 255, 255, 0.568); 
+}
+
+.options {
+  margin: 20px 0;
+  padding-top: 10px;
+  z-index: 1;
+  color: #000000;
+}
+
+.options a {
+  color: #000000;
+  padding: 10px 15px; 
+  text-decoration: none;
+  margin: 0 10px;
+  font-weight: 700;
+  background-color: rgba(255, 255, 255, 0.349);
+  border-radius: 5px;
+  transition: background-color 0.3s, color 0.3s, box-shadow 0.3s;
+}
+
+.options a:hover {
+  background-color: #77b0fd;
+  color: #ffffff;
+  cursor: pointer;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 .center-content {
   text-align: center;
+  z-index: 1;
+  color: #000000c7;
+  padding-top: 20px; 
+}
+
+.features {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  position: absolute;
+  bottom: 20px;
+  left: 0;
+  right: 0;
+  z-index: 1;
+  padding: 20px;
+  background-color: rgba(255, 255, 255, 0.445); /* Fundo branco com opacidade */
+  border-radius: 10px;
+}
+
+.feature-item {
+  background: #ffffff00;
+  border: 1px solid #dddddd00;
+  border-radius: 10px;
+  padding: 8px;
+  margin: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: calc(25% - 20px);
+  box-sizing: border-box;
+}
+
+.feature-item h2 {
+  color: #77b0fd;
+}
+
+.feature-item p {
+  color: #444;
 }
