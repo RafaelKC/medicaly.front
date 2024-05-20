@@ -18,6 +18,7 @@
               <p-progressSpinner *ngIf="salvando" [style]="{width: '40px', height: '40px'}" ></p-progressSpinner>
             </div>
         </form>
-        <p>Ainda não tem cadastro conosco? <a routerLink="/notAuth/cadastro-paciente">Clique aqui.</a></p>
+        <p *ngIf="tipoUsuario != tiposUsuario.Administrador && tipoUsuario != tiposUsuario.ProfissionalSaude"> Ainda não tem cadastro conosco? 
+            <a routerLink="/notAuth/cadastro-paciente">Clique aqui.</a></p>
     </div>
 </div>

@@ -12,6 +12,9 @@
           <h4>|</h4>
           <h5>{{ getTipoUsurio() }}</h5>
         }
+        @if (!authentication.autenticado && tipoUsuario != null) {
+          <h5>{{ getTipoUsurio(tipoUsuario) }}</h5>  
+        }
       </div>
 
       <span class="spacer"></span>
