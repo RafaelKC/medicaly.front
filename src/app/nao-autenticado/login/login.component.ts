@@ -20,6 +20,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   public loginForm: FormGroup<LoginForm>;
   public carregado = false;
   public salvando = false;
+  
 
   public tipoUsuario: UserTipo;
 
@@ -93,6 +94,7 @@ export class LoginComponent implements OnInit, OnDestroy {
       });
     this.subs.add(sub);
   }
+
 
   private setFormError(): void {
     this.salvando = false;

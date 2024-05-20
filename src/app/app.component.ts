@@ -97,7 +97,6 @@ export class AppComponent {
 
   ngOnInit() {
     this.setTipoUsuario();
-    console.log("Usuario Setado");
   }
 
   ngOnDestroy() {

@@ -15,10 +15,11 @@
               <span></span>
               <button [disabled]="!podeSalvar" (click)="onSubmit()" mat-raised-button color="primary" type="submit">Fazer login</button>
               <span *ngIf="!salvando"></span>
-              <p-progressSpinner *ngIf="salvando" [style]="{width: '40px', height: '40px'}" ></p-progressSpinner>
+              <p-progressSpinner *ngIf="salvando" [style]="{width: '40px', height: '40px'}"></p-progressSpinner>
             </div>
         </form>
-        <p *ngIf="tipoUsuario != tiposUsuario.Administrador && tipoUsuario != tiposUsuario.ProfissionalSaude"> Ainda não tem cadastro conosco? 
-            <a routerLink="/notAuth/cadastro-paciente">Clique aqui.</a></p>
+        <p *ngIf="tipoUsuario != tiposUsuario.Administrador && tipoUsuario != tiposUsuario.ProfissionalSaude"> Ainda não tem cadastro conosco?   
+            <button mat-button class="create-account-button" [routerLink]="['/notAuth/cadastro-paciente']"style="margin-left: 8px;">Criar Conta</button>
+        </p>
     </div>
 </div>
