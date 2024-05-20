@@ -118,8 +118,6 @@ export class AppComponent {
         next: (params) => {
           this.tipoUsuario = params['tipoUsuario'] as UserTipo;
           if (this.tipoUsuario) {
-            console.log("AHHAHA");
-            console.log(this.getTipoUsurio(this.tipoUsuario));
           }
         }
       });
