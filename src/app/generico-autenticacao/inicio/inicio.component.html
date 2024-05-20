@@ -4,10 +4,14 @@
       <div class="center-content">
           <h1 id="sub-header">Plataforma de Gerenciamento e Agendamento de Consultas Online</h1>
           <div class="options">
+            @if (!auth.autenticado) {
               <a href="notAuth/login?tipoUsuario=2">Acessar</a>
               <a href="/notAuth/login?tipoUsuario=0">Acessar como Administrador</a>
               <a href="/notAuth/login?tipoUsuario=1">Acessar como Profissional</a>
               <a href="/notAuth/cadastro-paciente">Cadastrar-se</a>
+            } @else {
+              <a href="/contato">Contato</a>
+            }
               <a href="/contato">Contato</a>
               <a href="/sobre">Sobre Nós</a>
           </div>

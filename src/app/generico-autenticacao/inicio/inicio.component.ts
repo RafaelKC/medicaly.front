@@ -1,4 +1,5 @@
 import {Component} from '@angular/core';
+import {AuthenticationService} from "../../../tokens";
 
 @Component({
   selector: 'app-inicio',
@@ -7,4 +8,6 @@ import {Component} from '@angular/core';
 })
 export class InicioComponent {
 
+  constructor(public auth: AuthenticationService) {
+  }
 }
