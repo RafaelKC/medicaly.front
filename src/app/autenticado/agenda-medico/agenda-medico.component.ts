@@ -1,21 +1,18 @@
-import { Component, signal, ChangeDetectorRef, ViewChild } from '@angular/core';
-import { ProcedimentoOutput } from "../../../tokens/models/procedimento-output";
-import { AgendaMedicoService } from "./agenda-medico.service";
-import { GetListProcedimentoInput } from "../../../tokens/models/get-list-procedimento-input";
-import { Router } from "@angular/router";
-import { AuthenticationService } from "../../../tokens";
-import { CommonModule } from '@angular/common';
-import { RouterOutlet } from '@angular/router';
-import { FullCalendarComponent, FullCalendarModule } from '@fullcalendar/angular';
-import { CalendarOptions, DateSelectArg, EventClickArg, EventApi } from '@fullcalendar/core';
+import {ChangeDetectorRef, Component, signal, ViewChild} from '@angular/core';
+import {ProcedimentoOutput} from "../../../tokens/models/procedimento-output";
+import {AgendaMedicoService} from "./agenda-medico.service";
+import {GetListProcedimentoInput} from "../../../tokens/models/get-list-procedimento-input";
+import {AuthenticationService} from "../../../tokens";
+import {FullCalendarComponent} from '@fullcalendar/angular';
+import {CalendarOptions, DateSelectArg, EventApi, EventClickArg} from '@fullcalendar/core';
 import interactionPlugin from '@fullcalendar/interaction';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import listPlugin from '@fullcalendar/list';
-import { INITIAL_EVENTS, createEventId } from './event-utils';
-import { ProcedimentoInput } from "../../../tokens/models/procedimento";
-import { en } from "@fullcalendar/core/internal-common";
-import { Console } from "node:inspector";
+import {INITIAL_EVENTS} from './event-utils';
+import {MatDialog} from "@angular/material/dialog";
+import {DialogComponent} from "./dialog/dialog.component";
+import {EventImpl} from "@fullcalendar/core/internal";
 
 @Component({
   selector: 'app-agenda-medico',
@@ -40,7 +37,7 @@ export class AgendaMedicoComponent {
       right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
     },
     initialView: 'dayGridMonth',
-    initialEvents: INITIAL_EVENTS, // alternatively, use the `events` setting to fetch from a feed
+    // initialEvents: INITIAL_EVENTS, // alternatively, use the `events` setting to fetch from a feed
     weekends: true,
     editable: true,
     selectable: true,
@@ -59,7 +56,8 @@ export class AgendaMedicoComponent {
 
   constructor(private procedimentoService: AgendaMedicoService,
               private auth: AuthenticationService,
-              private changeDetector: ChangeDetectorRef) {
+              private changeDetector: ChangeDetectorRef,
+              public dialog: MatDialog) {
   }
 
   getProcedimento() {
@@ -80,17 +78,20 @@ export class AgendaMedicoComponent {
     }
 
     this.procedimentos.forEach(procedimento => {
-      console.log(procedimento);
-      const title = procedimento.idPaciente;
-      const id = procedimento.id;
-      const start = procedimento.data; // Directly use the date string
+      if(procedimento.idProfissional==this.auth.user?.id) {
+        console.log(procedimento);
+        const title = procedimento.paciente.nome;
+        const id = procedimento.id;
+        const start = procedimento.data; // Directly use the date string
 
-      calendarApi.addEvent({
-        id: id,
-        title: title,
-        start: start,
-        // allDay: true
-      });
+        calendarApi.addEvent({
+          id: id,
+          title: title,
+          start: start,
+          procedimento: procedimento
+          // allDay: true
+
+      });}
     });
   }
 
@@ -125,10 +126,17 @@ export class AgendaMedicoComponent {
     // }
   }
 
+  openDialog(procedimento: ProcedimentoOutput, evento: EventImpl) {
+    this.dialog.open(DialogComponent, {
+      data: { procedimento: procedimento,
+              evento: evento},
+    });
+  }
+
   handleEventClick(clickInfo: EventClickArg) {
-    if (confirm(`Are you sure you want to delete the event '${clickInfo.event.title}'`)) {
-      clickInfo.event.remove();
-    }
+    const procedimento = clickInfo.event.extendedProps["procedimento"];
+    this.openDialog(procedimento, clickInfo.event);
+
   }
 
   handleEvents(events: EventApi[]) {
