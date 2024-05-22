@@ -7,6 +7,8 @@ import { HttpMedicalyModule } from '../../http-medicaly.module';
 import { MatCardModule } from '@angular/material/card';
 import { ButtonModule } from 'primeng/button';
 import { MatButton } from '@angular/material/button';
+import {ProgressSpinnerModule} from "primeng/progressspinner";
+
 
 const routes: Routes = [
   {path: '', component: VerAgendamentoPacienteComponent}
@@ -20,7 +22,9 @@ const routes: Routes = [
     RouterModule.forChild(routes),
     HttpMedicalyModule,
     MatCardModule,
-    MatButton
+    MatButton,
+    ProgressSpinnerModule,
+
   ],
   providers:[VerAgendamentoService]
 })

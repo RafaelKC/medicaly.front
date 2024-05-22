@@ -17,22 +17,18 @@ import {Router} from "@angular/router";
   styleUrl: './ver-agendamento-paciente.component.scss',
 })
 export class VerAgendamentoPacienteComponent {
-  constructor(private verAgendamentoService: VerAgendamentoService, private auth: AuthenticationService, private route : Router) {
+  constructor(private verAgendamentoService: VerAgendamentoService, private auth: AuthenticationService, private route: Router) {
   }
 
   public procedimento: ProcedimentoOutput[];
-  public medico: ProfissionalInput;
-
-
-
-
+  public cancelando : boolean;
+  public carregando :boolean = true;
 
   ngOnInit() {
-    if (this.auth.user?.id) {
-      this.getProcedimento();
-      console.log(this.procedimento);
 
-    }
+    this.getProcedimento();
+    console.log(this.procedimento);
+
 
   }
 
@@ -42,13 +38,10 @@ export class VerAgendamentoPacienteComponent {
     this.verAgendamentoService.getAgendamentos(filter).subscribe(res => {
       this.procedimento = res.items;
       console.log(this.procedimento);
-
-
-
-
+      this.cancelando = false
+      this.carregando = false
     })
   }
-
 
 
   navegar(id?: string) {
@@ -59,12 +52,14 @@ export class VerAgendamentoPacienteComponent {
   }
 
   public cancelar(id: string): void {
+    this.cancelando = true
     this.verAgendamentoService
       .cancelar(id)
       .pipe(first())
       .subscribe({
         next: (result) => {
           this.getProcedimento();
+
         },
       });
   }
