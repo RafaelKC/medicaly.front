@@ -21,6 +21,7 @@ import {EventImpl} from "@fullcalendar/core/internal";
 })
 export class AgendaMedicoComponent {
   procedimentos: ProcedimentoOutput[];
+  carregado: boolean;
 
   @ViewChild('calendar') calendarComponent: FullCalendarComponent;
   calendarVisible = signal(true);
@@ -65,7 +66,7 @@ export class AgendaMedicoComponent {
     filter.profissionalId = this.auth.user?.id;
     this.procedimentoService.getProcedimento(filter).subscribe(res => {
       this.procedimentos = res.items;
-      this.writeProcedimentosOnCalendar(); // Move this here
+      this.writeProcedimentosOnCalendar();
     });
   }
 
@@ -97,6 +98,7 @@ export class AgendaMedicoComponent {
 
   ngOnInit() {
     this.getProcedimento(); // Just call getProcedimento() here
+
   }
 
   handleCalendarToggle() {
