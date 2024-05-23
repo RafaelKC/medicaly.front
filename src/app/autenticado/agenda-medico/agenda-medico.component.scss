@@ -55,3 +55,16 @@ full-calendar{
     max-height: 100%;
   }
 }
+
+@media(max-height: 765px){
+  full-calendar{
+    max-height: 65%;
+  }
+}
+
+@media(max-height: 625px){
+  full-calendar{
+    max-height: 55%;
+  }
+}
+

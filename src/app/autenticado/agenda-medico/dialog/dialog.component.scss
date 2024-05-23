@@ -2,3 +2,30 @@
   height: 100%;
   width: 70%;
 }
+.example-card {
+  width: 200px;
+  height: 340px;
+  margin: 16px;
+  align-items: center;
+  img{
+    width: 120px;
+    height: 125px;
+  }
+}
+
+.example-header-image {
+  background-image: url('https://material.angular.io/assets/img/examples/shiba1.jpg');
+  background-size: cover;
+}
+
+.dialog_content{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 30px;
+}
+
+.botoes{
+  display: flex;
+  gap: 10px;}
