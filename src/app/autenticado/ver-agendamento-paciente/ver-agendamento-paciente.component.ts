@@ -10,6 +10,8 @@ import {AuthenticationService} from "../../../tokens";
 import {error} from "@angular/compiler-cli/src/transformers/util";
 import {ProcedimentoOutput} from "../../../tokens/models/procedimento-output";
 import {Router} from "@angular/router";
+import {resultadoOutput} from "../../../tokens/models/resultadoOutput";
+import {AnexosService} from "../../../tokens/services/anexos.service";
 
 @Component({
   selector: 'app-ver-agendamento-paciente',
@@ -17,12 +19,14 @@ import {Router} from "@angular/router";
   styleUrl: './ver-agendamento-paciente.component.scss',
 })
 export class VerAgendamentoPacienteComponent {
-  constructor(private verAgendamentoService: VerAgendamentoService, private auth: AuthenticationService, private route: Router) {
+  constructor(private verAgendamentoService: VerAgendamentoService, private auth: AuthenticationService, private route: Router, private anexoService: AnexosService) {
   }
 
   public procedimento: ProcedimentoOutput[];
   public cancelando : boolean;
   public carregando :boolean = true;
+  public resultadoFinalizado = true;
+  public resultado: resultadoOutput;
 
   ngOnInit() {
 
@@ -42,6 +46,18 @@ export class VerAgendamentoPacienteComponent {
       this.carregando = false
     })
   }
+
+  getResultado(id: string) {
+    this.verAgendamentoService.getResultado(id).subscribe(res => {
+      this.resultado = res;
+      this.verAgendamentoService.getAnexo(this.resultado.anexoId).subscribe(response => {
+        this.anexoService.download(response, true).subscribe()
+      })
+    })
+
+  }
+
+
 
 
   navegar(id?: string) {

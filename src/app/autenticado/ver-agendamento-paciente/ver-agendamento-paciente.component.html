@@ -23,6 +23,7 @@
         <p>Unidade: {{item.unidadeAtendimento.nome}}</p>
       </mat-card-content>
       <mat-card-actions>
+        <p *ngIf=" item.status == 1"><button mat-raised-button color="primary" (click)="getResultado(item.id)">Baixar resultado</button></p>
         <p><button mat-raised-button color="warn" (click)="cancelar(item.id)">Cancelar</button></p>
       </mat-card-actions>
     </mat-card>

@@ -8,6 +8,9 @@ import {GetListProcedimentoInput} from "../../../tokens/models/get-list-procedim
 import {PagedResult} from "../../../tokens/models/paged-result";
 import {ProcedimentoOutput} from "../../../tokens/models/procedimento-output";
 import {ProfissionalInput} from "../../../tokens/models/profissional-input";
+import {resultadoOutput} from "../../../tokens/models/resultadoOutput";
+import {anexo} from "../../../tokens/models/anexo";
+import {AnexoComLinkOutput} from "../../../tokens/models/anexos-com-link-output";
 
 @Injectable({
   providedIn: 'root'
@@ -33,7 +36,23 @@ export class VerAgendamentoService {
     return this.http.get<PagedResult<ProcedimentoOutput>>(this.basePathProcedimento, { params });
   }
 
+  public getResultado(id: string) : Observable<resultadoOutput> {
+    const url = this.basePathResultado + `/${id}`
+    return this.http.get<resultadoOutput>(url)
+  }
 
+  public getAnexo(id: string) : Observable<AnexoComLinkOutput> {
+    const url = this.basePathAnexo + `/${id}`
+    return this.http.get<AnexoComLinkOutput>(url)
+  }
+
+  public get basePathResultado(): string {
+    return `${ensureTrailingSlash(environment.apiUrl)}resultados`;
+  }
+
+  public get basePathAnexo(): string {
+    return `${ensureTrailingSlash(environment.apiUrl)}anexos`;
+  }
 
   public cancelar(id:string): Observable<any>{
     return this.http.delete<any>(this.basePathProcedimento + `/${id}`)
