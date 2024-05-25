@@ -50,7 +50,7 @@ full-calendar{
   max-height: 75%;
 }
 
-@media(min-height: 900px){
+@media(min-height: 980px){
   full-calendar{
     max-height: 100%;
   }
@@ -62,7 +62,7 @@ full-calendar{
   }
 }
 
-@media(max-height: 625px){
+@media(max-height: 680px){
   full-calendar{
     max-height: 55%;
   }
