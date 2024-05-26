@@ -33,3 +33,19 @@ mat-form-field {
     width: 40px;
   }
 }
+button.create-account-button {
+  color: #888888;
+  background-color: #dcdcdc;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  box-shadow: none;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease, color 0.3s ease;
+}
+
+button.create-account-button:hover {
+  color: #ffffff;
+  background-color: #77b0fd;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
+}

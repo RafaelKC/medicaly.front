@@ -8,9 +8,8 @@ export const tipoUsuarioGuard = (tipos: UserTipo[]): CanActivateFn => {
   return (route, state): MaybeAsync<GuardResult> => {
   const authenticationService = inject(AuthenticationService);
   const sub = authenticationService.userChange.pipe(
-    map(e => {
-      if (e.inicial) return true;
-      const user = authenticationService.user;
+    map(user => {
+      if (user === undefined) return true
       if (!user) return false;
       return tipos.includes(user.tipo);
     }));

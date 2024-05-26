@@ -8,6 +8,9 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {first} from "rxjs";
 import {ProcedimentoInput} from "../../../../tokens/models/procedimento";
 import {StatusProcedimento} from "../../../../tokens/enums/status-procedimento";
+import {MatDialog} from "@angular/material/dialog";
+import {ConflitoMessageComponent} from "./conflito-message/conflito-message.component";
+import {AgendadoMessageComponent} from "./agendado-message/agendado-message.component";
 
 @Component({
   selector: 'app-selecionar-horario',
@@ -51,7 +54,9 @@ export class SelecionarHorarioComponent implements OnInit {
 
   public salvar() {
 
+    console.log(this.authService.user)
     const data = this.agendamentoForm.value.dataProcedimento;
+    data?.setHours(0,0,0,0,);
     data?.setMilliseconds(Number(this.agendamentoForm.value.horarioProcedimento))
     const procedimento = {
       status: StatusProcedimento.Ativo,
@@ -65,8 +70,20 @@ export class SelecionarHorarioComponent implements OnInit {
 
     this.selecionarService.createProcedimento(procedimento).subscribe({
       next: () => {
-        this.router.navigate(['/home'])
-      }
+        this.dialogService.open(AgendadoMessageComponent, { data: {
+            data: data,
+            profissional: this.medico
+          } })
+          .afterClosed().pipe(first())
+          .subscribe({
+            next: () => {
+              this.router.navigate(['/home'])
+            }
+          })
+      },
+      error: () => this.dialogService.open(ConflitoMessageComponent, { data: {
+          data: data
+        }})
     })
 
   }
@@ -77,6 +94,7 @@ export class SelecionarHorarioComponent implements OnInit {
 
 
   constructor(
+    private dialogService: MatDialog,
     private selecionarService: SelecionarHorarioService,
     private route: ActivatedRoute,
     private router: Router,
