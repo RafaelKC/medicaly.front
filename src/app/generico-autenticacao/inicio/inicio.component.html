@@ -8,8 +8,12 @@
         <a href="/notAuth/login?tipoUsuario=0">Acessar como Administrador</a>
         <a href="/notAuth/login?tipoUsuario=1">Acessar como Profissional</a>
         <a href="/notAuth/cadastro-paciente">Cadastrar-se</a>
-      } @else {
-        <a href="/contato">Contato</a>
+      } @else if (auth.user?.tipo == tiposUsuarios.Paciente) {
+        <a href="/auth/list-medicos">Agendar Procedimento</a>
+        <a href="/auth/ver-agendamento">Meus agendamentos</a>
+      } @else if (auth.user?.tipo == tiposUsuarios.Administrador) {
+        <a href="/auth/dashboard-adm">Dashboard</a>
+      } @else if (auth.user?.tipo == tiposUsuarios.ProfissionalSaude) {
       }
       <a href="/contato">Contato</a>
       <a href="/sobre">Sobre Nós</a>

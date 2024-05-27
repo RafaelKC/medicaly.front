@@ -13,7 +13,7 @@
           <h5>{{ getTipoUsurio() }}</h5>
         }
         @if (!authentication.autenticado && tipoUsuario != null) {
-          <h5>{{ getTipoUsurio(tipoUsuario) }}</h5>  
+          <h5>{{ getTipoUsurio(tipoUsuario) }}</h5>
         }
       </div>
 
@@ -32,7 +32,7 @@
     </button>
 
     <button mat-fab extended color="primary" *ngIf="!authentication.autenticado"
-            (click)="navegar(['/notAuth/login'], loginPacienteParams)">
+            (click)="navegar(['/notAuth/ß'], loginPacienteParams)">
       <mat-icon>login</mat-icon>
       Acessar
     </button>
@@ -49,10 +49,21 @@
       Acessar como profissional
     </button>
 
-<button mat-fab extended color="primary" *ngIf="authentication.autenticado &&  authentication.user?.tipo === tiposUsuario.Paciente"
+    <button mat-fab extended color="primary"
+            *ngIf="authentication.autenticado &&  authentication.user?.tipo === tiposUsuario.Paciente"
             (click)="navegar(['/auth/list-medicos'], loginProfissionalParams)">
       <mat-icon>favorite</mat-icon>
       Agendar Procedimento
+    </button>
+
+    <button
+      mat-fab
+      extended
+      color="primary"
+      (click)="navegar(['/auth/ver-agendamento'])"
+      *ngIf="authentication.autenticado && authentication.user?.tipo === tiposUsuario.Paciente">
+      <mat-icon>event</mat-icon>
+      Meus agendamentos
     </button>
 
     <button
@@ -85,10 +96,10 @@
       Contato
     </button>
 
-      <button 
-      mat-fab 
-      extended 
-      color="primary" 
+    <button
+      mat-fab
+      extended
+      color="primary"
       (click)="navegar(['/','sobre'])">
       <mat-icon>public</mat-icon>
       Sobre Nós
@@ -102,14 +113,6 @@
       *ngIf="authentication.autenticado">
       <fa-icon class="icon" [icon]="sairIcon"></fa-icon>
       Sair
-    </button>
-    <button
-      mat-fab
-      extended
-      color="primary"
-      (click)="navegar(['/auth/ver-agendamento'])"
-      *ngIf="authentication.autenticado">
-      Meus agendamentos
     </button>
   </mat-drawer>
 </mat-drawer-container>

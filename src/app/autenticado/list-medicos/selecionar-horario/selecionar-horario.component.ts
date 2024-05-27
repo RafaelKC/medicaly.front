@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {TipoProcedimento} from "../../../../tokens/enums/tipo-procedimento";
 import {ProfissionalInput} from '../../../../tokens/models/profissional-input';
-import {AuthenticationService, stringIsNullOrEmptyOrWhitespace} from "../../../../tokens";
+import {AuthenticationService, DiasSemana, stringIsNullOrEmptyOrWhitespace} from "../../../../tokens";
 import {SelecionarHorarioService} from "./selecionar-horario.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {first} from "rxjs";
@@ -11,7 +11,6 @@ import {StatusProcedimento} from "../../../../tokens/enums/status-procedimento";
 import {MatDialog} from "@angular/material/dialog";
 import {ConflitoMessageComponent} from "./conflito-message/conflito-message.component";
 import {AgendadoMessageComponent} from "./agendado-message/agendado-message.component";
-import {v4 as uuidv4} from "uuid"
 
 @Component({
   selector: 'app-selecionar-horario',
@@ -117,6 +116,10 @@ export class SelecionarHorarioComponent implements OnInit {
         });
       }
     });
+  }
+
+  public getDiaDescricao(d: DiasSemana) {
+    return DiasSemana[d];
   }
 }
 
