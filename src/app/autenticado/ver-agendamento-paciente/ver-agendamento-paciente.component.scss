@@ -1,0 +1,39 @@
+.example-card {
+  width: 260px;
+  height: 260px;
+  display: flex;
+  border: solid 3px #dadeba;
+  align-items: center;
+  margin: 5px;
+}
+
+.teste {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin: 10px;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+  margin: 20px;
+  width: 100%;
+  height: 100vh;
+}
+
+.cancelar-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.cancelar-spinner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

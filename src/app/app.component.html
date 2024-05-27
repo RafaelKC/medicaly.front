@@ -32,7 +32,7 @@
     </button>
 
     <button mat-fab extended color="primary" *ngIf="!authentication.autenticado"
-            (click)="navegar(['/notAuth/login'], loginPacienteParams)">
+            (click)="navegar(['/notAuth/ß'], loginPacienteParams)">
       <mat-icon>login</mat-icon>
       Acessar
     </button>
@@ -54,6 +54,16 @@
             (click)="navegar(['/auth/list-medicos'], loginProfissionalParams)">
       <mat-icon>favorite</mat-icon>
       Agendar Procedimento
+    </button>
+
+    <button
+      mat-fab
+      extended
+      color="primary"
+      (click)="navegar(['/auth/ver-agendamento'])"
+      *ngIf="authentication.autenticado && authentication.user?.tipo === tiposUsuario.Paciente">
+      <mat-icon>event</mat-icon>
+      Meus agendamentos
     </button>
 
     <button

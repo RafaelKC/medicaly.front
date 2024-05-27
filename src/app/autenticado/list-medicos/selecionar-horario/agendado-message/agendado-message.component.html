@@ -1,4 +1,4 @@
 <div>
-  <span>Procedimento Agendado para o dia {{ data.data | date: "dd/MM/yyyy" }} as {{ data.data | date: "H:mm" }}, com o profissional: {{ data.profissional.nome }} {{ data.profissional.sobrenome }}.</span>
+  <span>Procedimento agendado para o dia {{ data.data | date: "dd/MM/yyyy" }} ás {{ data.data | date: "H:mm" }}, com o profissional: {{ data.profissional.nome }} {{ data.profissional.sobrenome }}.</span>
   <button mat-flat-button color="primary" (click)="fechar()">Fechar</button>
 </div>

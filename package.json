@@ -41,7 +41,7 @@
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "^17.0.10",
-    "@angular/cli": "^17.3.1",
+    "@angular/cli": "^17.3.7",
     "@angular/compiler-cli": "^17.3.0",
     "@fullcalendar/interaction": "^6.1.11",
     "@fullcalendar/list": "^6.1.11",

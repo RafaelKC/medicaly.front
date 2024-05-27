@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {TipoProcedimento} from "../../../../tokens/enums/tipo-procedimento";
 import {ProfissionalInput} from '../../../../tokens/models/profissional-input';
-import {AuthenticationService, stringIsNullOrEmptyOrWhitespace} from "../../../../tokens";
+import {AuthenticationService, DiasSemana, stringIsNullOrEmptyOrWhitespace} from "../../../../tokens";
 import {SelecionarHorarioService} from "./selecionar-horario.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {first} from "rxjs";
@@ -58,7 +58,7 @@ export class SelecionarHorarioComponent implements OnInit {
     data?.setMilliseconds(Number(this.agendamentoForm.value.horarioProcedimento))
     const procedimento = {
       status: StatusProcedimento.Ativo,
-      tipoProcedimento: TipoProcedimento.Consulta,
+      tipoProcedimento: TipoProcedimento.Cirurgia,
       idProfissional: this.medico.id,
       idPaciente: this.authService.user?.id,
       codigoTuss: '123456',
@@ -114,6 +114,10 @@ export class SelecionarHorarioComponent implements OnInit {
         });
       }
     });
+  }
+
+  public getDiaDescricao(d: DiasSemana) {
+    return DiasSemana[d];
   }
 }
 

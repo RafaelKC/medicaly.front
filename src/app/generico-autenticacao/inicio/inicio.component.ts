@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {AuthenticationService} from "../../../tokens";
+import {AuthenticationService, UserTipo} from "../../../tokens";
 
 @Component({
   selector: 'app-inicio',
@@ -8,6 +8,10 @@ import {AuthenticationService} from "../../../tokens";
 })
 export class InicioComponent {
 
+  public tiposUsuarios = UserTipo;
+
   constructor(public auth: AuthenticationService) {
   }
+
+  protected readonly tiposUsuario = UserTipo;
 }
