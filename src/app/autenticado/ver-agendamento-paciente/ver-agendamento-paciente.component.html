@@ -1,0 +1,40 @@
+<div class="teste">
+  <div *ngIf="procedimento"></div>
+  @for (item of procedimento; track $index) {
+    <mat-card class="example-card">
+      <mat-card-header>
+        <mat-card-title>
+          <div *ngIf="item.tipoProcedimento == 0">
+            Cirurgia
+          </div>
+          <div *ngIf="item.tipoProcedimento == 1">
+            Consulta
+          </div>
+          <div *ngIf="item.tipoProcedimento == 2">
+            Exame
+          </div>
+        </mat-card-title>
+      </mat-card-header>
+      <mat-card-subtitle>
+       <p>Em {{item.data | date: 'dd/MM'}}</p>
+      </mat-card-subtitle>
+      <mat-card-content>
+        <p>Profissional: {{item.profissional.nome}}</p>
+        <p>Unidade: {{item.unidadeAtendimento.nome}}</p>
+      </mat-card-content>
+      <mat-card-actions>
+        <p *ngIf=" item.status == 1"><button mat-raised-button color="primary" (click)="getResultado(item.id)">Baixar resultado</button></p>
+        <p><button mat-raised-button color="warn" (click)="cancelar(item.id)">Cancelar</button></p>
+      </mat-card-actions>
+    </mat-card>
+  }
+  <div class="cancelar-overlay" *ngIf="cancelando">
+    <div class="cancelar-spinner">
+      <p-progressSpinner [style]="{width: '100px', height: '100px'}"></p-progressSpinner>
+    </div>
+  </div>
+
+  <div *ngIf="!procedimento" class="teste">
+    <p-progressSpinner *ngIf="carregando"   [style]="{width: '80px', height: '80px'}" ></p-progressSpinner>
+  </div>
+</div>

@@ -11,6 +11,7 @@ import {StatusProcedimento} from "../../../../tokens/enums/status-procedimento";
 import {MatDialog} from "@angular/material/dialog";
 import {ConflitoMessageComponent} from "./conflito-message/conflito-message.component";
 import {AgendadoMessageComponent} from "./agendado-message/agendado-message.component";
+import {v4 as uuidv4} from "uuid"
 
 @Component({
   selector: 'app-selecionar-horario',
@@ -60,7 +61,7 @@ export class SelecionarHorarioComponent implements OnInit {
     data?.setMilliseconds(Number(this.agendamentoForm.value.horarioProcedimento))
     const procedimento = {
       status: StatusProcedimento.Ativo,
-      tipoProcedimento: TipoProcedimento.Consulta,
+      tipoProcedimento: TipoProcedimento.Cirurgia,
       idProfissional: this.medico.id,
       idPaciente: this.authService.user?.id,
       codigoTuss: '123456',
