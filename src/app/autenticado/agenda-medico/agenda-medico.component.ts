@@ -1,4 +1,4 @@
-import {ChangeDetectorRef, Component, signal, ViewChild} from '@angular/core';
+import {ChangeDetectorRef, Component, OnInit, signal, ViewChild} from '@angular/core';
 import {ProcedimentoOutput} from "../../../tokens/models/procedimento-output";
 import {AgendaMedicoService} from "./agenda-medico.service";
 import {GetListProcedimentoInput} from "../../../tokens/models/get-list-procedimento-input";
@@ -9,18 +9,22 @@ import interactionPlugin from '@fullcalendar/interaction';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import listPlugin from '@fullcalendar/list';
-import {INITIAL_EVENTS} from './event-utils';
 import {MatDialog} from "@angular/material/dialog";
 import {DialogComponent} from "./dialog/dialog.component";
 import {EventImpl} from "@fullcalendar/core/internal";
+import {GetResultadoInput} from "../../../tokens/models/get-resultado-input";
+import {ResultadoOutput} from "../../../tokens/models/resultado-output";
+import {StatusProcedimento} from "../../../tokens/enums/status-procedimento";
 
 @Component({
   selector: 'app-agenda-medico',
   templateUrl: './agenda-medico.component.html',
   styleUrl: './agenda-medico.component.scss',
 })
-export class AgendaMedicoComponent {
+export class AgendaMedicoComponent implements OnInit{
   procedimentos: ProcedimentoOutput[];
+  resultado: ResultadoOutput[];
+
   carregado: boolean;
 
   @ViewChild('calendar') calendarComponent: FullCalendarComponent;
@@ -70,17 +74,15 @@ export class AgendaMedicoComponent {
     });
   }
 
-  writeProcedimentosOnCalendar() {
+  getResultado(procedimento: ProcedimentoOutput){
     let calendarApi = this.calendarComponent.getApi();
 
-    if (!this.procedimentos || !Array.isArray(this.procedimentos)) {
-      console.error('Procedimentos vazios');
-      return;
-    }
-
-    this.procedimentos.forEach(procedimento => {
-      if(procedimento.idProfissional==this.auth.user?.id) {
-        console.log(procedimento);
+    const filter = new GetResultadoInput();
+    filter.resultadoId = procedimento.id;
+    return this.procedimentoService.getResultado(filter).subscribe(res => {
+      console.log(res)
+      const resultado = {observacoes: res.observacoes, procedimentoId: res.procedimentoId, anexo: res.anexo} as ResultadoOutput
+      if (procedimento.idProfissional == this.auth.user?.id) {
         const title = procedimento.paciente.nome;
         const id = procedimento.id;
         const start = procedimento.data; // Directly use the date string
@@ -89,10 +91,48 @@ export class AgendaMedicoComponent {
           id: id,
           title: title,
           start: start,
-          procedimento: procedimento
+          procedimento: procedimento,
+          resultado: resultado
           // allDay: true
 
-      });}
+        });
+      }
+    })
+  }
+
+
+  writeProcedimentosOnCalendar() {
+    let calendarApi = this.calendarComponent.getApi();
+
+    if (!this.procedimentos || !Array.isArray(this.procedimentos)) {
+      console.error('Procedimentos vazios');
+      return;
+    }
+
+
+    this.procedimentos.forEach(procedimento => {
+      if(procedimento.status==StatusProcedimento.Finalizado){
+        this.getResultado(procedimento)
+
+      }
+      else
+      {
+        if (procedimento.idProfissional == this.auth.user?.id) {
+          const title = procedimento.paciente.nome;
+          const id = procedimento.id;
+          const start = procedimento.data; // Directly use the date string
+
+          calendarApi.addEvent({
+            id: id,
+            title: title,
+            start: start,
+            procedimento: procedimento,
+            resultado: null
+            // allDay: true
+
+          });
+        }
+      }
     });
   }
 
@@ -128,16 +168,18 @@ export class AgendaMedicoComponent {
     // }
   }
 
-  openDialog(procedimento: ProcedimentoOutput, evento: EventImpl) {
+  openDialog(procedimento: ProcedimentoOutput, evento: EventImpl, resultado: ResultadoOutput| null) {
     this.dialog.open(DialogComponent, {
       data: { procedimento: procedimento,
-              evento: evento},
+              evento: evento,
+              resultado: resultado},
     });
   }
 
   handleEventClick(clickInfo: EventClickArg) {
     const procedimento = clickInfo.event.extendedProps["procedimento"];
-    this.openDialog(procedimento, clickInfo.event);
+    const resultado = clickInfo.event.extendedProps["resultado"];
+    this.openDialog(procedimento, clickInfo.event, resultado);
 
   }
 

@@ -12,6 +12,7 @@ import {FilteredInput} from "../models/paged-filtered-input";
 @Injectable({
   providedIn: 'root'
 })
+
 export class AnexosService {
 
   constructor(private httpClient: HttpClient) { }
@@ -31,9 +32,12 @@ export class AnexosService {
     return this.httpClient.delete<any>(this.basePath + `/${id}`);
   }
 
-  public upload(file: File, reportProgress = false): Observable<HttpEvent<{ key: string }> | { key: string }> {
+  public upload(file: File, id:string | null = null, reportProgress = false): Observable<HttpEvent<{ key: string }> | { key: string }> {
     const fileInput = new AnexoInput();
     fileInput.arquivoNome = file.name;
+    if(id!=null){
+      fileInput.id = id
+    }
 
     return this.httpClient.post<AnexosCreatedOutput>(this.basePath, fileInput)
       .pipe(
@@ -45,6 +49,7 @@ export class AnexosService {
             reportProgress: true,
             observe: 'response'
           });
+
           const noProgressRequest =  this.httpClient.put<{ key: string }>(response.uploadLink, formData);
 
           return reportProgress ? progressRequest : noProgressRequest;

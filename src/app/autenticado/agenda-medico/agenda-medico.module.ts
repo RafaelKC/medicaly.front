@@ -23,7 +23,8 @@ const routes: Routes =  [
     MatCardHeader,
     MatCardActions,
     MatCardModule,
-    FullCalendarModule
+    FullCalendarModule,
+    HttpMedicalyModule
   ]
   , providers: [AgendaMedicoService],
   bootstrap: [AgendaMedicoComponent]

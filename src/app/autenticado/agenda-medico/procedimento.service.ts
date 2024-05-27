@@ -17,7 +17,6 @@ export class ProcedimentoService {
   constructor(private http: HttpClient ) { }
 
   public update(id: string, input: ProcedimentoInput): Observable<any> {
-    console.log('tentando updatar')
     return this.http.put<any>(this.basePath + `/${id}`, input);
   }
 

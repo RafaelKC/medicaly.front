@@ -13,7 +13,7 @@
           <h5>{{ getTipoUsurio() }}</h5>
         }
         @if (!authentication.autenticado && tipoUsuario != null) {
-          <h5>{{ getTipoUsurio(tipoUsuario) }}</h5>  
+          <h5>{{ getTipoUsurio(tipoUsuario) }}</h5>
         }
       </div>
 
@@ -40,16 +40,17 @@
     <button mat-fab extended color="primary" *ngIf="!authentication.autenticado"
             (click)="navegar(['/notAuth/login'], loginAdministradorParams)">
       <mat-icon>login</mat-icon>
-      Acessar como Administrador
+      Acesso Administrador
     </button>
 
     <button mat-fab extended color="primary" *ngIf="!authentication.autenticado"
             (click)="navegar(['/notAuth/login'], loginProfissionalParams)">
       <mat-icon>login</mat-icon>
-      Acessar como profissional
+      Acesso profissional
     </button>
 
-<button mat-fab extended color="primary" *ngIf="authentication.autenticado &&  authentication.user?.tipo === tiposUsuario.Paciente"
+    <button mat-fab extended color="primary"
+            *ngIf="authentication.autenticado &&  authentication.user?.tipo === tiposUsuario.Paciente"
             (click)="navegar(['/auth/list-medicos'], loginProfissionalParams)">
       <mat-icon>favorite</mat-icon>
       Agendar Procedimento
@@ -85,23 +86,23 @@
       Contato
     </button>
 
-      <button 
-      mat-fab 
-      extended 
-      color="primary" 
+    <button
+      mat-fab
+      extended
+      color="primary"
       (click)="navegar(['/','sobre'])">
       <mat-icon>public</mat-icon>
       Sobre Nós
     </button>
 
-<button
+    <button
       mat-fab
       extended
       color="primary"
       *ngIf="authentication.autenticado && authentication.user?.tipo === tiposUsuario.ProfissionalSaude"
       (click)="navegar(['/auth/agenda-medico'])"
->
-      <mat-icon>medicaly-logo</mat-icon>
+    >
+      <mat-icon>calendar_today</mat-icon>
       Minha Agenda
 
     </button>

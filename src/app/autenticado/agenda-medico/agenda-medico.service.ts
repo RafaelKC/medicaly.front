@@ -7,6 +7,10 @@ import {ensureTrailingSlash} from "../../../tokens/functions/ensure-trailing-sla
 import {environment} from "../../../environments/environment";
 import {ProcedimentoOutput} from "../../../tokens/models/procedimento-output";
 import {GetListProcedimentoInput} from "../../../tokens/models/get-list-procedimento-input";
+import {GetResultadoOutput} from "../../../tokens/models/get-resultado-output";
+import {ResultadoInput} from "../../../tokens/models/resultado-input";
+import {GetResultadoInput} from "../../../tokens/models/get-resultado-input";
+import {ResultadoOutput} from "../../../tokens/models/resultado-output";
 
 
 
@@ -33,8 +37,19 @@ export class AgendaMedicoService {
     return this.http.get<PagedResult<ProcedimentoOutput>>(this.basePath, { params });
 
   }
+
+  getResultado(input: GetResultadoInput): Observable<ResultadoOutput> {
+    return this.http.get<ResultadoOutput>(this.basePathR+'/'+input.resultadoId);
+  }
+
   public get basePath(): string {
     return `${ensureTrailingSlash(environment.apiUrl)}procedimentos`;
   }
+
+  public get basePathR(): string {
+    return `${ensureTrailingSlash(environment.apiUrl)}resultados`;
+  }
+
+
   constructor(private http: HttpClient) { }
 }

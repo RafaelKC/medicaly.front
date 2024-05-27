@@ -13,7 +13,7 @@
         <mat-card-content>
           <div class="info-medico">
 
-            <p> Genero: {{ genero(data.procedimento.paciente.genero) }}</p>
+            <p> Gênero: {{ genero(data.procedimento.paciente.genero) }}</p>
             <p>Data de nascimento: {{ data.procedimento.paciente.dataNascimento | date:"dd/MM/yyyy" }}</p>
             <p> Contato: {{ data.procedimento.paciente.email }}</p>
           </div>
@@ -23,51 +23,48 @@
     </div>
     <div class="info-procedimento">
       <div>
-      <h3>Horario: {{ data.procedimento.data | date: "H:mm" }}</h3>
-      <h3>Tipo: {{ tipoProcedimento(data.procedimento.tipoProcedimento) }}</h3>
-      <h3>Status: {{ statusProcedimento(data.procedimento.status) }}</h3>
+        <h3>Horario: {{ data.procedimento.data | date: "H:mm" }}</h3>
+        <h3>Tipo: {{ tipoProcedimento(data.procedimento.tipoProcedimento) }}</h3>
+        <h3>Status: {{ statusProcedimento(data.procedimento.status) }}</h3>
       </div>
 
       <div class="botoes">
         @if (data.procedimento.status == 0) {
-          <button mat-raised-button color="accent" (click)="showFinalizarDiv()"> Finalizar </button>
-          <button mat-raised-button color="warn" (click)="cancelarProcedimento(data.procedimento.id, data.procedimento)"> Cancelar </button>
+          <button mat-raised-button color="accent" (click)="showFinalizarDiv()"> Finalizar</button>
+          <button mat-raised-button color="warn" (click)="cancelarProcedimento(data.procedimento)"> Cancelar</button>
         }
 
-        <button mat-raised-button color="primary" (click)="dialogref.close()"> Fechar </button>
+        <button mat-raised-button color="primary" (click)="dialogref.close()"> Fechar</button>
 
 
       </div>
 
     </div>
 
-      <form class="info-finalizar" *ngIf="showFinalizar">
-        <mat-form-field class="example-full-width">
-          <mat-label>Observações sobre {{artigo(data.procedimento.tipoProcedimento)}} {{ tipoProcedimento(data.procedimento.tipoProcedimento) }}</mat-label>
-          <textarea matInput rows="8" [cdkTextareaAutosize]="false" placeholder="Ex. O paciente piorou"></textarea>
-        </mat-form-field>
+    <form class="info-finalizar" *ngIf="showFinalizar" [formGroup]="procedimentoForm">
+      <mat-form-field class="example-full-width" disabled="true">
+        <mat-label>Observações sobre {{ artigo(data.procedimento.tipoProcedimento) }} {{ tipoProcedimento(data.procedimento.tipoProcedimento) }}</mat-label>
+        <textarea formControlName="observacoes" matInput rows="8" [cdkTextareaAutosize]="false" placeholder="Ex. O paciente piorou"></textarea>
+      </mat-form-field>
 
+      <div *ngIf="data.procedimento.status != 3">
         <div>
-          <div>
-            <p style="font-weight: bold">
-              {{fileName}}
-            </p>
-
-        <button mat-fab extended color="primary" class="up-button" (click)="uploadClicked($event)">
-          @if (uploadClicado) {
-            <UploadIcon></UploadIcon>
-            Selecionar arquivo
-          } @else {
-            ✖
-          }
-
-        </button>
-
+          <p style="font-weight: bold">
+            {{ fileName }}
+          </p>
+          <button mat-fab extended color="primary" class="up-button" (click)="uploadClicked($event)">
+            @if (uploadClicado) {
+              <UploadIcon></UploadIcon>
+              Selecionar arquivo
+            } @else {
+              ✖
+            }
+          </button>
           <input hidden (change)="onFileSelected()" #uploadInput type="file" id="file">
-          </div>
-        <button mat-raised-button color="primary"> Enviar </button>
-
         </div>
-      </form>
+        <button mat-raised-button color="primary" (click)="finalizarProcedimento(data.procedimento)">Enviar</button>
+      </div>
+    </form>
+
   </div>
 </mat-dialog-content>

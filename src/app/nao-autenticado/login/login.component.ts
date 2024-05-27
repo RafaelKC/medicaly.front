@@ -20,7 +20,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   public loginForm: FormGroup<LoginForm>;
   public carregado = false;
   public salvando = false;
-  
+
 
   public tipoUsuario: UserTipo;
 
@@ -37,7 +37,6 @@ export class LoginComponent implements OnInit, OnDestroy {
   public ngOnInit(): void {
     this.setForm();
     this.setTipoUsuario();
-    console.log(this.tipoUsuario != this.tiposUsuario.Administrador);
   }
 
   public ngOnDestroy(): void {

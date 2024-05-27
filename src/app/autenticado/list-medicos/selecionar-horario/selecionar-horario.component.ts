@@ -53,8 +53,6 @@ export class SelecionarHorarioComponent implements OnInit {
   }
 
   public salvar() {
-
-    console.log(this.authService.user)
     const data = this.agendamentoForm.value.dataProcedimento;
     data?.setHours(0,0,0,0,);
     data?.setMilliseconds(Number(this.agendamentoForm.value.horarioProcedimento))

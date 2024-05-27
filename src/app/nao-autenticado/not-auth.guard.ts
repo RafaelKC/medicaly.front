@@ -11,7 +11,6 @@ export const notAuthGuard: CanActivateFn = (route, state) => {
   const sub = authorizationService.autenticadoChange.pipe(
     map(autenticado => {
       if (autenticado === undefined) return true
-      console.log(autenticado)
       if (!autenticado) {
         return true
       } else {
