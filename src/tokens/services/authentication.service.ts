@@ -4,7 +4,7 @@ import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {ensureTrailingSlash} from "../functions/ensure-trailing-slash";
 import {environment} from "../../environments/environment";
 import {User} from "../models";
-import {BehaviorSubject, catchError, first, map, Observable, of, Subject, tap} from "rxjs";
+import {BehaviorSubject, catchError, first, map, Observable, of, ReplaySubject, Subject, tap} from "rxjs";
 import {DOCUMENT} from "@angular/common";
 import {ActivatedRoute, Router} from "@angular/router";
 import {MessageService} from "primeng/api";
@@ -13,8 +13,8 @@ import {MessageService} from "primeng/api";
   providedIn: 'root'
 })
 export class AuthenticationService {
-  public autenticadoChange = new BehaviorSubject<{ inicial: boolean }>({ inicial: true });
-  public userChange = new BehaviorSubject<{ inicial: boolean }>({ inicial: true });
+  public autenticadoChange = new BehaviorSubject<boolean | undefined>(undefined);
+  public userChange = new BehaviorSubject<User | undefined>(undefined);
 
   private _autenticado = false;
   public token?: string;
@@ -42,7 +42,7 @@ export class AuthenticationService {
 
   public set autenticado(auth: boolean) {
     this._autenticado = auth;
-    this.autenticadoChange.next({ inicial: false })
+    this.autenticadoChange.next(auth)
   }
 
 
@@ -52,7 +52,7 @@ export class AuthenticationService {
 
   public set user(auth: User | undefined) {
     this._user = auth;
-    this.userChange.next({ inicial: false })
+    this.userChange.next(auth)
   }
 
   private setLocalStorage(): void {

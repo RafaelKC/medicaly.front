@@ -20,10 +20,12 @@ export class LoginComponent implements OnInit, OnDestroy {
   public loginForm: FormGroup<LoginForm>;
   public carregado = false;
   public salvando = false;
+  
 
-  private tipoUsuario: UserTipo;
+  public tipoUsuario: UserTipo;
 
   private readonly subs = new SubscriptionsManagerUtil();
+  public tiposUsuario = UserTipo;
 
   constructor(private _fb: FormBuilder,
               private router: ActivatedRoute,
@@ -35,6 +37,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   public ngOnInit(): void {
     this.setForm();
     this.setTipoUsuario();
+    console.log(this.tipoUsuario != this.tiposUsuario.Administrador);
   }
 
   public ngOnDestroy(): void {
@@ -91,6 +94,7 @@ export class LoginComponent implements OnInit, OnDestroy {
       });
     this.subs.add(sub);
   }
+
 
   private setFormError(): void {
     this.salvando = false;
