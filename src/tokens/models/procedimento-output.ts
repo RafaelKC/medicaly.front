@@ -1,5 +1,3 @@
-import {Genero, UserTipo} from "../enums";
-
 import {TipoProcedimento} from "../enums/tipo-procedimento";
 import {StatusProcedimento} from "../enums/status-procedimento";
 import {PacienteOutput} from "./paciente-output";
@@ -18,6 +16,4 @@ export class ProcedimentoOutput{
   public idProfissional: string;
   public idPaciente: string;
   public idUnidadeAtendimento: string
-  public paciente: PacienteOutput;
-  public profissional: ProfissionalOutput
 }

@@ -4,14 +4,8 @@
     <mat-card class="example-card">
       <mat-card-header>
         <mat-card-title>
-          <div *ngIf="item.tipoProcedimento == 0">
-            Cirurgia
-          </div>
           <div *ngIf="item.tipoProcedimento == 1">
             Consulta
-          </div>
-          <div *ngIf="item.tipoProcedimento == 2">
-            Exame
           </div>
         </mat-card-title>
       </mat-card-header>
@@ -21,10 +15,11 @@
       <mat-card-content>
         <p>Profissional: {{item.profissional.nome}}</p>
         <p>Unidade: {{item.unidadeAtendimento.nome}}</p>
+        <p>Status: {{statusProcedimento[item.status]}}</p>
       </mat-card-content>
       <mat-card-actions>
-        <p *ngIf=" item.status == 1"><button mat-raised-button color="primary" (click)="getResultado(item.id)">Baixar resultado</button></p>
-        <p><button mat-raised-button color="warn" (click)="cancelar(item.id)">Cancelar</button></p>
+        <p *ngIf=" item.status == statusProcedimento.Finalizado"><button mat-raised-button color="primary" (click)="getResultado(item.id)">Baixar resultado</button></p>
+        <p  *ngIf=" item.status == statusProcedimento.Ativo || item.status == statusProcedimento.EmAndamento" ><button mat-raised-button color="warn" (click)="cancelar(item)">Cancelar</button></p>
       </mat-card-actions>
     </mat-card>
   }

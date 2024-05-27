@@ -93,10 +93,12 @@ export class DialogComponent implements OnInit{
 
 
   public ngOnInit(): void {
+    if (this.data.resultado != null) {
+      this.resultado = this.data.resultado;
+    }
     this.createForm()
 
     if (this.data.procedimento.status == StatusProcedimento.Finalizado) {
-      console.log(this.data.resultado);
       this.procedimentoForm?.get('observacoes')?.setValue(this.data.resultado?.observacoes);
       this.procedimentoForm.disable();
     }

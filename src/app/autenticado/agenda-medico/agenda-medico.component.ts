@@ -80,16 +80,16 @@ export class AgendaMedicoComponent implements OnInit{
     const filter = new GetResultadoInput();
     filter.resultadoId = procedimento.id;
     return this.procedimentoService.getResultado(filter).subscribe(res => {
-      console.log(res)
       const resultado = {observacoes: res.observacoes, procedimentoId: res.procedimentoId, anexo: res.anexo} as ResultadoOutput
       if (procedimento.idProfissional == this.auth.user?.id) {
-        const title = procedimento.paciente.nome;
+        const title = procedimento.paciente.nome + ' ' + procedimento.paciente.sobrenome;
         const id = procedimento.id;
         const start = procedimento.data; // Directly use the date string
 
         calendarApi.addEvent({
           id: id,
           title: title,
+          nomePasciente: procedimento.paciente.nome + ' ' + procedimento.paciente.sobrenome,
           start: start,
           procedimento: procedimento,
           resultado: resultado

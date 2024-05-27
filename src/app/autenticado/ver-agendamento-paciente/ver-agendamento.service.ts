@@ -54,8 +54,12 @@ export class VerAgendamentoService {
     return `${ensureTrailingSlash(environment.apiUrl)}anexos`;
   }
 
-  public cancelar(id:string): Observable<any>{
+  public deleta(id:string): Observable<any>{
     return this.http.delete<any>(this.basePathProcedimento + `/${id}`)
+  }
+
+  public update(id: string, procedimento: ProcedimentoOutput): Observable<any> {
+    return this.http.put<any>(this.basePathProcedimento + `/${id}`, procedimento)
   }
 
   public get basePathProcedimento(): string {

@@ -58,7 +58,6 @@ export class AnexosService {
   }
 
   public download(anexo: AnexoComLinkOutput, autoDownload: boolean = false): Observable<Blob> {
-    console.log(anexo.downloadLink);
     return this.httpClient.get(anexo.downloadLink, {
       responseType: "blob"
     }).pipe(

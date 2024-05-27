@@ -1,4 +1,4 @@
-<h2 mat-dialog-title>Agendamento dia {{ data.evento.start?.getDate() }}</h2>
+<h2 mat-dialog-title>Agendamento dia {{ data.evento.start | date:"dd/MM/yyyy" }}</h2>
 <mat-dialog-content>
   <div class="dialog_content">
     <div>
@@ -24,7 +24,6 @@
     <div class="info-procedimento">
       <div>
         <h3>Horario: {{ data.procedimento.data | date: "H:mm" }}</h3>
-        <h3>Tipo: {{ tipoProcedimento(data.procedimento.tipoProcedimento) }}</h3>
         <h3>Status: {{ statusProcedimento(data.procedimento.status) }}</h3>
       </div>
 
