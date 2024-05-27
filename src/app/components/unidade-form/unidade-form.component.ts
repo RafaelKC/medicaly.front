@@ -20,6 +20,7 @@ interface UnidadeForm {
   nome: FormControl<string | null>;
   tipoUnidade: FormControl<TipoUnidade | null>;
 }
+
 @Component({
   selector: 'app-unidade-form',
   templateUrl: './unidade-form.component.html',

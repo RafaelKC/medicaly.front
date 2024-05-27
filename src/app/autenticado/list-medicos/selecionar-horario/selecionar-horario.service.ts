@@ -3,7 +3,6 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from '../../../../environments/environment';
 import { ensureTrailingSlash } from '../../../../tokens/functions/ensure-trailing-slash';
-import { GetProfissionalOutput } from '../../../../tokens/models/get-profissional-output';
 import { ProfissionalInput } from '../../../../tokens/models/profissional-input';
 import {ProcedimentoInput} from "../../../../tokens/models/procedimento";
 

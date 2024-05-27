@@ -1,0 +1,70 @@
+<h2 mat-dialog-title>Agendamento dia {{ data.evento.start?.getDate() }}</h2>
+<mat-dialog-content>
+  <div class="dialog_content">
+    <div>
+      <mat-card class="example-card">
+        <mat-card-header>
+          <mat-card-title>{{ data.procedimento.paciente.nome }} {{ data.procedimento.paciente.sobrenome }}</mat-card-title>
+          <!--          <mat-card-subtitle> {{data.procedimento.paciente.atuacoesIds}} </mat-card-subtitle>-->
+        </mat-card-header>
+        <img mat-card-image
+             src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/59/User-avatar.svg/2048px-User-avatar.svg.png"
+             alt="Photo of a Shiba Inu">
+        <mat-card-content>
+          <div class="info-medico">
+
+            <p> Gênero: {{ genero(data.procedimento.paciente.genero) }}</p>
+            <p>Data de nascimento: {{ data.procedimento.paciente.dataNascimento | date:"dd/MM/yyyy" }}</p>
+            <p> Contato: {{ data.procedimento.paciente.email }}</p>
+          </div>
+
+        </mat-card-content>
+      </mat-card>
+    </div>
+    <div class="info-procedimento">
+      <div>
+        <h3>Horario: {{ data.procedimento.data | date: "H:mm" }}</h3>
+        <h3>Tipo: {{ tipoProcedimento(data.procedimento.tipoProcedimento) }}</h3>
+        <h3>Status: {{ statusProcedimento(data.procedimento.status) }}</h3>
+      </div>
+
+      <div class="botoes">
+        @if (data.procedimento.status == 0) {
+          <button mat-raised-button color="accent" (click)="showFinalizarDiv()"> Finalizar</button>
+          <button mat-raised-button color="warn" (click)="cancelarProcedimento(data.procedimento)"> Cancelar</button>
+        }
+
+        <button mat-raised-button color="primary" (click)="dialogref.close()"> Fechar</button>
+
+
+      </div>
+
+    </div>
+
+    <form class="info-finalizar" *ngIf="showFinalizar" [formGroup]="procedimentoForm">
+      <mat-form-field class="example-full-width" disabled="true">
+        <mat-label>Observações sobre {{ artigo(data.procedimento.tipoProcedimento) }} {{ tipoProcedimento(data.procedimento.tipoProcedimento) }}</mat-label>
+        <textarea formControlName="observacoes" matInput rows="8" [cdkTextareaAutosize]="false" placeholder="Ex. O paciente piorou"></textarea>
+      </mat-form-field>
+
+      <div *ngIf="data.procedimento.status != 3">
+        <div>
+          <p style="font-weight: bold">
+            {{ fileName }}
+          </p>
+          <button mat-fab extended color="primary" class="up-button" (click)="uploadClicked($event)">
+            @if (uploadClicado) {
+              <UploadIcon></UploadIcon>
+              Selecionar arquivo
+            } @else {
+              ✖
+            }
+          </button>
+          <input hidden (change)="onFileSelected()" #uploadInput type="file" id="file">
+        </div>
+        <button mat-raised-button color="primary" (click)="finalizarProcedimento(data.procedimento)">Enviar</button>
+      </div>
+    </form>
+
+  </div>
+</mat-dialog-content>

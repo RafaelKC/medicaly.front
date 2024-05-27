@@ -15,6 +15,10 @@ const routes: Routes = [
         loadChildren: () => import('./cadastro-profissional/cadastro-profissional.module').then(m => m.CadastroProfissionalModule)
       },
       {
+        path: 'agenda-medico',
+        loadChildren: () => import('./agenda-medico/agenda-medico.module').then(m => m.AgendaMedicoModule)
+      },
+      {
         path: 'cadastro-unidade',
         loadChildren: () => import('../components/unidade-form/unidade-form.module').then(m => m.UnidadeFormModule)
       },

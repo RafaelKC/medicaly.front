@@ -40,13 +40,13 @@
     <button mat-fab extended color="primary" *ngIf="!authentication.autenticado"
             (click)="navegar(['/notAuth/login'], loginAdministradorParams)">
       <mat-icon>login</mat-icon>
-      Acessar como Administrador
+      Acesso Administrador
     </button>
 
     <button mat-fab extended color="primary" *ngIf="!authentication.autenticado"
             (click)="navegar(['/notAuth/login'], loginProfissionalParams)">
       <mat-icon>login</mat-icon>
-      Acessar como profissional
+      Acesso profissional
     </button>
 
     <button mat-fab extended color="primary"
@@ -103,6 +103,18 @@
       (click)="navegar(['/','sobre'])">
       <mat-icon>public</mat-icon>
       Sobre Nós
+    </button>
+
+    <button
+      mat-fab
+      extended
+      color="primary"
+      *ngIf="authentication.autenticado && authentication.user?.tipo === tiposUsuario.ProfissionalSaude"
+      (click)="navegar(['/auth/agenda-medico'])"
+    >
+      <mat-icon>calendar_today</mat-icon>
+      Minha Agenda
+
     </button>
 
     <button
