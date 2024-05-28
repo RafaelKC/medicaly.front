@@ -13,9 +13,8 @@ import {MatButton} from "@angular/material/button";
 import {TimeSelectModule} from "../../components/time-select/time-select.module";
 import {EnderecoFormModule} from "../../components/endereco-form/endereco-form.module";
 import {CreateProfissionalService} from "./create-profissional.service";
-import {HttpMedicalyModule} from "../../http-medicaly.module";
 import {SelectEspecialidadeModule} from "../../components/select-especialidade/select-especialidade.module";
-import {DashboardUnidadesServiceService} from "../dashboard-adm/dashboard-unidades/dashboard-unidades-service.service";
+import {HttpMedicalyModule} from "../../http-medicaly.module";
 
 const routes: Routes = [
   { path: '', component: CadastroProfissionalComponent }
@@ -25,10 +24,10 @@ const routes: Routes = [
   declarations: [CadastroProfissionalComponent],
   exports: [RouterModule],
     imports: [
+        HttpMedicalyModule,
         CommonModule,
         EnderecoFormModule,
         FormsModule,
-        HttpMedicalyModule,
         IMaskDirective,
         MatButton,
         MatDatepicker,

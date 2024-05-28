@@ -1,24 +1,17 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {TableLazyLoadEvent, TableModule} from "primeng/table";
-import {
-  Genero,
-  PacienteInput,
-  stringIsNullOrEmptyOrWhitespace,
-  SubscriptionsManagerUtil,
-  TELEFONE_MASK
-} from "../../../../tokens";
+import {Genero, stringIsNullOrEmptyOrWhitespace, SubscriptionsManagerUtil} from "../../../../tokens";
 import {DatePipe, NgIf} from "@angular/common";
 import {MatIcon} from "@angular/material/icon";
 import {MatFabButton, MatIconButton} from "@angular/material/button";
 import {DashboardProfissionaisServiceService} from "./dashboard-profissionais-service.service";
 import {FilteredInput} from "../../../../tokens/models/paged-filtered-input";
-import {debounceTime, filter, first, Subscription} from "rxjs";
+import {debounceTime, first} from "rxjs";
 import {MatFormField, MatLabel} from "@angular/material/form-field";
 import {MatInput} from "@angular/material/input";
 import {FormControl, ReactiveFormsModule} from "@angular/forms";
 import {Router} from "@angular/router";
 import {ProfissionalOutput} from "../../../../tokens/models/profissional-output";
-import {HttpMedicalyModule} from "../../../http-medicaly.module";
 
 @Component({
   selector: 'app-dashboard-profissionais',
@@ -34,7 +27,6 @@ import {HttpMedicalyModule} from "../../../http-medicaly.module";
     MatInput,
     MatLabel,
     ReactiveFormsModule,
-    HttpMedicalyModule
   ],
   templateUrl: './dashboard-profissional.component.html',
   styleUrl: './dashboard-profissional.component.scss'

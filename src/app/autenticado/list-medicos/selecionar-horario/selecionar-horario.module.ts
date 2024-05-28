@@ -11,11 +11,11 @@ import {
   MatCardModule
 } from "@angular/material/card";
 import {MatButton} from "@angular/material/button";
-import {HttpMedicalyModule} from "../../../http-medicaly.module";
 import {MatCalendar} from "@angular/material/datepicker";
 import {FormControl, ReactiveFormsModule} from "@angular/forms";
 import {TimeSelectModule} from "../../../components/time-select/time-select.module";
 import {SelecionarHorarioService} from "./selecionar-horario.service";
+import {HttpMedicalyModule} from "../../../http-medicaly.module";
 
 const routes: Routes = [
   { path: '', component: SelecionarHorarioComponent }
@@ -24,6 +24,7 @@ const routes: Routes = [
 @NgModule({
   declarations: [SelecionarHorarioComponent],
   imports: [
+    HttpMedicalyModule,
     CommonModule,
     RouterModule.forChild(routes),
     MatCard,
@@ -32,7 +33,6 @@ const routes: Routes = [
     MatCardActions,
     MatCardImage,
     MatButton,
-    HttpMedicalyModule,
     MatCardModule,
     MatCalendar,
     ReactiveFormsModule,

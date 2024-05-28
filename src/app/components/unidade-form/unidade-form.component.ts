@@ -1,17 +1,11 @@
 import {Component, EventEmitter, OnInit, Output} from '@angular/core';
-import {
-  FormBuilder,
-  FormControl,
-  FormGroup,
-  Validators,
-} from '@angular/forms';
+import {FormBuilder, FormControl, FormGroup, Validators,} from '@angular/forms';
 import {EnderecoInput, stringIsNullOrEmptyOrWhitespace} from '../../../tokens';
-import { TipoUnidade } from '../../../tokens/enums/tipo-unidade';
-import { UnidadeFormService } from './unidade-form.service';
-import { UnidadeAtendimentoInput } from '../../../tokens/models/unidade-atendimento-input';
-import { CreateUnidadeInput } from '../../../tokens/models/create-unidade-input';
-import {v4 as uuidv4} from "uuid";
-import { MessageService } from 'primeng/api';
+import {TipoUnidade} from '../../../tokens/enums/tipo-unidade';
+import {UnidadeFormService} from './unidade-form.service';
+import {UnidadeAtendimentoInput} from '../../../tokens/models/unidade-atendimento-input';
+import {CreateUnidadeInput} from '../../../tokens/models/create-unidade-input';
+import {MessageService} from 'primeng/api';
 import {ActivatedRoute, Router} from '@angular/router';
 import {UnidadeAtendimentoOutput} from "../../../tokens/models/unidade-atendimento-output";
 import {first} from "rxjs";

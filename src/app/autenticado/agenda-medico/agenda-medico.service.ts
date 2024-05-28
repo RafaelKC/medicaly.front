@@ -1,24 +1,17 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {HttpClient, HttpParams} from "@angular/common/http";
-import {Observable} from "rxjs";
+import {Observable, Subject} from "rxjs";
 import {PagedResult} from "../../../tokens/models/paged-result";
-import {GetProfissionaisOutput} from "../../../tokens/models/get-profissionais-output";
 import {ensureTrailingSlash} from "../../../tokens/functions/ensure-trailing-slash";
 import {environment} from "../../../environments/environment";
 import {ProcedimentoOutput} from "../../../tokens/models/procedimento-output";
 import {GetListProcedimentoInput} from "../../../tokens/models/get-list-procedimento-input";
-import {GetResultadoOutput} from "../../../tokens/models/get-resultado-output";
-import {ResultadoInput} from "../../../tokens/models/resultado-input";
 import {GetResultadoInput} from "../../../tokens/models/get-resultado-input";
 import {ResultadoOutput} from "../../../tokens/models/resultado-output";
 
 
-
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class AgendaMedicoService {
-
   getProcedimento(input: GetListProcedimentoInput): Observable<PagedResult<ProcedimentoOutput>> {
     let params = new HttpParams();
     if (input.maxResultCount) {

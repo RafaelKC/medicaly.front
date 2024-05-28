@@ -1,18 +1,12 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {TableLazyLoadEvent, TableModule} from "primeng/table";
-import {
-  Genero,
-  PacienteInput,
-  stringIsNullOrEmptyOrWhitespace,
-  SubscriptionsManagerUtil,
-  TELEFONE_MASK
-} from "../../../../tokens";
+import {Genero, PacienteInput, stringIsNullOrEmptyOrWhitespace, SubscriptionsManagerUtil} from "../../../../tokens";
 import {DatePipe, NgIf} from "@angular/common";
 import {MatIcon} from "@angular/material/icon";
 import {MatFabButton, MatIconButton} from "@angular/material/button";
 import {DashboardPacientesServiceService} from "./dashboard-pacientes-service.service";
 import {FilteredInput} from "../../../../tokens/models/paged-filtered-input";
-import {debounceTime, filter, first, Subscription} from "rxjs";
+import {debounceTime, first} from "rxjs";
 import {MatFormField, MatLabel} from "@angular/material/form-field";
 import {MatInput} from "@angular/material/input";
 import {FormControl, ReactiveFormsModule} from "@angular/forms";

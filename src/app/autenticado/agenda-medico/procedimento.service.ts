@@ -6,9 +6,7 @@ import {ensureTrailingSlash} from "../../../tokens/functions/ensure-trailing-sla
 import {environment} from "../../../environments/environment";
 
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class ProcedimentoService {
   public get basePath(): string {
     return `${ensureTrailingSlash(environment.apiUrl)}procedimentos`;

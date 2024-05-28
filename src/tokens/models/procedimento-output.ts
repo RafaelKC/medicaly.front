@@ -3,6 +3,7 @@ import {StatusProcedimento} from "../enums/status-procedimento";
 import {PacienteOutput} from "./paciente-output";
 import {ProfissionalOutput} from "./profissional-output";
 import {UnidadeAtendimentoOutput} from "./unidade-atendimento-output";
+import {ResultadoOutput} from "./resultadoOutput";
 
 export class ProcedimentoOutput{
   public id: string;
@@ -16,4 +17,5 @@ export class ProcedimentoOutput{
   public idProfissional: string;
   public idPaciente: string;
   public idUnidadeAtendimento: string
+  public resultado?: ResultadoOutput
 }

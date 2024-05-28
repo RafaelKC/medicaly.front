@@ -16,9 +16,10 @@
         <p>Profissional: {{item.profissional.nome}}</p>
         <p>Unidade: {{item.unidadeAtendimento.nome}}</p>
         <p>Status: {{statusProcedimento[item.status]}}</p>
+        <p *ngIf="item.status == statusProcedimento.Finalizado && item.resultado?.observacoes">Observações: {{item.resultado?.observacoes}}</p>
       </mat-card-content>
       <mat-card-actions>
-        <p *ngIf=" item.status == statusProcedimento.Finalizado"><button mat-raised-button color="primary" (click)="getResultado(item.id)">Baixar resultado</button></p>
+        <p *ngIf=" item.status == statusProcedimento.Finalizado && item.resultado?.temAnexo"><button mat-raised-button color="primary" (click)="getResultado(item)">Baixar resultado</button></p>
         <p  *ngIf=" item.status == statusProcedimento.Ativo || item.status == statusProcedimento.EmAndamento" ><button mat-raised-button color="warn" (click)="cancelar(item)">Cancelar</button></p>
       </mat-card-actions>
     </mat-card>
@@ -32,4 +33,4 @@
   <div *ngIf="!procedimento" class="teste">
     <p-progressSpinner *ngIf="carregando"   [style]="{width: '80px', height: '80px'}" ></p-progressSpinner>
   </div>
-</div>
+.</div>

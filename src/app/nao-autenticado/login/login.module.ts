@@ -6,10 +6,9 @@ import {MatInputModule} from "@angular/material/input";
 import {LoginComponent} from "./login.component";
 import {MatButton} from "@angular/material/button";
 import {LoginService} from "./login.service";
-import {NgIf} from "@angular/common";
 import {httpInterceptorsProvider} from "../../interceptors";
-import {HttpMedicalyModule} from "../../http-medicaly.module";
 import {ProgressSpinnerModule} from "primeng/progressspinner";
+import {NgIf} from "@angular/common";
 
 const routes: Routes = [
   {
@@ -20,17 +19,16 @@ const routes: Routes = [
 
 @NgModule({
   declarations: [LoginComponent],
-    imports: [
-        ReactiveFormsModule,
-        MatFormFieldModule,
-        MatInputModule,
-        RouterLink,
-        RouterModule.forChild(routes),
-        MatButton,
-        NgIf,
-        HttpMedicalyModule,
-        ProgressSpinnerModule
-    ],
+  imports: [
+    ReactiveFormsModule,
+    MatFormFieldModule,
+    MatInputModule,
+    RouterLink,
+    RouterModule.forChild(routes),
+    MatButton,
+    ProgressSpinnerModule,
+    NgIf
+  ],
   exports: [RouterModule],
   providers: [LoginService, httpInterceptorsProvider]
 })

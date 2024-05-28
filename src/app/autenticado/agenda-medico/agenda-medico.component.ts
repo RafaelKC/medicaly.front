@@ -10,11 +10,11 @@ import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import listPlugin from '@fullcalendar/list';
 import {MatDialog} from "@angular/material/dialog";
-import {DialogComponent} from "./dialog/dialog.component";
 import {EventImpl} from "@fullcalendar/core/internal";
 import {GetResultadoInput} from "../../../tokens/models/get-resultado-input";
 import {ResultadoOutput} from "../../../tokens/models/resultado-output";
 import {StatusProcedimento} from "../../../tokens/enums/status-procedimento";
+import {ProcedimentoDialogComponent} from "./procedimento-dialog/procedimento-dialog.component";
 
 @Component({
   selector: 'app-agenda-medico',
@@ -42,20 +42,13 @@ export class AgendaMedicoComponent implements OnInit{
       right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
     },
     initialView: 'dayGridMonth',
-    // initialEvents: INITIAL_EVENTS, // alternatively, use the `events` setting to fetch from a feed
     weekends: true,
     editable: true,
     selectable: true,
     selectMirror: true,
     dayMaxEvents: true,
-    select: this.handleDateSelect.bind(this),
     eventClick: this.handleEventClick.bind(this),
     eventsSet: this.handleEvents.bind(this)
-    /* you can update a remote database when these fire:
-    eventAdd:
-    eventChange:
-    eventRemove:
-    */
   });
   currentEvents = signal<EventApi[]>([]);
 
@@ -109,6 +102,8 @@ export class AgendaMedicoComponent implements OnInit{
       return;
     }
 
+    calendarApi.removeAllEvents()
+
 
     this.procedimentos.forEach(procedimento => {
       if(procedimento.status==StatusProcedimento.Finalizado){
@@ -137,43 +132,16 @@ export class AgendaMedicoComponent implements OnInit{
   }
 
   ngOnInit() {
-    this.getProcedimento(); // Just call getProcedimento() here
+    this.getProcedimento();
 
-  }
-
-  handleCalendarToggle() {
-    this.calendarVisible.update((bool) => !bool);
-  }
-
-  handleWeekendsToggle() {
-    this.calendarOptions.update((options) => ({
-      ...options,
-      weekends: !options.weekends,
-    }));
-  }
-
-  handleDateSelect(selectInfo: DateSelectArg) {
-    // const a  = prompt(selectInfo.endStr);
-    // const title = prompt('Please enter a new title for your event');
-    //
-    // const calendarApi = selectInfo.view.calendar;
-    // calendarApi.unselect(); // clear date selection
-    // if (title) {
-    //   calendarApi.addEvent({
-    //     id: createEventId(),
-    //     title,
-    //     start: selectInfo.startStr,
-    //     end: selectInfo.endStr,
-    //   });
-    // }
   }
 
   openDialog(procedimento: ProcedimentoOutput, evento: EventImpl, resultado: ResultadoOutput| null) {
-    this.dialog.open(DialogComponent, {
+    this.dialog.open(ProcedimentoDialogComponent, {
       data: { procedimento: procedimento,
               evento: evento,
               resultado: resultado},
-    });
+    }).afterClosed().subscribe(result => this.getProcedimento());
   }
 
   handleEventClick(clickInfo: EventClickArg) {

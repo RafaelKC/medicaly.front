@@ -10,7 +10,6 @@ import {MatFormField, MatLabel} from "@angular/material/form-field";
 import {MatInput} from "@angular/material/input";
 import {FormControl, ReactiveFormsModule} from "@angular/forms";
 import {Router} from "@angular/router";
-import {HttpMedicalyModule} from "../../../http-medicaly.module";
 import {UnidadeAtendimentoOutput} from "../../../../tokens/models/unidade-atendimento-output";
 import {TipoUnidade} from "../../../../tokens/enums/tipo-unidade";
 import {DashboardUnidadesServiceService} from "./dashboard-unidades-service.service";
@@ -28,8 +27,7 @@ import {DashboardUnidadesServiceService} from "./dashboard-unidades-service.serv
     MatFormField,
     MatInput,
     MatLabel,
-    ReactiveFormsModule,
-    HttpMedicalyModule
+    ReactiveFormsModule
   ],
   templateUrl: './dashboard-unidade.component.html',
   styleUrl: './dashboard-unidade.component.scss'

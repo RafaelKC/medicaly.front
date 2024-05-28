@@ -7,9 +7,7 @@ import { ensureTrailingSlash } from '../../../tokens/functions/ensure-trailing-s
 import { CreateUnidadeInput } from '../../../tokens/models/create-unidade-input';
 import {UnidadeAtendimentoOutput} from "../../../tokens/models/unidade-atendimento-output";
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class UnidadeFormService {
 
   constructor(private http: HttpClient ) { }

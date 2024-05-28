@@ -1,8 +1,8 @@
-import {Component, input, OnDestroy, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {ActivatedRoute, Router} from '@angular/router';
 import {AuthenticationService, LoginInput, SubscriptionsManagerUtil, UserTipo} from "../../../tokens";
-import {catchError, first, of, switchMap} from "rxjs";
+import {first, of, switchMap} from "rxjs";
 import {LoginService} from "./login.service";
 import {MessageService} from "primeng/api";
 

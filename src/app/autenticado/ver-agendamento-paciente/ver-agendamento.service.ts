@@ -1,15 +1,12 @@
-import { HttpClient, HttpParams } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import { environment } from '../../../environments/environment';
-import { ensureTrailingSlash } from '../../../tokens/functions/ensure-trailing-slash';
-import { GetProcedimentoOutput } from '../../../tokens/models/get-procedimento-output';
+import {HttpClient, HttpParams} from '@angular/common/http';
+import {Injectable} from '@angular/core';
+import {Observable} from 'rxjs';
+import {environment} from '../../../environments/environment';
+import {ensureTrailingSlash} from '../../../tokens/functions/ensure-trailing-slash';
 import {GetListProcedimentoInput} from "../../../tokens/models/get-list-procedimento-input";
 import {PagedResult} from "../../../tokens/models/paged-result";
 import {ProcedimentoOutput} from "../../../tokens/models/procedimento-output";
-import {ProfissionalInput} from "../../../tokens/models/profissional-input";
-import {resultadoOutput} from "../../../tokens/models/resultadoOutput";
-import {anexo} from "../../../tokens/models/anexo";
+import {ResultadoOutput} from "../../../tokens/models/resultadoOutput";
 import {AnexoComLinkOutput} from "../../../tokens/models/anexos-com-link-output";
 
 @Injectable({
@@ -36,9 +33,9 @@ export class VerAgendamentoService {
     return this.http.get<PagedResult<ProcedimentoOutput>>(this.basePathProcedimento, { params });
   }
 
-  public getResultado(id: string) : Observable<resultadoOutput> {
+  public getResultado(id: string) : Observable<ResultadoOutput> {
     const url = this.basePathResultado + `/${id}`
-    return this.http.get<resultadoOutput>(url)
+    return this.http.get<ResultadoOutput>(url)
   }
 
   public getAnexo(id: string) : Observable<AnexoComLinkOutput> {

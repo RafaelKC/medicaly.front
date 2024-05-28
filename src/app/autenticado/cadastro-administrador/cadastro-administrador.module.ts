@@ -3,7 +3,7 @@ import {CommonModule} from '@angular/common';
 import {CadastroAdministradorComponent} from "./cadastro-administrador.component";
 import {RouterModule, Routes} from "@angular/router";
 import {EnderecoFormModule} from "../../components/endereco-form/endereco-form.module";
-import {MatFormField, MatFormFieldControl, MatFormFieldModule, MatLabel, MatSuffix} from "@angular/material/form-field";
+import {MatFormField, MatLabel, MatSuffix} from "@angular/material/form-field";
 import {IMaskDirective} from "angular-imask";
 import {MatRadioButton, MatRadioGroup} from "@angular/material/radio";
 import {MatDatepicker, MatDatepickerInput, MatDatepickerToggle} from "@angular/material/datepicker";
@@ -21,6 +21,7 @@ const routes: Routes = [
 @NgModule({
   declarations: [CadastroAdministradorComponent],
   imports: [
+    HttpMedicalyModule,
     CommonModule,
     EnderecoFormModule,
     IMaskDirective,
@@ -35,7 +36,6 @@ const routes: Routes = [
     MatRadioGroup,
     MatSuffix,
     ReactiveFormsModule,
-    HttpMedicalyModule,
     RouterModule.forChild(routes),
   ],
   exports: [RouterModule],

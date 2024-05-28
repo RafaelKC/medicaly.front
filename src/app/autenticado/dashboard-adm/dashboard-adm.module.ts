@@ -14,16 +14,26 @@ import {DashboardUnidadesServiceService} from "./dashboard-unidades/dashboard-un
 import {DashboardUnidadeComponent} from "./dashboard-unidades/dashboard-unidade.component";
 import {DashboardEspecialidadeComponent} from "./dashboard-especialidades/dashboard-especialidade.component";
 import {DashboardEspecialidadeService} from "./dashboard-especialidades/dashboard-especialidade.service";
+import {HttpMedicalyModule} from "../../http-medicaly.module";
 
 const routes: Routes = [
-  { path: '', component: DashboardAdmComponent }
+  {path: '', component: DashboardAdmComponent}
 ];
 
 
 @NgModule({
   declarations: [DashboardAdmComponent],
   exports: [RouterModule],
-  imports: [RouterModule.forChild(routes), MatTabGroup, MatTab, DashboardPacientesComponent, DashboardProfissionalComponent, DashboardAdministradorComponent, DashboardUnidadeComponent, DashboardEspecialidadeComponent,],
+  imports: [
+    RouterModule.forChild(routes),
+    MatTabGroup,
+    MatTab,
+    HttpMedicalyModule,
+    DashboardPacientesComponent,
+    DashboardProfissionalComponent,
+    DashboardAdministradorComponent,
+    DashboardUnidadeComponent,
+    DashboardEspecialidadeComponent,],
   providers: [
     DashboardPacientesServiceService,
     DashboardProfissionaisServiceService,
@@ -31,4 +41,5 @@ const routes: Routes = [
     DashboardEspecialidadeService,
     DashboardUnidadesServiceService]
 })
-export class DashboardAdmModule { }
+export class DashboardAdmModule {
+}

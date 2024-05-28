@@ -7,12 +7,10 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatButton} from "@angular/material/button";
 import {MatRadioGroup, MatRadioModule} from '@angular/material/radio';
-import {HttpClientModule} from '@angular/common/http';
 import {IMaskModule} from 'angular-imask';
 import {RadioButtonModule} from "primeng/radiobutton";
 import {RouterModule, Routes} from "@angular/router";
 import {EnderecoFormModule} from "../../../components/endereco-form/endereco-form.module";
-import {HttpMedicalyModule} from "../../../http-medicaly.module";
 
 const routes: Routes = [
   { path: '', component: TelaCadastroComponent }
@@ -29,7 +27,6 @@ const routes: Routes = [
     MatDatepickerModule,
     MatButton,
     MatRadioModule,
-    HttpMedicalyModule,
     IMaskModule,
     RadioButtonModule,
     EnderecoFormModule,

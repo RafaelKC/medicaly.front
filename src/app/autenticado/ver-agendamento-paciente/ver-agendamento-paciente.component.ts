@@ -1,11 +1,11 @@
 import {Component} from '@angular/core';
 import {VerAgendamentoService} from './ver-agendamento.service';
-import {first} from 'rxjs';
+import {first, switchMap} from 'rxjs';
 import {GetListProcedimentoInput} from "../../../tokens/models/get-list-procedimento-input";
 import {AuthenticationService} from "../../../tokens";
 import {ProcedimentoOutput} from "../../../tokens/models/procedimento-output";
 import {Router} from "@angular/router";
-import {resultadoOutput} from "../../../tokens/models/resultadoOutput";
+import {ResultadoOutput} from "../../../tokens/models/resultadoOutput";
 import {AnexosService} from "../../../tokens/services/anexos.service";
 import {StatusProcedimento} from "../../../tokens/enums/status-procedimento";
 
@@ -22,8 +22,6 @@ export class VerAgendamentoPacienteComponent {
   public procedimento: ProcedimentoOutput[];
   public cancelando = false;
   public carregando :boolean = true;
-  public resultadoFinalizado = true;
-  public resultado: resultadoOutput;
 
   ngOnInit() {
 
@@ -41,24 +39,13 @@ export class VerAgendamentoPacienteComponent {
     })
   }
 
-  getResultado(id: string) {
-    this.verAgendamentoService.getResultado(id).subscribe(res => {
-      this.resultado = res;
-      this.verAgendamentoService.getAnexo(this.resultado.anexoId).subscribe(response => {
-        this.anexoService.download(response, true).subscribe()
+  getResultado(procedimento: ProcedimentoOutput) {
+    if (!procedimento.resultado) return;
+    this.verAgendamentoService.getAnexo(procedimento.resultado.procedimentoId).pipe(
+      switchMap(res => {
+        return this.anexoService.download(res, true)
       })
-    })
-
-  }
-
-
-
-
-  navegar(id?: string) {
-    if (id) {
-      this.route.navigate(['auth/meus-procedimentos/' + id])
-
-    }
+    ).subscribe()
   }
 
   public cancelar(procedimento: ProcedimentoOutput): void {

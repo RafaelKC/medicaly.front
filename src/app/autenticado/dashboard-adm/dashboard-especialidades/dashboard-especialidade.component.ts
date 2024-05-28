@@ -10,7 +10,6 @@ import {MatFormField, MatLabel} from "@angular/material/form-field";
 import {MatInput} from "@angular/material/input";
 import {FormControl, ReactiveFormsModule} from "@angular/forms";
 import {Router} from "@angular/router";
-import {HttpMedicalyModule} from "../../../http-medicaly.module";
 import {DashboardEspecialidadeService} from "./dashboard-especialidade.service";
 import {EspecialidadeModel} from "../../../../tokens/models/especialidade-model";
 
@@ -28,7 +27,6 @@ import {EspecialidadeModel} from "../../../../tokens/models/especialidade-model"
     MatInput,
     MatLabel,
     ReactiveFormsModule,
-    HttpMedicalyModule
   ],
   templateUrl: './dashboard-especialidade.component.html',
   styleUrl: './dashboard-especialidade.component.scss'

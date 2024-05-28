@@ -1,7 +1,5 @@
-import {AnexoComLinkOutput} from "./anexos-com-link-output";
-
-export class resultadoOutput {
+export class ResultadoOutput {
   public observacoes: string;
   public procedimentoId: string;
-  public anexoId: string;
+  public temAnexo: boolean;
 }

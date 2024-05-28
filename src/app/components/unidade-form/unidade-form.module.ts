@@ -5,11 +5,11 @@ import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatInputModule} from "@angular/material/input";
 import {MatButton} from "@angular/material/button";
 import {NgIf} from "@angular/common";
-import {httpInterceptorsProvider} from "../../interceptors";
-import {HttpMedicalyModule} from "../../http-medicaly.module";
 import { UnidadeFormComponent } from './unidade-form.component';
 import { EnderecoFormModule } from "../endereco-form/endereco-form.module";
 import { MatRadioButton, MatRadioGroup } from '@angular/material/radio';
+import {HttpMedicalyModule} from "../../http-medicaly.module";
+import {UnidadeFormService} from "./unidade-form.service";
 
 const routes: Routes = [
   { path: '', component: UnidadeFormComponent }
@@ -17,8 +17,9 @@ const routes: Routes = [
 
 @NgModule({
     declarations: [UnidadeFormComponent],
-    exports: [RouterModule],
     imports: [
+        HttpMedicalyModule,
+        NgIf,
         ReactiveFormsModule,
         MatFormFieldModule,
         MatInputModule,
@@ -26,11 +27,11 @@ const routes: Routes = [
         RouterLink,
         RouterModule.forChild(routes),
         MatButton,
-        NgIf,
-        HttpMedicalyModule,
         EnderecoFormModule,
         MatRadioGroup
-    ]
+    ],
+  providers: [UnidadeFormService],
+  exports: [RouterModule],
 })
 export class UnidadeFormModule {
 }

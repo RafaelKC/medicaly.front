@@ -1,13 +1,12 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { RouterModule, Routes } from '@angular/router';
-import { VerAgendamentoPacienteComponent } from './ver-agendamento-paciente.component';
-import { VerAgendamentoService } from './ver-agendamento.service';
-import { HttpMedicalyModule } from '../../http-medicaly.module';
-import { MatCardModule } from '@angular/material/card';
-import { ButtonModule } from 'primeng/button';
-import { MatButton } from '@angular/material/button';
+import {NgModule} from '@angular/core';
+import {CommonModule} from '@angular/common';
+import {RouterModule, Routes} from '@angular/router';
+import {VerAgendamentoPacienteComponent} from './ver-agendamento-paciente.component';
+import {VerAgendamentoService} from './ver-agendamento.service';
+import {MatCardModule} from '@angular/material/card';
+import {MatButton} from '@angular/material/button';
 import {ProgressSpinnerModule} from "primeng/progressspinner";
+import {HttpMedicalyModule} from "../../http-medicaly.module";
 
 
 const routes: Routes = [
@@ -18,9 +17,9 @@ const routes: Routes = [
   declarations: [VerAgendamentoPacienteComponent],
   exports:[RouterModule],
   imports: [
+    HttpMedicalyModule,
     CommonModule,
     RouterModule.forChild(routes),
-    HttpMedicalyModule,
     MatCardModule,
     MatButton,
     ProgressSpinnerModule,

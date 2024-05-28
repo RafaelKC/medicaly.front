@@ -1,6 +1,5 @@
 import {Injectable} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
-import {ProcedimentoInput} from "../../../tokens/models/procedimento";
 import {Observable} from "rxjs";
 import {ensureTrailingSlash} from "../../../tokens/functions/ensure-trailing-slash";
 import {environment} from "../../../environments/environment";
@@ -8,9 +7,7 @@ import {ResultadoInput} from "../../../tokens/models/resultado-input";
 import {ResultadoAnexoInput} from "../../../tokens/models/resultado-anexo-input";
 
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class ResultadoService {
   public get basePath(): string {
     return `${ensureTrailingSlash(environment.apiUrl)}resultados`;
