@@ -130,7 +130,7 @@ export class TelaCadastroComponent implements OnInit {
 
       this.service.update(this.paciente.id, paciente).pipe(first())
         .subscribe(() => {
-          this.messageService.add({ summary: 'Paciente atualizada crom sucesso', severity: 'success' });
+          this.messageService.add({ summary: 'Paciente atualizada com sucesso', severity: 'success' });
           this.router.navigate(['/auth/dashboard-adm'])
         })
     }

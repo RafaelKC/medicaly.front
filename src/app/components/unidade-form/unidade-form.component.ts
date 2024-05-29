@@ -63,7 +63,7 @@ export class UnidadeFormComponent implements OnInit {
 
       this.unidadeService.update(this.unidade.id, unidade).pipe(first())
         .subscribe(() => {
-          this.messageService.add({ summary: 'Unidade de atendimento atualizada crom sucesso', severity: 'success' });
+          this.messageService.add({ summary: 'Unidade de atendimento atualizada com sucesso', severity: 'success' });
           this.router.navigate(['/auth/dashboard-adm'])
         })
     }
@@ -85,7 +85,7 @@ export class UnidadeFormComponent implements OnInit {
     unidadeInput.endereco = endereco;
     this.unidadeService.create(unidadeInput).subscribe({
       next: () => {
-        this.messageService.add({ summary: 'Unidade de atendimento criada crom sucesso', severity: 'success' });
+        this.messageService.add({ summary: 'Unidade de atendimento criada com sucesso', severity: 'success' });
         this.router.navigate(['/auth/dashboard-adm'])
       }
     })
