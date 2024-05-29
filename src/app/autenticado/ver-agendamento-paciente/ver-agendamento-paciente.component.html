@@ -1,5 +1,5 @@
 <div class="teste">
-  <div *ngIf="procedimento"></div>
+  <h1 class="semProcedimento"  *ngIf="!procedimento || procedimento.length <= 0">Sem procedimentos</h1>
   @for (item of procedimento; track $index) {
     <mat-card class="example-card">
       <mat-card-header>
