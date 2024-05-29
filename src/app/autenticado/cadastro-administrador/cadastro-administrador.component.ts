@@ -79,7 +79,7 @@ export class CadastroAdministradorComponent implements OnInit {
 
       this.service.update(this.administrador.id, administrador).pipe(first())
         .subscribe(() => {
-          this.messageService.add({ summary: 'Administrador atualizada crom sucesso', severity: 'success' });
+          this.messageService.add({ summary: 'Administrador atualizada com sucesso', severity: 'success' });
           this.router.navigate(['/auth/dashboard-adm'])
         })
     }
